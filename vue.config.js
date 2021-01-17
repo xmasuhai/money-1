@@ -6,7 +6,7 @@ module.exports = {
   lintOnSave: false,
   chainWebpack: config => {
     const dir = path.resolve(__dirname, 'src/assets/icons') // 确定目录
-    config.module
+    config.module.uses.clear()
       .rule('svg-sprite')
       .test(/\.svg$/)// .test(/\.(svg)(\?.*)?$/)
       .include.add(dir).end() // 指定 仅包含 icons 的目录
