@@ -26,6 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/global.scss";
 nav {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -44,7 +45,12 @@ nav {
       }
     }
   > .item.selected{
-    color: orangered;
+    color: $color-highlight;
     }
+  }
+
+a {
+  font-weight: bold;
+  color: #2c3e50;
   }
 </style>
