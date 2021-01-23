@@ -7,8 +7,7 @@
 
 <script>
 export default {
-  components: {
-  },
+  components: {},
   name: "App",
 };
 </script>
@@ -16,14 +15,12 @@ export default {
 <style lang="scss">
 @import "~@/assets/style/global.scss";
 @import "~@/assets/style/reset.scss";
-body {
-  }
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   font-family: $font-hei;
   color: #2c3e50;
+  font-size: 16px;
 }
-
 </style>

@@ -3,9 +3,21 @@
   line-height: 1.5;
   margin: 0;
   padding: 0;
-  }
+}
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+button, input {
+  font: inherit;
+  border-radius: 0;
+  }
+:focus {
+  outline: none;
   }
