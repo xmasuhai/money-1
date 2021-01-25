@@ -11,13 +11,13 @@
         <button>新增标签</button>
       </div>
     </div>
-    <div>
+    <div  class="div_notes">
       <label class="notes">
         <span class="name">备注</span>
         <input type="text" placeholder="在这里输入备注"/>
       </label>
     </div>
-    <div>
+    <div class="div_types">
       <ul class="types">
         <li class="selected">支出</li>
         <li>收入</li>
@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss">
 .layout-content {
-  border: 3px solid red;
   display: flex;
   flex-direction: column;
   }
