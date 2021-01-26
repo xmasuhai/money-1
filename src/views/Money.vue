@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     <Tags/>
     <Notes/>
-    <Types xxx="Hi"/>
+    <Types :xxx="123"/>
     <Numpad/>
   </Layout>
 </template>
