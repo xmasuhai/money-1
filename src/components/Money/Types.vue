@@ -9,9 +9,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-
-@Component()
-export default class Types extends Vue {
+const TypesProps = Vue.extend({
+  props: {
+    xxx: String
+  }
+})
+@Component
+export default class Types extends TypesProps {
   // initial data
   type = '-'; // '-' 表示支出， '+'表示收入
 
@@ -21,6 +25,9 @@ export default class Types extends Vue {
       throw new Error('type is unknown');
     }
     this.type = type;
+  }
+  mounted() {
+    console.log(this.xxx)
   }
 }
 </script>
