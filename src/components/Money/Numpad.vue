@@ -1,28 +1,54 @@
 <template>
   <div class="numpad">
-    <div class="output">100</div>
+    <div class="output">{{ output || '0' }}</div>
     <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
       <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
       <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
       <button class="ok">OK</button>
-      <button class="zero">0</button>
-      <button>.</button>
+      <button @click="inputContent" class="zero">0</button>
+      <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
 <script lang="ts">
-export default {
-  name: 'Numpad'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class Numpad extends Vue {
+  output = '';
+
+  inputContent(event: MouseEvent) {
+    const button = (event.target as HTMLButtonElement);
+    const input = button.textContent as string;
+    // 显示的数字长短限制
+    if (this.output.length === 12) {return;}
+    // '0'开头的逻辑
+    if (this.output === '0') {
+      if ('0123456789'.indexOf(input) >= 0) {
+        this.output = input;
+      } else { // '.'的逻辑
+        // 按数字位数 拼接 字符串
+        this.output += input;
+      }
+      return;
+    }
+    // '.'重复判断
+    if (this.output.indexOf('.') >= 0 && input === '.') {
+      return;
+    }
+    this.output += input;
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
