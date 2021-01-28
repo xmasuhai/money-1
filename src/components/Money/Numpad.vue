@@ -2,20 +2,20 @@
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
     <div class="buttons">
-      <button @click="inputContent">1</button>
-      <button @click="inputContent">2</button>
-      <button @click="inputContent">3</button>
-      <button @click="removeContent">删除</button>
-      <button @click="inputContent">4</button>
-      <button @click="inputContent">5</button>
-      <button @click="inputContent">6</button>
-      <button @click="clearContent">清空</button>
-      <button @click="inputContent">7</button>
-      <button @click="inputContent">8</button>
-      <button @click="inputContent">9</button>
-      <button @click="confirmContent" class="ok">OK</button>
-      <button @click="inputContent" class="zero">0</button>
-      <button @click="inputContent">.</button>
+      <button @touchstart="inputContent">1</button>
+      <button @touchstart="inputContent">2</button>
+      <button @touchstart="inputContent">3</button>
+      <button @touchstart="removeContent">删除</button>
+      <button @touchstart="inputContent">4</button>
+      <button @touchstart="inputContent">5</button>
+      <button @touchstart="inputContent">6</button>
+      <button @touchstart="clearContent">清空</button>
+      <button @touchstart="inputContent">7</button>
+      <button @touchstart="inputContent">8</button>
+      <button @touchstart="inputContent">9</button>
+      <button @touchstart="confirmContent" class="ok">OK</button>
+      <button @touchstart="inputContent" class="zero">0</button>
+      <button @touchstart="inputContent">.</button>
     </div>
   </div>
 </template>
@@ -25,13 +25,16 @@ import {Component} from 'vue-property-decorator';
 
 @Component
 export default class Numpad extends Vue {
-  output = '';
+  output = '0';
 
   inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent as string;
     // 显示的数字长短限制
-    if (this.output.length === 12) {return;}
+    if (this.output.length >= 11) {
+      alert('别做白日梦啦');
+      return;
+    }
     // '0'开头的逻辑
     if (this.output === '0') {
       if ('0123456789'.indexOf(input) >= 0) {
@@ -42,9 +45,12 @@ export default class Numpad extends Vue {
       }
       return;
     }
-    // '.'重复判断
-    if (this.output.indexOf('.') >= 0 && input === '.') {
-      return;
+    // '.'开头的逻辑
+    if (this.output.indexOf('.') >= 0) {
+      // '.'重复判断
+      if (input === '.') {return;}
+      // '.'限制小数位 2位
+      if (this.output.length >= 4) {return;}
     }
     this.output += input;
   }
