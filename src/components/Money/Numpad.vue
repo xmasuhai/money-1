@@ -5,15 +5,15 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button>删除</button>
+      <button @click="removeContent">删除</button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
-      <button>清空</button>
+      <button @click="clearContent">清空</button>
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button class="ok">OK</button>
+      <button @click="confirmContent" class="ok">OK</button>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -47,6 +47,22 @@ export default class Numpad extends Vue {
       return;
     }
     this.output += input;
+  }
+
+  removeContent() {
+    this.output = this.output.slice(0, -1);
+    if (this.output === '') {
+      this.output = '0';
+    }
+  }
+
+  clearContent() {
+    this.output = '0';
+  }
+
+  confirmContent() {
+    this.output = '0';
+    // confirm save to Tags
   }
 }
 </script>
