@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags :data-source="tags"/>
+    <Tags :data-source.sync="tags"/>
     <Notes/>
     <Types/>
     <Numpad/>
@@ -21,7 +21,7 @@ import { Component } from 'vue-property-decorator';
   }
 })
 export default class Money extends Vue{
-  tags= ['衣','食','住','行','理财'];
+  tags = ['衣','食','住','行','理财'];
 }
 </script>
 
