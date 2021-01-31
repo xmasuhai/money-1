@@ -8,24 +8,18 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Types extends Vue {
-  // initial data
-  type = '-'; // '-' 表示支出， '+'表示收入
+  @Prop() readonly type!: string;
 
   // method
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
-    this.type = type;
-  }
-  // watch
-  @Watch('type')
-  onTypeChanged(value: string) {
-    this.$emit('update:value', value);
+    this.$emit('update:type', type);
   }
 }
 </script>

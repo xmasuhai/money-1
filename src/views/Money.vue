@@ -2,8 +2,8 @@
   <Layout class-prefix="layout">
     <Tags :data-source.sync="tags" @update:selectedTags="onUpdate"/>
     <Notes @update:value="onUpdateNotes"/>
-    <Types @update:value="onUpdateType"/>
-    <Numpad @update:value="onUpdateAmount"/>
+    <Types :type.sync="record.type"/>
+    <Numpad :value.sync="record.amount"/>
     {{record}}
   </Layout>
 </template>
@@ -43,14 +43,6 @@ export default class Money extends Vue {
 
   onUpdateNotes(notesValue: string) {
     this.record.notes = notesValue;
-  }
-
-  onUpdateType(type: string) {
-    this.record.type = type;
-  }
-
-  onUpdateAmount(amount: string) {
-    this.record.amount = parseFloat(amount);
   }
 }
 </script>
