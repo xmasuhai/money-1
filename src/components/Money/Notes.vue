@@ -15,13 +15,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class Notes extends Vue {
   inputValue = '';
-/*
- * v-model
-  onInput(event: InputEvent | KeyboardEvent) { // value = $event.target.value
-    const input = event.target as HTMLInputElement;
-    this.inputValue = input.value;
-  }
-*/
 }
 </script>
 <style lang="scss" scoped>
