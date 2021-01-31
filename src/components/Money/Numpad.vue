@@ -46,11 +46,12 @@ export default class Numpad extends Vue {
       return;
     }
     // '.'开头的逻辑
-    if (this.output.indexOf('.') >= 0) {
+    const dotIndex = this.output.indexOf('.');
+    if (dotIndex >= 0) {
       // '.'重复判断
       if (input === '.') {return;}
       // '.'限制小数位 2位
-      if (this.output.length >= 4) {return;}
+      if (this.output.slice(dotIndex, -1).length > 1) {return;}
     }
     this.output += input;
   }
@@ -67,8 +68,10 @@ export default class Numpad extends Vue {
   }
 
   confirmContent() {
-    this.output = '0';
     // confirm save to Tags
+    this.$emit('update:value', this.output);
+    // recover
+    this.output = '0';
   }
 }
 </script>
