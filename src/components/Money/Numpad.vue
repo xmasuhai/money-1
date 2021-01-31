@@ -71,6 +71,7 @@ export default class Numpad extends Vue {
   confirmContent() {
     // confirm save to Tags
     this.$emit('update:value', this.output);
+    this.$emit('submit', this.output);
     // recover
     this.output = '0';
   }

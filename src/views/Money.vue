@@ -3,8 +3,8 @@
     <Tags :data-source.sync="tags" @update:selectedTags="onUpdate"/>
     <Notes @update:value="onUpdateNotes"/>
     <Types :type.sync="record.type"/>
-    <Numpad :value.sync="record.amount"/>
-    {{record}}
+    <Numpad :value.sync="record.amount" @submit="saveRecord"/>
+    {{recordList}}
   </Layout>
 </template>
 
@@ -14,7 +14,7 @@ import Tags from '@/components/Money/Tags.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Types from '@/components/Money/Types.vue';
 import Numpad from '@/components/Money/Numpad.vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 type Record = {
   tags: string[];
@@ -36,6 +36,7 @@ export default class Money extends Vue {
     type: '-',
     amount: 0
   };
+  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') ?? '[]');
 
   onUpdate(selectedTags: string[]) {
     this.record.tags = selectedTags;
@@ -43,6 +44,16 @@ export default class Money extends Vue {
 
   onUpdateNotes(notesValue: string) {
     this.record.notes = notesValue;
+  }
+
+  saveRecord() {
+    const clonedRecord = JSON.parse(JSON.stringify(this.record));
+    this.recordList.push(clonedRecord);
+  }
+
+  @Watch('recordList')
+  onRecordeChange() {
+    localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 }
 </script>
