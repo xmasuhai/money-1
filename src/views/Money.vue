@@ -4,7 +4,6 @@
     <Notes @update:value="onUpdateNotes"/>
     <Types :type.sync="record.type"/>
     <Numpad :value.sync="record.amount" @submit="saveRecord"/>
-    {{recordList}}
   </Layout>
 </template>
 
@@ -21,6 +20,7 @@ type Record = {
   notes: string;
   type: string;
   amount: number;
+  createdAt?: Date;
 }
 
 @Component({
@@ -34,7 +34,8 @@ export default class Money extends Vue {
     tags: [],
     notes: '',
     type: '-',
-    amount: 0
+    amount: 0,
+    createdAt: new Date(),
   };
   recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') ?? '[]');
 
@@ -47,7 +48,8 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const clonedRecord = JSON.parse(JSON.stringify(this.record));
+    const clonedRecord: Record = JSON.parse(JSON.stringify(this.record));
+    clonedRecord.createdAt = new Date();
     this.recordList.push(clonedRecord);
   }
 

@@ -2,20 +2,20 @@
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
     <div class="buttons">
-      <button @touchstart="inputContent">1</button>
-      <button @touchstart="inputContent">2</button>
-      <button @touchstart="inputContent">3</button>
-      <button @touchstart="removeContent">删除</button>
-      <button @touchstart="inputContent">4</button>
-      <button @touchstart="inputContent">5</button>
-      <button @touchstart="inputContent">6</button>
-      <button @touchstart="clearContent">清空</button>
-      <button @touchstart="inputContent">7</button>
-      <button @touchstart="inputContent">8</button>
-      <button @touchstart="inputContent">9</button>
-      <button @touchstart="confirmContent" class="ok">OK</button>
-      <button @touchstart="inputContent" class="zero">0</button>
-      <button @touchstart="inputContent">.</button>
+      <button @touchstart="inputNum">1</button>
+      <button @touchstart="inputNum">2</button>
+      <button @touchstart="inputNum">3</button>
+      <button @touchstart="removeNum">删除</button>
+      <button @touchstart="inputNum">4</button>
+      <button @touchstart="inputNum">5</button>
+      <button @touchstart="inputNum">6</button>
+      <button @touchstart="clearNum">清空</button>
+      <button @touchstart="inputNum">7</button>
+      <button @touchstart="inputNum">8</button>
+      <button @touchstart="inputNum">9</button>
+      <button @touchstart="confirmNum" class="ok">OK</button>
+      <button @touchstart="inputNum" class="zero">0</button>
+      <button @touchstart="inputNum">.</button>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default class Numpad extends Vue {
   @Prop() readonly value!: number;
   output = this.value.toString();
 
-  inputContent(event: MouseEvent) {
+  inputNum(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent as string;
     // 显示的数字长短限制
@@ -57,19 +57,19 @@ export default class Numpad extends Vue {
     this.output += input;
   }
 
-  removeContent() {
+  removeNum() {
     this.output = this.output.slice(0, -1);
     if (this.output === '') {
       this.output = '0';
     }
   }
 
-  clearContent() {
+  clearNum() {
     this.output = '0';
   }
 
-  confirmContent() {
-    // confirm save to Tags
+  confirmNum() {
+    // send prop to Tags
     this.$emit('update:value', this.output);
     this.$emit('submit', this.output);
     // recover
