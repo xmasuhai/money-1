@@ -34,6 +34,7 @@ export default class Numpad extends Vue {
     // 显示的数字长短限制
     if (this.output.length >= 11) {
       alert('别做白日梦啦');
+      this.removeNum(event, -3);
       return;
     }
     // '0'开头的逻辑
@@ -57,8 +58,8 @@ export default class Numpad extends Vue {
     this.output += input;
   }
 
-  removeNum() {
-    this.output = this.output.slice(0, -1);
+  removeNum(event: MouseEvent, number = -1) {
+    this.output = this.output.slice(0, number);
     if (this.output === '') {
       this.output = '0';
     }
