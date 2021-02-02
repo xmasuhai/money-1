@@ -3,9 +3,10 @@ const model = {
   fetchData() {
     return JSON.parse(window.localStorage.getItem(localStorageKeyName) ?? '[]')
   },
-  saveData(data) {
+  saveData(data: RecordItem[]) {
     localStorage.setItem(localStorageKeyName, JSON.stringify(data))
   }
 }
 // export default model
-export {model}
+// export {model}
+export default model;
