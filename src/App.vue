@@ -20,5 +20,6 @@ export default {
   font-family: $font-hei;
   color: #2c3e50;
   font-size: 16px;
+  background: whitesmoke;
 }
 </style>
