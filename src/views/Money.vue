@@ -18,7 +18,7 @@ import {Component, Watch} from 'vue-property-decorator';
 // const model = require('@/model.js').model;
 // const {model} = require('@/model.ts');
 // import {model} from '@/model.ts'; // export {model}
-import model from '@/model.ts';
+import model from '@/models/model.ts';
 
 @Component({
   components: {

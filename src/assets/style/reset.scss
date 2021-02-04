@@ -14,10 +14,14 @@ ul,
 ol {
   list-style: none;
 }
-button, input {
-  font: inherit;
+
+button,
+input {
+  border: none;
   border-radius: 0;
-  }
+  font: inherit;
+}
+
 :focus {
   outline: none;
-  }
+}

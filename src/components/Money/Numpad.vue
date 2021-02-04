@@ -95,7 +95,6 @@ export default class Numpad extends Vue {
       height: 64px;
       float: left;
       background: transparent;
-      border: none;
       &.ok {
         height: (64px) * 2;
         float: right;

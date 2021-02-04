@@ -71,7 +71,6 @@ export default class Tags extends Vue {
     padding-top: 16px;
     button {
       background: transparent;
-      border: none;
       border-bottom: 1px solid;
       color: #999;
       padding: 0 4px;

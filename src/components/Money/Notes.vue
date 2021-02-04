@@ -37,7 +37,6 @@ export default class Notes extends Vue {
     height: 73px;
     flex-grow: 1;
     background: transparent;
-    border: none;
     padding-right: 16px;
     }
   }
