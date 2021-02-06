@@ -14,19 +14,18 @@ import Notes from '@/components/Money/Notes.vue';
 import Types from '@/components/Money/Types.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component, Watch} from 'vue-property-decorator';
-// import model from '@/model.js'; // TS 中不能用`import`直接引入 JS 的模块
-// const model = require('@/model.js').model;
-// const {model} = require('@/model.ts');
-// import {model} from '@/model.ts'; // export {model}
-import model from '@/models/model.ts';
+import recordListModel from '@/models/recordListModel.ts';
+import tagListModel from '@/models/tagListModel';
 
 @Component({
   components: {
     Numpad, Types, Notes, Tags
   }
 })
+
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行', '理财'];
+  tags = tagListModel.fetchData();
+  recordList = recordListModel.fetchData();
   record: RecordItem = {
     tags: [],
     notes: '',
@@ -34,9 +33,6 @@ export default class Money extends Vue {
     amount: 0,
     createdAt: new Date(),
   };
-  // recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') ?? '[]');
-  // recordList: RecordItem[] = model.fetchData();
-  recordList = model.fetchData();
 
   onUpdate(selectedTags: string[]) {
     this.record.tags = selectedTags;
@@ -47,14 +43,14 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const clonedRecord = model.clone(this.record);
+    const clonedRecord = recordListModel.clone(this.record);
     clonedRecord.createdAt = new Date();
     this.recordList.push(clonedRecord);
   }
 
   @Watch('recordList')
   onRecordeChange() {
-    model.saveData(this.recordList);
+    recordListModel.saveData(this.recordList);
   }
 }
 </script>
