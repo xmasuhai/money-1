@@ -1,6 +1,9 @@
 <template>
   <Layout>
+    <div class="edit">
+      <Icon name="money_right"/>
     编辑标签
+    </div>
   </Layout>
 </template>
 
@@ -27,5 +30,12 @@ export default class EditLabel extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+.edit{
+  > svg {
+    transform: rotate(180deg);
+    font-size: 24px;
+    color: #666;
+    margin-right: 16px;
+    }
+  }
 </style>
