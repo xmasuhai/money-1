@@ -2,8 +2,10 @@
   <Layout class="labels">
     <ul class="tags">
       <li v-for="tag in tags" :key="tag.id">
-        <span>{{ tag.name }}</span>
-        <Icon name="money_right"/>
+        <router-link class="tag" :to="`/labels/edit/${tag.id}`">
+          <span class="tag-text">{{ tag.name }}</span>
+          <Icon class="tag-icon" name="money_right"/>
+        </router-link>
       </li>
     </ul>
     <div class="createTag-wrapper">
@@ -46,19 +48,21 @@ export default class Labels extends Vue {
     font-size: 16px;
     padding-left: 16px;
     > li {
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e6e6e6;
-      > span {
-        // text overflow mixins
-        @include multiline-ellipsis(1, 44px, 4em);
-        }
-      > svg {
-        font-size: 24px;
-        color: #666;
-        margin-right: 16px;
+      > .tag {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e6e6e6;
+        > span {
+          // text overflow mixins
+          @include multiline-ellipsis(1, 44px, 4em);
+          }
+        > svg {
+          font-size: 24px;
+          color: #666;
+          margin-right: 16px;
+          }
         }
       }
     }

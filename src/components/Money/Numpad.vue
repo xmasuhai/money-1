@@ -82,14 +82,14 @@ export default class Numpad extends Vue {
 @import "~@/assets/style/global.scss";
 .numpad {
   .output {
-    @extend %innerShadow;
+    @extend %inner-shadow;
     font-size: 36px;
     font-family: Consolas, monospace;
     padding: 9px 16px;
     text-align: right;
     }
   .buttons {
-    @extend %clearFix;
+    @extend %clear-fix;
     > button {
       width: 25%;
       height: 64px;
