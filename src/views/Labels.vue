@@ -1,8 +1,8 @@
 <template>
   <Layout class="labels">
     <ul class="tags">
-      <li v-for="tag in tags" :key="tag">
-        <span>{{ tag }}</span>
+      <li v-for="tag in tags" :key="tag.id">
+        <span>{{ tag.name }}</span>
         <Icon name="money_right"/>
       </li>
     </ul>
@@ -22,7 +22,7 @@ tagListModel.fetchData();
 @Component
 
 export default class Labels extends Vue {
-  tags = tagListModel.data;
+  tags = tagListModel.data; // [{id: '1', name: '1'}, {id: '2', name: '2'}]
 
   createTag() {
     const name = window.prompt('请输入标签名');
