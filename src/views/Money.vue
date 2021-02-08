@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <Tags :data-source.sync="tags" @update:selectedTags="onUpdate"/>
-    <Notes field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
+    <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
     <Types :type.sync="record.type"/>
     <Numpad :value.sync="record.amount" @submit="saveRecord"/>
   </Layout>
@@ -10,7 +10,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Tags from '@/components/Money/Tags.vue';
-import Notes from '@/components/Money/Notes.vue';
+import FormItem from '@/components/Money/FormItem.vue';
 import Types from '@/components/Money/Types.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component, Watch} from 'vue-property-decorator';
@@ -19,7 +19,7 @@ import tagListModel from '@/models/tagListModel';
 
 @Component({
   components: {
-    Numpad, Types, Notes, Tags
+    Numpad, Types, FormItem, Tags
   }
 })
 
