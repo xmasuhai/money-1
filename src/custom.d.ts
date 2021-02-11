@@ -5,5 +5,3 @@ type RecordItem = {
   amount: number;
   createdAt?: Date;
 }
-
-

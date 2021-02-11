@@ -4,7 +4,7 @@
       <Icon class="left-icon" name="money_right"/>
       <span class="title">编辑标签</span>
     </div>
-    <FormItem class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
+    <FormItem :inputValue="tag.name" class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
     <div class="button-wrapper">
       <Button>删除标签</Button>
     </div>
@@ -22,13 +22,17 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
+  tag?: { id: string; name: string } = undefined;
+
   created() {
     const id = this.$route.params.id;
     tagListModel.fetchData();
     const tags = tagListModel.data;
     // const tag = tags.filter(t => t.id === id)[0];
     const tag = tags.find(t => t.id === id);
-    if (!tag) {
+    if (tag) {
+      this.tag = tag;
+    } else {
       this.$router.replace('/404');
     }
   }
