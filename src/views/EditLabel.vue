@@ -1,10 +1,10 @@
 <template>
   <Layout>
-    <div class="edit">
-      <Icon name="money_right"/>
-      编辑标签
+    <div class="headerBar">
+      <Icon class="leftIcon" name="money_right"/>
+      <span class="title">编辑标签</span>
     </div>
-    <FormItem field-name="标签名" placeholder="在这里输入标签名"/>
+    <FormItem class="formItem" field-name="标签名" placeholder="在这里输入标签名"/>
     <Button>删除标签</Button>
   </Layout>
 </template>
@@ -15,6 +15,7 @@ import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel.ts';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+
 @Component({
   components: {Button, FormItem}
 })
@@ -35,12 +36,29 @@ export default class EditLabel extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.edit {
-  > svg {
+.headerBar {
+  text-align: center;
+  font-size: 16px;
+  padding: 12px 16px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > .leftIcon {
     transform: rotate3d(0, 1, 0, 180deg);
-    font-size: 24px;
     color: #666;
-    margin-right: 16px;
+    font-size: 24px;
     }
+  > .title {
+    }
+  &::after {
+    content: '';
+    display: inline;
+    width: 24px;
+    height: 24px;
+    }
+  }
+.formItem {
+  margin-top: 8px;
   }
 </style>
