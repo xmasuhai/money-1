@@ -9,6 +9,7 @@ type TagListModel = {
   create: (name: string) => 'success' | 'duplicated';
   saveData: () => void;
   updateData: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+  removeData: (id: string) => boolean;
 }
 
 // return this.data | 'success' | 'duplicated' | 'not found'
@@ -38,13 +39,25 @@ const tagListModel: TagListModel = {
       } else {
         const tag = this.data.filter(item => item.id === id)[0];
         tag.name = name;
+        tag.id = name;
         this.saveData();
         return 'success';
       }
-
     } else {
       return 'not found';
     }
+  },
+  removeData(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    this.data.splice(index, 1);
+    this.saveData();
+    return true;
   }
 };
 export default tagListModel;

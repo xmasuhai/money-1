@@ -5,10 +5,10 @@
       <span class="title">编辑标签</span>
     </div>
     <FormItem :inputValue="tag.name"
-              @update:inputValue="updateTag"
+              @update:inputValue="update"
               class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
     <div class="button-wrapper">
-      <Button>删除标签</Button>
+      <Button @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -39,9 +39,15 @@ export default class EditLabel extends Vue {
     }
   }
 
-  updateTag(name: string) {
-    if(this.tag) {
+  update(name: string) {
+    if (this.tag) {
       tagListModel.updateData(this.tag.id, name);
+    }
+  }
+
+  remove() {
+    if (this.tag) {
+      tagListModel.removeData(this.tag.id);
     }
   }
 }
