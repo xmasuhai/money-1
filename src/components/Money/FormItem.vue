@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper">
-    <label class="formItem">
+    <label class="form-item">
       <span class="name">{{ this.fieldName }}</span>
       <input type="text"
              v-model="inputValue"
@@ -28,8 +28,8 @@ export default class FormItem extends Vue {
 @import "~@/assets/style/global.scss";
 
 .form-wrapper {
-  background: #fff;
-  .formItem {
+  background: transparent;
+  .form-item {
     align-items: center;
     display: flex;
     font-size: 14px;
@@ -45,6 +45,4 @@ export default class FormItem extends Vue {
       }
     }
   }
-
-
 </style>

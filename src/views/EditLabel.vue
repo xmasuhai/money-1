@@ -1,11 +1,13 @@
 <template>
   <Layout>
     <div class="headerBar">
-      <Icon class="leftIcon" name="money_right"/>
+      <Icon class="left-icon" name="money_right"/>
       <span class="title">编辑标签</span>
     </div>
-    <FormItem class="formItem" field-name="标签名" placeholder="在这里输入标签名"/>
-    <Button>删除标签</Button>
+    <FormItem class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
+    <div class="button-wrapper">
+      <Button>删除标签</Button>
+    </div>
   </Layout>
 </template>
 
@@ -44,7 +46,7 @@ export default class EditLabel extends Vue {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  > .leftIcon {
+  > .left-icon {
     transform: rotate3d(0, 1, 0, 180deg);
     color: #666;
     font-size: 24px;
@@ -58,7 +60,16 @@ export default class EditLabel extends Vue {
     height: 24px;
     }
   }
-.formItem {
+.form-item {
   margin-top: 8px;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 1px 0 #BCBBC1;
+  -moz-box-shadow: 0 1px 1px 0 #BCBBC1;
+  box-shadow: 0 1px 1px 0 #BCBBC1;
+  }
+.button-wrapper {
+  text-align: center;
+  padding: 16px;
+  margin-top: 44-16px;
   }
 </style>

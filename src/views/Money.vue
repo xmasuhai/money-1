@@ -60,8 +60,10 @@ export default class Money extends Vue {
   display: flex;
   flex-direction: column;
   }
+</style>
+
+<style lang="scss" scoped>
 .form-item {
-  background: red;
-  padding: 12px 0;
+  padding: 6px 0;
   }
 </style>
