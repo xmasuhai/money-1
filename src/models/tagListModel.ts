@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 const localStorageKeyName = 'tagList';
 type Tag = {
   id: string;
@@ -5,17 +7,20 @@ type Tag = {
 }
 type TagListModel = {
   data: Tag[];
-  fetchData: () => Tag[];
+  fetch: () => Tag[];
   create: (name: string) => 'success' | 'duplicated';
-  saveData: () => void;
-  updateData: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
-  removeData: (id: string) => boolean;
+  save: () => void;
+  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+  remove: (id: string) => boolean;
 }
 
 // return this.data | 'success' | 'duplicated' | 'not found'
 const tagListModel: TagListModel = {
   data: [],
-  fetchData() {
+  save() {
+    localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
+  },
+  fetch() {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) ?? '[]');
     return this.data;
   },
@@ -23,14 +28,12 @@ const tagListModel: TagListModel = {
     // this.data = [{id: '1', name: '1'}, {id: '2', name: '2'}]
     const names = this.data.map(d => d.name);
     if (names.indexOf(name) >= 0) { return 'duplicated'; }
-    this.data.push({id: name, name: name});
-    this.saveData();
+    const id = createId().toString();
+    this.data.push({ id, name: name });
+    this.save();
     return 'success';
   },
-  saveData() {
-    localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
-  },
-  updateData(id: string, name: string) {
+  update(id: string, name: string) {
     const idList = this.data.map(item => item.id);
     if (idList.indexOf(id) >= 0) {
       const nameList = this.data.map(item => item.name);
@@ -40,14 +43,14 @@ const tagListModel: TagListModel = {
         const tag = this.data.filter(item => item.id === id)[0];
         tag.name = name;
         tag.id = name;
-        this.saveData();
+        this.save();
         return 'success';
       }
     } else {
       return 'not found';
     }
   },
-  removeData(id: string) {
+  remove(id: string) {
     let index = -1;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].id === id) {
@@ -56,7 +59,7 @@ const tagListModel: TagListModel = {
       }
     }
     this.data.splice(index, 1);
-    this.saveData();
+    this.save();
     return true;
   }
 };

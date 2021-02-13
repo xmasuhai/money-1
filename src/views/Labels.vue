@@ -20,7 +20,7 @@ import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel.ts';
 import Button from '@/components/Button.vue';
 
-tagListModel.fetchData();
+tagListModel.fetch();
 @Component({
   components: {Button}
 })
