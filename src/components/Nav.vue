@@ -16,13 +16,15 @@
 </template>
 
 <script lang="ts">
-// import x from '@/assets/icons/bills.svg';
+import Vue from 'vue';
 import Icon from '@/components/Icon.vue';
+import {Component} from 'vue-property-decorator';
 
-export default {
-  name: 'Nav',
+@Component({
   components: {Icon}
-};
+})
+export default class Button extends Vue {
+}
 </script>
 
 <style lang="scss" scoped>
@@ -44,7 +46,7 @@ nav {
       height: 32px;
       }
     }
-  > .item.selected{
+  > .item.selected {
     color: $color-highlight;
     }
   }

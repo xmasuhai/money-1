@@ -1,9 +1,12 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags :data-source.sync="tags" @update:selectedTags="onUpdate"/>
-    <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
+    <Tags :data-source.sync="tags"
+          @update:selectedTags="onUpdate"/>
+    <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
+              @update:value="onUpdateNotes"/>
     <Types :type.sync="record.type"/>
-    <Numpad :value.sync="record.amount" @submit="saveRecord"/>
+    <Numpad :value.sync="record.amount"
+            @submit="saveRecord"/>
   </Layout>
 </template>
 

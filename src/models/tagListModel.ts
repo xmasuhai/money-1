@@ -20,8 +20,15 @@ const tagListModel: TagListModel = {
   save() {
     localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
-  fetch() {
+  fetch: function () {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) ?? '[]');
+    this.data.forEach(item => {
+      if (item.id === '') {
+        this.remove(item.id);
+        this.data.splice(this.data.indexOf(item), 1);
+        console.log(this.data);
+      }
+    });
     return this.data;
   },
   create(name: string) {
@@ -29,7 +36,7 @@ const tagListModel: TagListModel = {
     const names = this.data.map(d => d.name);
     if (names.indexOf(name) >= 0) { return 'duplicated'; }
     const id = createId().toString();
-    this.data.push({ id, name: name });
+    this.data.push({id, name: name});
     this.save();
     return 'success';
   },

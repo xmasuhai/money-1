@@ -1,17 +1,17 @@
 <template>
   <div class="form-wrapper">
     <label class="form-item">
-      <span class="name">{{ this.fieldName }}</span>
+      <span class="name">{{ fieldName }}</span>
       <input type="text"
              :value="inputValue"
              @input="oninputValueChanged($event.target.value)"
-             :placeholder="this.placeholder"/>
+             :placeholder="placeholder"/>
     </label>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class FormItem extends Vue {
@@ -19,7 +19,7 @@ export default class FormItem extends Vue {
   @Prop({required: true}) fieldName!: string;
   @Prop({default: ''}) placeholder?: string;
 
-  @Watch('inputValue')
+  // @Watch('inputValue')
   oninputValueChanged(newValue: string) {
     this.$emit('update:inputValue', newValue);
   }
