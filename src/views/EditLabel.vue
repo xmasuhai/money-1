@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="headerBar">
-      <Icon class="left-icon" name="money_right"/>
+      <Icon class="left-icon" name="money_right" @click.native="goBack"/>
       <span class="title">编辑标签</span>
     </div>
     <FormItem :inputValue="tag.name"
@@ -49,6 +49,10 @@ export default class EditLabel extends Vue {
     if (this.tag) {
       tagListModel.removeData(this.tag.id);
     }
+  }
+
+  goBack() {
+    this.$router.back();
   }
 }
 </script>

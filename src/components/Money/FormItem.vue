@@ -3,7 +3,8 @@
     <label class="form-item">
       <span class="name">{{ this.fieldName }}</span>
       <input type="text"
-             :value="inputValue" @input="oninputValueChanged($event.target.value)"
+             :value="inputValue"
+             @input="oninputValueChanged($event.target.value)"
              :placeholder="this.placeholder"/>
     </label>
   </div>
