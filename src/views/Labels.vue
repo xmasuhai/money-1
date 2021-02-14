@@ -31,7 +31,7 @@ export default class Labels extends Vue {
     if (name) {
       window.createTag(name);
     } else {
-      window.alert('没有输入内容，轻重新创建标签');
+      window.alert('没有输入内容，请重新创建标签');
     }
   }
 }
