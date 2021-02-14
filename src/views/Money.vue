@@ -18,7 +18,6 @@ import Types from '@/components/Money/Types.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import recordListModel from '@/models/recordListModel.ts';
-import tagListModel from '@/models/tagListModel';
 
 @Component({
   components: {
@@ -27,7 +26,7 @@ import tagListModel from '@/models/tagListModel';
 })
 
 export default class Money extends Vue {
-  tags = tagListModel.fetch();
+  tags = window.tagList;
   recordList = recordListModel.fetchRecord();
   record: RecordItem = {
     tags: [],
@@ -41,8 +40,8 @@ export default class Money extends Vue {
     this.record.tags = selectedTags;
   }
 
-  onUpdateTips(notesValue: string) {
-    this.record.tips = notesValue;
+  onUpdateTips(value: string) {
+    this.record.tips = value;
   }
 
   saveRecord() {

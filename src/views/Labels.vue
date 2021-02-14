@@ -20,13 +20,12 @@ import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel.ts';
 import Button from '@/components/Button.vue';
 
-tagListModel.fetch();
 @Component({
   components: {Button}
 })
 
 export default class Labels extends Vue {
-  tags = tagListModel.data; // [{id: '1', name: '1'}, {id: '2', name: '2'}]
+  tags = window.tagList; // [{id: '1', name: '1'}, {id: '2', name: '2'}]
 
   createTag() {
     const name = window.prompt('请输入标签名');

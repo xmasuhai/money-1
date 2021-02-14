@@ -1,4 +1,4 @@
-import clone from '@/lib/clone';
+import clone from '@/lib/clone.ts';
 
 const localStorageKeyName = 'recordList';
 const recordListModel = {
@@ -7,6 +7,7 @@ const recordListModel = {
     const clonedRecord = clone(record);
     clonedRecord.createdAt = new Date();
     this.data.push(clonedRecord);
+    this.saveRecord();
   },
   fetchRecord() {
     this.data = JSON.parse(
