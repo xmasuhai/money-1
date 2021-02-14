@@ -1,9 +1,9 @@
 <template>
   <Layout class-prefix="layout">
     <Tags :data-source.sync="tags"
-          @update:selectedTags="onUpdate"/>
+          @update:selectedTags="pickTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
-              @update:value="onUpdateNotes"/>
+              @update:value="onUpdateTips"/>
     <Types :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
             @submit="saveRecord"/>
@@ -28,32 +28,30 @@ import tagListModel from '@/models/tagListModel';
 
 export default class Money extends Vue {
   tags = tagListModel.fetch();
-  recordList = recordListModel.fetchData();
+  recordList = recordListModel.fetchRecord();
   record: RecordItem = {
     tags: [],
-    notes: '',
+    tips: '',
     type: '-',
     amount: 0,
     createdAt: new Date(),
   };
 
-  onUpdate(selectedTags: string[]) {
+  pickTags(selectedTags: string[]) {
     this.record.tags = selectedTags;
   }
 
-  onUpdateNotes(notesValue: string) {
-    this.record.notes = notesValue;
+  onUpdateTips(notesValue: string) {
+    this.record.tips = notesValue;
   }
 
   saveRecord() {
-    const clonedRecord = recordListModel.clone(this.record);
-    clonedRecord.createdAt = new Date();
-    this.recordList.push(clonedRecord);
+    recordListModel.createItem(this.record);
   }
 
   @Watch('recordList')
   onRecordeChange() {
-    recordListModel.saveData(this.recordList);
+    recordListModel.saveRecord();
   }
 }
 </script>

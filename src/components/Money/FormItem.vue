@@ -27,7 +27,6 @@ export default class FormItem extends Vue {
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
-
 .form-wrapper {
   background: transparent;
   .form-item {
