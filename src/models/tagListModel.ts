@@ -8,17 +8,8 @@ const tagListModel: TagListModel = {
   save() {
     localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
-  checkEmpty() {
-    this.data.forEach(item => {
-      if (item.id === '') {
-        this.remove(item.id);
-        this.data.splice(this.data.indexOf(item), 1);
-      }
-    });
-  },
   fetch() {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) ?? '[]');
-    this.checkEmpty();
     return this.data;
   },
   create(name: string) {
@@ -26,7 +17,7 @@ const tagListModel: TagListModel = {
     const names = this.data.map(d => d.name);
     if (names.indexOf(name) >= 0) { return 'duplicated'; }
     const id = createId().toString();
-    this.data.push({id, name: name});
+    this.data.push({id, name});
     this.save();
     return 'success';
   },
@@ -39,7 +30,7 @@ const tagListModel: TagListModel = {
       } else {
         const tag = this.data.filter(item => item.id === id)[0];
         tag.name = name;
-        tag.id = name;
+        tag.id = id;
         this.save();
         return 'success';
       }
@@ -57,7 +48,6 @@ const tagListModel: TagListModel = {
     }
     this.data.splice(index, 1);
     this.save();
-    this.checkEmpty();
     return true;
   }
 };

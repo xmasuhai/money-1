@@ -16,9 +16,9 @@ type TagListModel = {
   save: () => void;
   update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
   remove: (id: string) => boolean;
-  checkEmpty: () => void;
 }
 
 interface Window {
   tagList: Tag[];
+  createTag: (name: string) => void;
 }

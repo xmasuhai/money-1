@@ -28,7 +28,7 @@ export default class EditLabel extends Vue {
 
   created() {
     const id = this.$route.params.id;
-    tagListModel.fetch();
+    window.tagList;
     const tags = tagListModel.data;
     // const tag = tags.filter(t => t.id === id)[0];
     const tag = tags.find(t => t.id === id);
@@ -40,16 +40,21 @@ export default class EditLabel extends Vue {
   }
 
   update(name: string) {
-    if (this.tag) {
-      tagListModel.update(this.tag.id, name);
+    if (!this.tag) { return; }
+    if (name === '') {
+      window.alert('标签名不能为空');
+      this.$router.back();
+      return;
     }
+    tagListModel.update(this.tag.id, name);
   }
 
   remove() {
     if (this.tag) {
       tagListModel.remove(this.tag.id);
-      this.$router.back();
       window.alert(`成功删除标签：${this.tag.name}`);
+      window.tagList;
+      this.$router.back();
     }
   }
 
