@@ -18,7 +18,7 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
-import store2 from '@/store/index2';
+import store2 from '@/store/index2.ts';
 
 @Component({
   components: {Button}

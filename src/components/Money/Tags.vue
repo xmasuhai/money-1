@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import createId from '@/lib/createId';
+import operateId from '@/lib/operateId';
 
 @Component
 export default class Tags extends Vue {
@@ -36,7 +36,8 @@ export default class Tags extends Vue {
   createTag() {
     const name = window.prompt('请输入标签名');
     if (name !== '' && this.dataSource !== undefined) {
-      this.$emit('update:dataSource', [...this.dataSource, {id: createId(), name}]);
+      this.$emit('update:dataSource',
+          [...this.dataSource, {id: operateId.createId(), name}]);
     } else {return;}
   }
 }
