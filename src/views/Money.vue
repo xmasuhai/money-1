@@ -1,9 +1,8 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags :data-source.sync="tags"
-          @update:selectedTags="pickTags"/>
+    <Tags @update:selectedTags="pickTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
-              @update:value="onUpdateTips"/>
+              @update:inputValue="onUpdateTips"/>
     <Types :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
             @submit="saveRecord"/>
@@ -20,13 +19,9 @@ import {Component} from 'vue-property-decorator';
 import store2 from '@/store/index2';
 
 @Component({
-  components: {
-    Numpad, Types, FormItem, Tags
-  }
+  components: { Numpad, Types, FormItem, Tags}
 })
-
 export default class Money extends Vue {
-  tags = store2.tagList;
   recordList = store2.recordList;
   record: RecordItem = {
     tags: [],
@@ -36,12 +31,12 @@ export default class Money extends Vue {
     createdAt: new Date(),
   };
 
-  pickTags(selectedTags: string[]) {
-    this.record.tags = selectedTags;
-  }
-
   onUpdateTips(value: string) {
     this.record.tips = value;
+  }
+
+  pickTags(selectedTags: string[]) {
+    this.record.tags = selectedTags;
   }
 
   saveRecord() {

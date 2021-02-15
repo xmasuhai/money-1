@@ -4,10 +4,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "App",
-};
+<script lang="ts">
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+import store2 from '@/store/index2';
+import operateId from '@/lib/operateId.ts';
+
+@Component
+export default class App extends Vue {
+  data() {
+    return {
+      store2,
+      operateId
+    };
+  }
+}
 </script>
 
 <style lang="scss">
@@ -21,5 +32,5 @@ export default {
   color: #2c3e50;
   font-size: 16px;
   background: whitesmoke;
-}
+  }
 </style>

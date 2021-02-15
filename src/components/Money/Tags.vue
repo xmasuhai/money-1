@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <ul class="current">
-      <li v-for="tag in dataSource"
+      <li v-for="tag in tagList"
           :key="tag.id"
           @click="toggle(tag)"
           :class="{selected: selectedTags.indexOf(tag)>=0 }">
@@ -15,16 +15,16 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
-import operateId from '@/lib/operateId';
+import {Component} from 'vue-property-decorator';
+import store2 from '@/store/index2';
 
 @Component
 export default class Tags extends Vue {
-  @Prop(Array) readonly dataSource: string[] | undefined;
-  selectedTags: string[] = [];
+  tagList = store2.fetchTags(); // Tag[]
+  selectedTags: Tag[] = [];
 
-  toggle(tag: string) {
-    const index = this.selectedTags.indexOf(tag);
+  toggle(tag: Tag) {
+    const index = this.selectedTags.map(i => i.id).indexOf(tag.id);
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
     } else {
@@ -35,10 +35,8 @@ export default class Tags extends Vue {
 
   createTag() {
     const name = window.prompt('请输入标签名');
-    if (name !== '' && this.dataSource !== undefined) {
-      this.$emit('update:dataSource',
-          [...this.dataSource, {id: operateId.createId(), name}]);
-    } else {return;}
+    if (!name) {return window.alert('标签名不能为空');}
+    store2.createTag(name);
   }
 }
 </script>
