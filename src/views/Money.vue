@@ -18,14 +18,12 @@ import Numpad from '@/components/Money/Numpad.vue';
 import {Component} from 'vue-property-decorator';
 
 @Component({
-  components: {Numpad, Types, FormItem, Tags},
-  computed: {
-    recordList() {
-      return this.$store.state.recordList;
-    }
-  },
+  components: {Numpad, Types, FormItem, Tags}
 })
 export default class Money extends Vue {
+  get recordList() {
+    return this.$store.state.recordList;
+  }
   record: RecordItem = {
     tags: [],
     tips: '',

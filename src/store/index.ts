@@ -10,9 +10,10 @@ const tagStore = new Vuex.Store({});
 
 const store = new Vuex.Store({
   state: {
-    tagList: [] as Tag[],
-    recordList: [] as RecordItem[]
-  },
+    tagList: [],
+    recordList: [],
+    currentTag: undefined,
+  } as RootState,
   mutations: {
     fetchRecords(state) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') ?? '[]') as RecordItem[];
@@ -27,9 +28,6 @@ const store = new Vuex.Store({
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     },
-    findTag(state, id: string) {
-      return state.tagList.find(t => t.id === id) || undefined;
-    },
     fetchTags(state) {
       return state.tagList = JSON.parse(window.localStorage.getItem('tagList') ?? '[]');
     },
@@ -40,13 +38,13 @@ const store = new Vuex.Store({
       const names = state.tagList.map(d => d.name);
       if (names.indexOf(name) >= 0) {
         window.alert('标签名重复了');
-        return 'duplicated';
+        // return 'duplicated';
       }
       const id = operateId.createId().toString();
       state.tagList.push({id, name});
       store.commit('saveTags');
       window.alert('添加成功');
-      return 'success';
+      // return 'success';
     },
     removeTag(state, id: string) {
       let index = -1;
@@ -58,7 +56,7 @@ const store = new Vuex.Store({
       }
       state.tagList.splice(index, 1);
       store.commit('saveTags');
-      return true;
+      // return true;
     },
     updateTag(state, tag) {
       const idList = state.tagList.map(item => item.id);
@@ -70,12 +68,16 @@ const store = new Vuex.Store({
           const tagItem = state.tagList.filter(item => item.id === tag.id)[0];
           tagItem.name = tag.name;
           store.commit('saveTags');
-          return 'success';
+          // return 'success';
         }
       } else {
-        return 'not found';
+        // return 'not found';
       }
-    }
+    },
+    setCurrentTag(state, id: string) {
+      // state.currentTag = state.tagList.find(t => t.id === id);
+      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+    },
   },
   modules: {
     recordStore,

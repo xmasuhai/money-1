@@ -18,3 +18,8 @@ type TagListModel = {
   updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
   removeTag: (id: string) => boolean;
 }
+type RootState = {
+  tagList: Tag[];
+  recordList: RecordItem[];
+  currentTag?: Tag;
+}

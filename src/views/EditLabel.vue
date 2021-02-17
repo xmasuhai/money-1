@@ -20,20 +20,14 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
 @Component({
-  components: {Button, FormItem},
-  computed: {
-    tag() {
-      return this.$store.commit('findTag', this.$route.params.id);
-    }
-  }
+  components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
-  // TODO
-  // tag = store2.findTag(this.$route.params.id);
-
+  get tag() {
+    return this.$store.state.currentTag;
+  }
   created() {
-    // TODO
-    this.tag = {id: '', name: ''}; // store2.findTag(this.$route.params.id);
+    this.$store.commit('setCurrentTag', this.$route.params.id);
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -46,9 +40,7 @@ export default class EditLabel extends Vue {
       this.$router.back();
       return;
     }
-    // TODO
-    // store2.updateTag(this.tag.id, name);
-    const tag = {id: this.tag.id, name}
+    const tag = {id: this.tag.id, name};
     this.$store.commit('updateTag', tag);
   }
 
