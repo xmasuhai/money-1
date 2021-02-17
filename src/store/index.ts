@@ -54,24 +54,25 @@ const store = new Vuex.Store({
           break;
         }
       }
-      state.tagList.splice(index, 1);
-      store.commit('saveTags');
-      // return true;
-    },
-    updateTag(state, tag) {
-      const idList = state.tagList.map(item => item.id);
-      if (idList.indexOf(tag.id) >= 0) {
-        const nameList = state.tagList.map(item => item.name);
-        if (nameList.indexOf(tag.name) >= 0) {
-          return 'duplicated';
-        } else {
-          const tagItem = state.tagList.filter(item => item.id === tag.id)[0];
-          tagItem.name = tag.name;
-          store.commit('saveTags');
-          // return 'success';
-        }
+      if (index >= 0) {
+        state.tagList.splice(index, 1);
+        store.commit('saveTags');
       } else {
-        // return 'not found';
+        window.alert('删除失败');
+      }
+    },
+    updateTag(state, tag: { id: string; name: string }) {
+      const {id, name} = tag;
+      const idList = state.tagList.map(item => item.id);
+      if (idList.indexOf(id) >= 0) {
+        const nameList = state.tagList.map(item => item.name);
+        if (nameList.indexOf(name) >= 0) {
+          window.alert('标签名重复类');
+        } else {
+          const tagItem = state.tagList.filter(item => item.id === id)[0];
+          tagItem.name = name;
+          store.commit('saveTags');
+        }
       }
     },
     setCurrentTag(state, id: string) {
