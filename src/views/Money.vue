@@ -1,10 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    count: {{ count }}
-    <button @click="add">+1 +5</button>
-    <button @click="$store.commit('increaseN', -10)">
-      使用$store： {{count}} - 10</button>
-    dataCount: {{ dataCount }}
     <Tags @update:selectedTags="pickTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
               @update:inputValue="onUpdateTips"/>
@@ -27,13 +22,9 @@ import store from '@/store/index.ts';
 @Component({
   components: {Numpad, Types, FormItem, Tags},
   computed: {
-    count() {
-      return store.state.count;
-    },
   },
 })
 export default class Money extends Vue {
-  dataCount = store.state.count;
   recordList = store2.recordList;
   record: RecordItem = {
     tags: [],
@@ -53,11 +44,6 @@ export default class Money extends Vue {
 
   saveRecord() {
     store2.createRecord(this.record);
-  }
-
-  add() {
-    store.commit('increaseCount');
-    this.$store.commit('increaseN', 5);
   }
 }
 </script>
