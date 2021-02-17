@@ -10,11 +10,11 @@ type Tag = {
   name: string;
 }
 type TagListModel = {
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: string) => 'success' | 'duplicated';
-  save: () => void;
-  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
-  remove: (id: string) => boolean;
+  tagList: Tag[];
+  fetchTags: () => Tag[];
+  findTag: (id: string) => Tag | undefined;
+  createTag: (name: string) => 'success' | 'duplicated';
+  saveTags: () => void;
+  updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+  removeTag: (id: string) => boolean;
 }
-

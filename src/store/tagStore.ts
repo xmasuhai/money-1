@@ -2,7 +2,7 @@ import operateId from '@/lib/operateId';
 
 const localStorageKeyName = 'tagList';
 
-const tagStore = {
+const tagStore: TagListModel = {
   tagList: [] as Tag[],
   findTag(id: string) {
     return this.tagList.find(t => t.id === id) || undefined;

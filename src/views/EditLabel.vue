@@ -18,13 +18,26 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
-import store2 from '@/store/index2';
 
 @Component({
-  components: {Button, FormItem}
+  components: {Button, FormItem},
+  computed: {
+    tag() {
+      return this.$store.commit('findTag', this.$route.params.id);
+    }
+  }
 })
 export default class EditLabel extends Vue {
-  tag = store2.findTag(this.$route.params.id);
+  // TODO
+  // tag = store2.findTag(this.$route.params.id);
+
+  created() {
+    // TODO
+    this.tag = {id: '', name: ''}; // store2.findTag(this.$route.params.id);
+    if (!this.tag) {
+      this.$router.replace('/404');
+    }
+  }
 
   update(name: string) {
     if (!this.tag) { return; }
@@ -33,15 +46,23 @@ export default class EditLabel extends Vue {
       this.$router.back();
       return;
     }
-    store2.updateTag(this.tag.id, name);
+    // TODO
+    // store2.updateTag(this.tag.id, name);
+    const tag = {id: this.tag.id, name}
+    this.$store.commit('updateTag', tag);
   }
 
   remove() {
     if (this.tag) {
+      // TODO : if (store2.removeTag(this.tag.id))
+      /*
       if (store2.removeTag(this.tag.id)) {
         window.alert(`成功删除标签：${this.tag.name}`);
         this.$router.back();
       }
+      */
+      window.alert(`成功删除标签：${this.tag.name}`);
+      this.$router.back();
     }
   }
 

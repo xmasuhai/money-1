@@ -7,18 +7,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import store2 from '@/store/index2';
-import operateId from '@/lib/operateId.ts';
 
 @Component
-export default class App extends Vue {
-  data() {
-    return {
-      store2,
-      operateId
-    };
-  }
-}
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">
