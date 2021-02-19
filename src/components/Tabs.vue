@@ -1,31 +1,33 @@
 <template>
-  <div class="div_types">
-    <ul class="types">
-      <li :class="{selected: type==='-', [classPrefix + '-item']: classPrefix}" @click="selectType('-')">支出</li>
-      <li :class="{selected: type==='+', [classPrefix + '-item']: classPrefix}" @click="selectType('+')">收入</li>
-    </ul>
-  </div>
+  <ul class="tabs">
+    <li v-for="item in dataSource" :key="item.value" :class="{selected: item.value === type}"
+        @click="select(item)">{{ item.text }}
+    </li>
+  </ul>
 </template>
+
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
+type dataSource = { text: string; value: string }
 @Component
-export default class Types extends Vue {
+export default class Tabs extends Vue {
+  @Prop({required: true, type: Array})
+  dataSource!: { text: string; value: string }[];
   @Prop(String) readonly type!: string;
   @Prop(String) readonly classPrefix?: string;
 
-  selectType(type: string) {
-    if (type !== '-' && type !== '+') {
-      throw new Error('type is unknown');
-    }
-    this.$emit('update:type', type);
+  select(item: dataSource) {
+    this.$emit('update:type', item.value);
   }
 }
 </script>
+
 <style lang="scss" scoped>
+
 @import "~@/assets/style/global.scss";
-.types {
+.tabs {
   background: #c4c4c4;
   display: flex;
   text-align: center;
