@@ -5,6 +5,13 @@
     type: {{ type }}
     <br>
     interval: {{ interval }}
+    <div>
+      <ol>
+        <li v-for="item in result" :key="item.id">
+          {{ item }}
+        </li>
+      </ol>
+    </div>
   </Layout>
 </template>
 
@@ -23,6 +30,23 @@ export default class Statistics extends Vue {
   interval = 'day';
   intervalList = intervalList;
   recordTypeList = recordTypeList;
+
+  get recordList() {
+    return this.$store.state.recordList;
+  }
+
+  get result() {
+    const {recordList} = this;
+    const hashTable = {};
+    for (let i = 0; i < recordList.length; i++) {
+      console.log(recordList[i].createdAt);
+    }
+    return hashTable
+  }
+
+  mounted() {
+    this.$store.commit('fetchRecords');
+  }
 }
 </script>
 
