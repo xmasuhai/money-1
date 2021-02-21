@@ -1,7 +1,7 @@
 <template>
-  <Layout>
-    <Types class-prefix="zzz" :type.sync="yyy"/>
-    <Tabs :data-source="array" :type.sync="hhh"/>
+  <Layout class="statistics">
+    <Tabs class-prefix="type" :data-source="typeList" :type.sync="type"/>
+    <Tabs class-prefix="interval" :data-source="intervalList" :type.sync="interval"/>
   </Layout>
 </template>
 
@@ -15,24 +15,32 @@ import Tabs from '@/components/Tabs.vue';
   components: {Tabs, Types}
 })
 export default class Statistics extends Vue {
-  yyy = '-';
-  array = [
-    {text: '按天', value: 'day'},
-    {text: '按周', value: 'week'},
-    {text: '按月', value: 'month'},
+  type = '-';
+  interval = 'day';
+
+  intervalList = [
+    {text: '按天', type: 'day'},
+    {text: '按周', type: 'week'},
+    {text: '按月', type: 'month'}
   ];
-  hhh = 'day';
+
+  typeList = [
+    {text: '支出', type: '-'},
+    {text: '收入', type: '+'}
+  ]
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep .zzz-item {
-  background: #fff;
-  &.selected {
-    border: 1px solid red;
-    background: #c4c4c4;
-    &::after {
-      display: none;
+.statistics {
+  ::v-deep .type-tabs-item {
+    background: #fff;
+    position: relative;
+    &.selected {
+      background: #c4c4c4;
+      &::after {
+        display: none;
+        }
       }
     }
   }

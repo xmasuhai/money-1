@@ -1,10 +1,8 @@
 <template>
-  <div class="div_types">
-    <ul class="types">
-      <li :class="{selected: type==='-', [classPrefix + '-item']: classPrefix}" @click="selectType('-')">支出</li>
-      <li :class="{selected: type==='+', [classPrefix + '-item']: classPrefix}" @click="selectType('+')">收入</li>
-    </ul>
-  </div>
+  <ul class="types">
+    <li :class="{[classPrefix + '-item']: classPrefix, selected: type==='-', }" @click="selectType('-')">支出</li>
+    <li :class="{[classPrefix + '-item']: classPrefix, selected: type==='+', }" @click="selectType('+')">收入</li>
+  </ul>
 </template>
 <script lang="ts">
 import Vue from 'vue';
@@ -24,7 +22,6 @@ export default class Types extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
 .types {
   background: #c4c4c4;
   display: flex;
