@@ -11,13 +11,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import Types from '@/components/Money/Types.vue';
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import intervalList from '@/constants/intervalList';
 
 @Component({
-  components: {Tabs, Types}
+  components: {Tabs}
 })
 export default class Statistics extends Vue {
   type = '-';
