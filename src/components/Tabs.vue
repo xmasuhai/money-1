@@ -1,6 +1,6 @@
 <template>
   <ul class="tabs">
-    <li v-for="item in dataSource" :key="item.value" :class="{selected: item.value === type}"
+    <li v-for="item in dataSource" :key="item.type" :class="liClass(item)"
         @click="select(item)">{{ item.text }}
     </li>
   </ul>
@@ -10,23 +10,28 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
-type dataSource = { text: string; value: string }
+type DataSource = { text: string; type: string }
 @Component
 export default class Tabs extends Vue {
   @Prop({required: true, type: Array})
-  dataSource!: { text: string; value: string }[];
+  dataSource!: DataSource[];
   @Prop(String) readonly type!: string;
-  @Prop(String) readonly classPrefix?: string;
+  @Prop(String) classPrefix?: string;
 
-  select(item: dataSource) {
-    this.$emit('update:type', item.value);
+  liClass(item: DataSource) {
+    return {
+      [this.classPrefix +'-tabs-item']: this.classPrefix,
+      selected: item.type === this.type
+    };
+  }
+
+  select(item: DataSource) {
+    this.$emit('update:type', item.type);
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-@import "~@/assets/style/global.scss";
 .tabs {
   background: #c4c4c4;
   display: flex;

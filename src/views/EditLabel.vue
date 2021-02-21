@@ -47,7 +47,6 @@ export default class EditLabel extends Vue {
 
   remove() {
     if (this.currentTag) {
-      // TODO : if (store2.removeTag(this.tag.id))
       this.$store.commit('removeTag', this.currentTag.id);
       window.alert(`成功删除标签：${this.currentTag.name}`);
       this.goBack();
@@ -60,6 +59,7 @@ export default class EditLabel extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/global.scss";
 .headerBar {
   text-align: center;
   font-size: 16px;
@@ -85,9 +85,7 @@ export default class EditLabel extends Vue {
 .form-item {
   margin-top: 8px;
   background: #fff;
-  -webkit-box-shadow: 0 1px 1px 0 #BCBBC1;
-  -moz-box-shadow: 0 1px 1px 0 #BCBBC1;
-  box-shadow: 0 1px 1px 0 #BCBBC1;
+  @extend %tag-shadow;
   }
 .button-wrapper {
   text-align: center;
