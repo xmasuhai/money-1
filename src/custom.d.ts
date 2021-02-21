@@ -23,3 +23,4 @@ type RootState = {
   recordList: RecordItem[];
   currentTag?: Tag;
 }
+type DataSource = { text: string; type: string }

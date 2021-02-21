@@ -28,14 +28,19 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 .statistics {
-  ::v-deep .type-tabs-item {
-    background: #fff;
-    position: relative;
-    &.selected {
-      background: #c4c4c4;
-      &::after {
-        display: none;
+  ::v-deep {
+    .type-tabs-item {
+      background: #fff;
+      position: relative;
+      &.selected {
+        background: #c4c4c4;
+        &::after {
+          display: none;
+          }
         }
+      }
+    .interval-tabs-item {
+      height: 48px;
       }
     }
   }
