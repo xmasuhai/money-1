@@ -1,6 +1,8 @@
 <template>
   <ul class="tabs">
-    <li v-for="item in dataSource" :key="item.type" :class="liClass(item)"
+    <li v-for="item in dataSource"
+        :key="item.type"
+        :class="liClass(item)"
         @click="select(item)">{{ item.text }}
     </li>
   </ul>
