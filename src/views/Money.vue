@@ -31,7 +31,7 @@ export default class Money extends Vue {
     tips: '',
     type: '-',
     amount: 0,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
   recordTypeList = recordTypeList;
 
