@@ -43,7 +43,7 @@ export default class Money extends Vue {
     this.record.tips = value;
   }
 
-  pickTags(selectedTags: string[]) {
+  pickTags(selectedTags: {id: string; name: string }[]) {
     this.record.tags = selectedTags;
   }
 
