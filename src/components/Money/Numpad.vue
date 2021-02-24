@@ -1,7 +1,7 @@
 <template>
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
-    <div class="buttons">
+    <div class="buttons" @mousemove="showMask">
       <button @touchstart="inputNum">1</button>
       <button @touchstart="inputNum">2</button>
       <button @touchstart="inputNum">3</button>
@@ -19,6 +19,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
@@ -28,7 +29,7 @@ export default class Numpad extends Vue {
   @Prop() readonly value!: number;
   output = this.value.toString();
 
-  inputNum(event: MouseEvent) {
+  inputNum(event: TouchEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent as string;
     // 显示的数字长短限制
@@ -58,7 +59,7 @@ export default class Numpad extends Vue {
     this.output += input;
   }
 
-  removeNum(event: MouseEvent, number = -1) {
+  removeNum(event: TouchEvent, number = -1) {
     this.output = this.output.slice(0, number);
     if (this.output === '') {
       this.output = '0';
@@ -76,8 +77,29 @@ export default class Numpad extends Vue {
     // recover
     this.output = '0';
   }
+
+  getParent(curEl, parentEl) {
+    while (curEl !== parentEl) {
+      curEl = curEl.parentElement;
+    }
+    return curEl;
+  }
+
+  showMask(e: MouseEvent) {
+    let elem = e.target as HTMLButtonElement;
+    const wrapper = document.querySelector('.buttons');
+    if (elem !== wrapper) {
+      elem = this.getParent(e.target, wrapper);
+    }
+    const x = e.clientX - elem.offsetLeft;
+    const y = e.clientY - elem.offsetTop;
+
+    document.documentElement.style.setProperty('--x-pos', x + 'px');
+    document.documentElement.style.setProperty('--y-pos', y + 'px');
+  }
 }
 </script>
+
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
 .numpad {
@@ -89,18 +111,42 @@ export default class Numpad extends Vue {
     text-align: right;
     }
   .buttons {
-    @extend %clear-fix;
+    display: grid;
+    grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+    padding: 1px;
+    grid-gap: 1px;
+    height: 256px;
+    overflow: hidden;
+    grid-template-areas:
+     '1 2 3 delete'
+     '4 5 6 clear'
+     '7 8 9 ok'
+     'point point point ok';
+    justify-items: stretch;
+    align-items: stretch;
+    &:hover {
+      background: radial-gradient(circle at var(--x-pos) var(--y-pos), #aaa, transparent 100px);
+      }
     > button {
-      width: 25%;
-      height: 64px;
-      float: left;
+      width: 100%;
+      height: 100%;
       background: transparent;
+      border: 2px solid transparent;
+      transition: border-color .25s;
+      &:hover {
+        border-color: #ccc;
+        }
+      &:last-child {
+        grid-column: 2/4;
+        grid-row: 4/5;
+        }
       &.ok {
-        height: (64px) * 2;
-        float: right;
+        grid-column: 4/5;
+        grid-row: 3/5;
         }
       &.zero {
-        width: 25 * 2%;
+        grid-column: 1/2;
+        grid-row: 4/5;
         }
       $bg: #f2f2f2;
       &:nth-child(1) {

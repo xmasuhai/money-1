@@ -64,6 +64,7 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/global.scss";
 .statistics {
   %item {
     padding: 8px 16px;
@@ -98,6 +99,7 @@ export default class Statistics extends Vue {
       margin-right: auto;
       margin-left: 16px;
       color: #999;
+      @include multiline-ellipsis(1, 40px, 14em);
       }
     }
   }
