@@ -2,6 +2,7 @@ $font-hei: -apple-system, "Smartisan CNS", "Noto Sans", "Helvetica Neue", Helvet
 $font-kai: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW", "AR PL UKai TW MBE", "AR PL KaitiM GB", KaiTi, KaiTi_GB2312, DFKai-SB, "TW\-Kai", serif;
 $font-song: Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif;
 $color-highlight: #ff4500;
+$shadow-dark: #bcbbc1;
 $color-shadow: rgba(0, 0, 0, .25);
 // placeholder
 %clear-fix {
@@ -22,17 +23,17 @@ $color-shadow: rgba(0, 0, 0, .25);
   }
 
 %tag-shadow {
-  box-shadow: 0 1px 1px 1px #bcbbc1;
+  box-shadow: 0 1px 1px 1px $shadow-dark;
   }
 
 // mixins
-@mixin tag-shadow($x: 0, $y: 1px, $blur: 1px, $spread: 0, $color: #bcbbc1) {
+@mixin tag-shadow($x: 0, $y: 1px, $blur: 1px, $spread: 0, $color: $shadow-dark) {
   box-shadow: $x $y $blur $spread $color;
   }
 // mixins text overflow
 @mixin multiline-ellipsis($line: 2, $line-height: 1.6em, $max-width: 5em) {
   //white-space: nowrap;
-  //word-break: break-word;
+  word-break: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

@@ -78,9 +78,9 @@ export default class Numpad extends Vue {
     this.output = '0';
   }
 
-  getParent(curEl, parentEl) {
+  getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
     while (curEl !== parentEl) {
-      curEl = curEl.parentElement;
+      curEl = curEl.parentElement as HTMLButtonElement;
     }
     return curEl;
   }
@@ -88,8 +88,8 @@ export default class Numpad extends Vue {
   showMask(e: MouseEvent) {
     let elem = e.target as HTMLButtonElement;
     const wrapper = document.querySelector('.buttons');
-    if (elem !== wrapper) {
-      elem = this.getParent(e.target, wrapper);
+    if (e.target && elem !== wrapper) {
+      elem = this.getParent(e.target as HTMLButtonElement, wrapper as HTMLElement);
     }
     const x = e.clientX - elem.offsetLeft;
     const y = e.clientY - elem.offsetTop;

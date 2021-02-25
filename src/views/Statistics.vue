@@ -7,8 +7,10 @@
         <h3 class="title">{{ index + 1 }}：{{ value.title }}</h3>
         <ol>
           <li class="record" v-for="item in value.items" :key="item.id">
-            <span>{{ tagToString(item.tags) }}</span>
-            <span class="tips">备注：{{ item.tips }}</span>
+            <span class="recordTag">{{ tagToString(item.tags) }}</span>
+            <div class="notes">
+              <span class="tips">备注：</span><span class="text">{{ item.tips }}</span>
+            </div>
             <span>￥ {{ item.amount }}</span>
           </li>
         </ol>
@@ -23,7 +25,9 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import intervalList from '@/constants/intervalList';
+import dayjs from 'dayjs';
 
+const api = dayjs();
 @Component({
   components: {Tabs}
 })
@@ -95,11 +99,20 @@ export default class Statistics extends Vue {
   .record {
     background: #fff;
     @extend %item;
-    .tips {
+    .recordTag {
+      @include multiline-ellipsis(2, 40px, 5em);
+      }
+    .notes {
+      display: flex;
       margin-right: auto;
       margin-left: 16px;
       color: #999;
-      @include multiline-ellipsis(1, 40px, 14em);
+      .tips {
+        @include multiline-ellipsis(1, 40px, 3em);
+        }
+      .text {
+        @include multiline-ellipsis(1, 40px, 3em);
+        }
       }
     }
   }
