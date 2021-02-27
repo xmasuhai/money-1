@@ -3,8 +3,8 @@
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <Tabs class-prefix="interval" :data-source="intervalList" :type.sync="interval" tabs-height="48px"/>
     <ol>
-      <li v-for="(value, name, index) in result" :key="name">
-        <h3 class="title">{{ index + 1 }}：{{ value.title }}</h3>
+      <li v-for="(value, name, index) in result" :key="name + index">
+        <h3 class="title">{{ showDay(value.title) }}</h3>
         <ol>
           <li class="record" v-for="item in value.items" :key="item.id">
             <span class="recordTag">{{ tagToString(item.tags) }}</span>
@@ -27,7 +27,6 @@ import recordTypeList from '@/constants/recordTypeList';
 import intervalList from '@/constants/intervalList';
 import dayjs from 'dayjs';
 
-const api = dayjs();
 @Component({
   components: {Tabs}
 })
@@ -59,6 +58,22 @@ export default class Statistics extends Vue {
       names.push(tags[i].name);
     }
     return names.length === 0 ? '无' : names.join(',');
+  }
+
+  showDay(someday: string) {
+    const now = dayjs();
+    const thatDay = dayjs(someday);
+    if (dayjs(someday).isSame(now, 'day')) {
+      return '今天';
+    } else if (thatDay.isSame(now.subtract(1, 'day'), 'day')) {
+      return '昨天';
+    } else if (thatDay.isSame(now.subtract(2, 'day'), 'day')) {
+      return '前天';
+    } else if (thatDay.isSame(now, 'year')) {
+      return thatDay.format('M月D日');
+    } else {
+      return thatDay.format('YYYY年M月D日');
+    }
   }
 
   beforeCreate() {

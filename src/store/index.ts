@@ -13,6 +13,7 @@ const store = new Vuex.Store<RootState>({
     tagList: [],
     recordList: [],
     currentTag: undefined,
+    localTimeStamp: ''
   } as RootState,
   mutations: {
     fetchRecords(state) {
@@ -22,9 +23,15 @@ const store = new Vuex.Store<RootState>({
       window.localStorage.setItem('recordList',
         JSON.stringify(state.recordList));
     },
+    getLocalTimeStamp(state) {
+      const date = new Date();
+      return state.localTimeStamp = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+        .toISOString();
+    },
     createRecord(state, record) {
       const clonedRecord = clone(record);
-      clonedRecord.createdAt = new Date().toISOString();
+      store.commit('getLocalTimeStamp');
+      clonedRecord.createdAt = store.state.localTimeStamp;
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     },
