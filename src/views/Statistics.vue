@@ -23,12 +23,15 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
-import recordTypeList from '@/constants/recordTypeList';
-import intervalList from '@/constants/intervalList';
+import recordTypeList from '@/constants/recordTypeList.ts';
+import intervalList from '@/constants/intervalList.ts';
 import dayjs from 'dayjs';
+/*
+import {State, Getter, Action, Mutation} from 'vuex-class';
+*/
 
 @Component({
-  components: {Tabs}
+  components: {Tabs},
 })
 export default class Statistics extends Vue {
   type = '-';
@@ -41,7 +44,16 @@ export default class Statistics extends Vue {
   }
 
   get result() {
+    /*
+    * [
+    *   {title, items},
+    *   {title, items},
+    *   {title, items},
+    * ]
+    *
+    * */
     const {recordList} = this;
+    // console.log(recordList);
     type HashTableValue = { title: string; items: RecordItem[] };
     const hashTable: { [HashTableKey: string]: HashTableValue } = {};
     for (let i = 0; i < recordList.length; i++) {
@@ -76,9 +88,12 @@ export default class Statistics extends Vue {
     }
   }
 
+  // @Mutation('fetchRecords') fetchRecords!: Function;
   beforeCreate() {
     this.$store.commit('fetchRecords');
+    // this.fetchRecords()
   }
+
 }
 </script>
 

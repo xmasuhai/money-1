@@ -18,12 +18,14 @@ import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList.ts';
 import Tabs from '@/components/Tabs.vue';
 
+// import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+
 @Component({
   components: {Tabs, Numpad, FormItem, Tags}
 })
 export default class Money extends Vue {
   get recordList() {
-    return this.$store.state.recordList;
+    return this.$store.state.recordList as RecordItem[];
   }
 
   record: RecordItem = {
@@ -36,7 +38,7 @@ export default class Money extends Vue {
   recordTypeList = recordTypeList;
 
   created() {
-    this.$store.commit('fetchRecords');
+    this.$store.commit('fetchRecords', null,{ root: true });
   }
 
   onUpdateTips(value: string) {
@@ -48,7 +50,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    this.$store.commit('createRecord', this.record);
+    this.$store.commit('createRecord', this.record,{ root: true });
   }
 }
 </script>

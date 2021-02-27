@@ -1,47 +1,27 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import clone from '@/lib/clone';
+/*
+import store from '@/store';
 import operateId from '@/lib/operateId';
-// failed use modules
-import tagStore from '@/store/modules/tagStore.ts';
-import recordStore from '@/store/modules/recordStore.ts';
 
-Vue.use(Vuex);
+type State = {
+  tagList: Tag[],
+  currentTag: Tag
+}
+*/
 
-const store = new Vuex.Store({
+const tagStore = {/*
+  // namespace: true,
   state: {
     tagList: [],
-    recordList: [],
-    currentTag: undefined,
-    localTimeStamp: ''
-  } as RootState,
+    currentTag: {},
+  },
   mutations: {
-    fetchRecords(state) {
-      state.recordList = JSON.parse(window.localStorage.getItem('recordList') ?? '[]') as RecordItem[];
-    },
-    saveRecords(state) {
-      window.localStorage.setItem('recordList',
-        JSON.stringify(state.recordList));
-    },
-    getLocalTimeStamp(state) {
-      const date = new Date();
-      return state.localTimeStamp = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
-        .toISOString();
-    },
-    createRecord(state, record) {
-      const clonedRecord = clone(record);
-      store.commit('getLocalTimeStamp');
-      clonedRecord.createdAt = store.state.localTimeStamp;
-      state.recordList.push(clonedRecord);
-      store.commit('saveRecords');
-    },
-    fetchTags(state) {
+    fetchTags(state: State) {
       return state.tagList = JSON.parse(window.localStorage.getItem('tagList') ?? '[]');
     },
-    saveTags(state) {
+    saveTags(state: State) {
       localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
-    createTag(state, name: string) {
+    createTag(state: State, name: string) {
       const names = state.tagList.map(d => d.name);
       if (names.indexOf(name) >= 0) {
         window.alert('标签名重复了');
@@ -53,7 +33,7 @@ const store = new Vuex.Store({
       window.alert('添加成功');
       // return 'success';
     },
-    removeTag(state, id: string) {
+    removeTag(state: State, id: string) {
       let index = -1;
       for (let i = 0; i < state.tagList.length; i++) {
         if (state.tagList[i].id === id) {
@@ -68,7 +48,7 @@ const store = new Vuex.Store({
         window.alert('删除失败');
       }
     },
-    updateTag(state, tag: { id: string; name: string }) {
+    updateTag(state: State, tag: { id: string; name: string }) {
       const {id, name} = tag;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
@@ -82,14 +62,10 @@ const store = new Vuex.Store({
         }
       }
     },
-    setCurrentTag(state, id: string) {
+    setCurrentTag(state: State, id: string) {
       // state.currentTag = state.tagList.find(t => t.id === id);
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
-    },
-  },
-  modules: {
-    recordStore,
-    tagStore
-  }
-});
-export default store;
+    }
+  }*/
+};
+export default tagStore;
