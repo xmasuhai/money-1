@@ -16,3 +16,12 @@ type RootState = {
   localTimeStamp: string;
 }
 type DataSource = { text: string; type: string }
+
+type tagState = {
+  tagList: Tag[];
+  currentTag: Tag;
+}
+type recordState = {
+  recordList: RecordItem[];
+  localTimeStamp: string;
+}

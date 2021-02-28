@@ -13,21 +13,15 @@
 import Vue from 'vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
+import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList.ts';
-import Tabs from '@/components/Tabs.vue';
-
-// import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 @Component({
-  components: {Tabs, Numpad, FormItem, Tags}
+  components: {Tabs, FormItem, Tags, Numpad}
 })
 export default class Money extends Vue {
-  get recordList() {
-    return this.$store.state.recordList as RecordItem[];
-  }
-
   record: RecordItem = {
     tags: [],
     tips: '',
@@ -38,7 +32,11 @@ export default class Money extends Vue {
   recordTypeList = recordTypeList;
 
   created() {
-    this.$store.commit('fetchRecords', null,{ root: true });
+    this.$store.commit('fetchRecords');
+  }
+
+  get recordList() {
+    return this.$store.state.recordStore.recordList as RecordItem[];
   }
 
   onUpdateTips(value: string) {
@@ -50,7 +48,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    this.$store.commit('createRecord', this.record,{ root: true });
+    this.$store.commit('createRecord', this.record);
   }
 }
 </script>

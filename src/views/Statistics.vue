@@ -26,9 +26,6 @@ import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList.ts';
 import intervalList from '@/constants/intervalList.ts';
 import dayjs from 'dayjs';
-/*
-import {State, Getter, Action, Mutation} from 'vuex-class';
-*/
 
 @Component({
   components: {Tabs},
@@ -39,8 +36,12 @@ export default class Statistics extends Vue {
   intervalList = intervalList;
   recordTypeList = recordTypeList;
 
+  beforeCreate() {
+    this.$store.commit('fetchRecords');
+  }
+
   get recordList() {
-    return (this.$store.state as RootState).recordList;
+    return this.$store.state.recordStore.recordList;
   }
 
   get result() {
@@ -53,7 +54,6 @@ export default class Statistics extends Vue {
     *
     * */
     const {recordList} = this;
-    // console.log(recordList);
     type HashTableValue = { title: string; items: RecordItem[] };
     const hashTable: { [HashTableKey: string]: HashTableValue } = {};
     for (let i = 0; i < recordList.length; i++) {
@@ -86,12 +86,6 @@ export default class Statistics extends Vue {
     } else {
       return thatDay.format('YYYY年M月D日');
     }
-  }
-
-  // @Mutation('fetchRecords') fetchRecords!: Function;
-  beforeCreate() {
-    this.$store.commit('fetchRecords');
-    // this.fetchRecords()
   }
 
 }

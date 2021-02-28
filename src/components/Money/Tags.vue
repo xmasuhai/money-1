@@ -20,14 +20,14 @@ import tagHelper from '@/mixins/tagHelper.ts';
 
 @Component
 export default class Tags extends mixins(tagHelper) {
-  get tagList() {
-    return this.$store.state.tagList;
-  }
-
   selectedTags: Tag[] = [];
 
   created() {
     this.$store.commit('fetchTags');
+  }
+
+  get tagList() {
+    return this.$store.state.tagStore.tagList;
   }
 
   toggle(tag: Tag) {

@@ -26,7 +26,7 @@ import tagHelper from '@/mixins/tagHelper.ts';
 
 export default class Labels extends mixins(tagHelper) {
   get tags() {
-    return this.$store.state.tagList;
+    return this.$store.state.tagStore.tagList;
   }
 
   beforeCreate() {
