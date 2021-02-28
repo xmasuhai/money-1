@@ -3,9 +3,11 @@ import operateId from '@/lib/operateId';
 
 const tagStore = {
   namespace: true,
-  state: {
-    tagList: [],
-    currentTag: {},
+  state() {
+    return {
+      tagList: [],
+      currentTag: {},
+    };
   },
   mutations: {
     fetchTags(state: tagState) {

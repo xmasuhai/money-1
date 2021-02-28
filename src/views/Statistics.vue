@@ -1,12 +1,11 @@
 <template>
   <Layout class="statistics">
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
-    <Tabs class-prefix="interval" :data-source="intervalList" :type.sync="interval" tabs-height="48px"/>
     <ol>
-      <li v-for="(value, name, index) in result" :key="name + index">
-        <h3 class="title">{{ showDay(value.title) }}</h3>
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3 class="title">{{ showDay(group.title) }}</h3>
         <ol>
-          <li class="record" v-for="item in value.items" :key="item.id">
+          <li class="record" v-for="item in group.items" :key="item.id">
             <span class="recordTag">{{ tagToString(item.tags) }}</span>
             <div class="notes">
               <span class="tips">备注：</span><span class="text">{{ item.tips }}</span>
@@ -24,16 +23,17 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList.ts';
-import intervalList from '@/constants/intervalList.ts';
 import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import clone from '@/lib/clone.ts';
+
+dayjs.locale('zh-cn');
 
 @Component({
   components: {Tabs},
 })
 export default class Statistics extends Vue {
   type = '-';
-  interval = 'day';
-  intervalList = intervalList;
   recordTypeList = recordTypeList;
 
   beforeCreate() {
@@ -44,24 +44,34 @@ export default class Statistics extends Vue {
     return this.$store.state.recordStore.recordList;
   }
 
-  get result() {
-    /*
-    * [
-    *   {title, items},
-    *   {title, items},
-    *   {title, items},
-    * ]
-    *
-    * */
+  get groupedList() {
     const {recordList} = this;
-    type HashTableValue = { title: string; items: RecordItem[] };
-    const hashTable: { [HashTableKey: string]: HashTableValue } = {};
-    for (let i = 0; i < recordList.length; i++) {
-      const [date,] = recordList[i].createdAt.split('T');
-      hashTable[date] = hashTable[date] || {title: date, items: []};
-      hashTable[date].items.push(recordList[i]);
+    if (recordList.length === 0) {return [];}
+    type groupedType = { title: string; items: RecordItem[] };
+    // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
+    const newList = clone(recordList).sort((a: RecordItem, b: RecordItem) => (
+        dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+    ));
+    // 排序后的第一项 newList[0] 处理后 作为初始项
+    const result: groupedType[] = [{
+      title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'),
+      items: [newList[0],]
+    }];
+    // 判断 newList[i] 从第二项开始的每一项的title: '20XX-XX-XX'  是否符合当前 分组项
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i]; // 当前项
+      const lastGroupItem = result[result.length - 1]; // 分组数据的最后一项
+      const localDay = dayjs(current.createdAt.split('T')[0]);
+      if (dayjs(lastGroupItem.title).isSame(localDay, 'day')) {
+        lastGroupItem.items.push(current);
+      } else {
+        result.push({
+          title: localDay.format('YYYY-MM-DD'),
+          items: [current]
+        });
+      }
     }
-    return hashTable;
+    return result;
   }
 
   tagToString(tags: Tag[]) {
@@ -73,9 +83,9 @@ export default class Statistics extends Vue {
   }
 
   showDay(someday: string) {
-    const now = dayjs();
+    const now = dayjs(new Date());
     const thatDay = dayjs(someday);
-    if (dayjs(someday).isSame(now, 'day')) {
+    if (thatDay.isSame(now, 'day')) {
       return '今天';
     } else if (thatDay.isSame(now.subtract(1, 'day'), 'day')) {
       return '昨天';
