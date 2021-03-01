@@ -3,7 +3,7 @@
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <ol>
       <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{ showDay(group.title) }}</h3>
+        <h3 class="title">{{ showDay(group.title) }} <span> ￥{{ group.total }}</span></h3>
         <ol>
           <li class="record" v-for="item in group.items" :key="item.id">
             <span class="recordTag">{{ tagToString(item.tags) }}</span>
@@ -47,11 +47,13 @@ export default class Statistics extends Vue {
   get groupedList() {
     const {recordList} = this;
     if (recordList.length === 0) {return [];}
-    type groupedType = { title: string; items: RecordItem[] };
+    type groupedType = { title: string; total?: number; items: RecordItem[] };
     // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
-    const newList = clone(recordList).sort((a: RecordItem, b: RecordItem) => (
-        dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
-    ));
+    const newList = clone(recordList)
+        .filter((r: RecordItem) => r.type === this.type)
+        .sort((a: RecordItem, b: RecordItem) => (
+            dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+        ));
     // 排序后的第一项 newList[0] 处理后 作为初始项
     const result: groupedType[] = [{
       title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'),
@@ -71,6 +73,11 @@ export default class Statistics extends Vue {
         });
       }
     }
+    // result.group.items: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
+    result.map(group => {
+      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+    });
+    console.log(result[0].items[0].amount);
     return result;
   }
 

@@ -26,7 +26,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Numpad extends Vue {
-  @Prop() readonly value!: number;
+  @Prop(Number) readonly value!: number;
   output = this.value.toString();
 
   inputNum(event: TouchEvent) {
@@ -72,8 +72,9 @@ export default class Numpad extends Vue {
 
   confirmNum() {
     // send prop to Tags
-    this.$emit('update:value', this.output);
-    this.$emit('submit', this.output);
+    const number = parseFloat(this.output);
+    this.$emit('update:value', number);
+    this.$emit('submit', number);
     // recover
     this.output = '0';
   }
