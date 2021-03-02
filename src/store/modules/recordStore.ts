@@ -7,7 +7,8 @@ const recordStore = {
   state() {
     return {
       recordList: [],
-      localTimeStamp: ''
+      localTimeStamp: '',
+      createRecordError: null
     };
   },
   mutations: {

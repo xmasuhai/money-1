@@ -43,12 +43,15 @@ export default class Money extends Vue {
     this.record.tips = value;
   }
 
-  pickTags(selectedTags: {id: string; name: string }[]) {
+  pickTags(selectedTags: { id: string; name: string }[]) {
     this.record.tags = selectedTags;
   }
 
   saveRecord() {
     this.$store.commit('createRecord', this.record);
+    if (this.$store.state.createRecordError === null) {
+      window.alert('已保存');
+    }
   }
 }
 </script>

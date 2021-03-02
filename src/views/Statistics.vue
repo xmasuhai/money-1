@@ -46,8 +46,8 @@ export default class Statistics extends Vue {
 
   get groupedList() {
     const {recordList} = this;
-    if (recordList.length === 0) {return [];}
     type groupedType = { title: string; total?: number; items: RecordItem[] };
+    if (recordList.length === 0) {return [] as groupedType[];}
     // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
     const newList = clone(recordList)
         .filter((r: RecordItem) => r.type === this.type)
@@ -77,7 +77,6 @@ export default class Statistics extends Vue {
     result.map(group => {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
     });
-    console.log(result[0].items[0].amount);
     return result;
   }
 

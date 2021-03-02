@@ -7,25 +7,42 @@ const tagStore = {
     return {
       tagList: [],
       currentTag: {},
+      isDefault: false
     };
   },
   mutations: {
+    getDefaultTags() {
+      ['衣', '食', '住', '行'].forEach((tagName) => {
+        store.commit('createTag', tagName);
+        }
+      );
+    },
     fetchTags(state: tagState) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') ?? '[]');
+      if (!state.tagList || state.tagList.length === 0) {
+        store.commit('getDefaultTags');
+      }
     },
     saveTags(state: tagState) {
       localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
     createTag(state: tagState, name: string) {
-      const names = state.tagList.map(d => d.name);
+      const names = state.tagList.map(tag => tag.name);
       if (names.indexOf(name) >= 0) {
-        window.alert('标签名重复了');
+        return window.alert('标签名重复了');
       }
       const id = operateId.createId().toString();
       state.tagList.push({id, name});
       store.commit('saveTags');
-      window.alert('添加成功');
-      // return 'success';
+      console.log(names);
+      if (names.length === 0) {
+        state.isDefault = true;
+        return window.alert('已还原默认标签');
+      } else if (state.isDefault) {
+        return;
+      } else {
+        return window.alert('添加成功');
+      }
     },
     removeTag(state: tagState, id: string) {
       let index = -1;
@@ -39,7 +56,7 @@ const tagStore = {
         state.tagList.splice(index, 1);
         store.commit('saveTags');
       } else {
-        window.alert('删除失败');
+        return window.alert('删除失败');
       }
     },
     updateTag(state: tagState, tag: { id: string; name: string }) {
@@ -48,7 +65,7 @@ const tagStore = {
       if (idList.indexOf(id) >= 0) {
         const nameList = state.tagList.map(item => item.name);
         if (nameList.indexOf(name) >= 0) {
-          window.alert('标签名重复类');
+          return window.alert('标签名重复了');
         } else {
           const tagItem = state.tagList.filter(item => item.id === id)[0];
           tagItem.name = name;

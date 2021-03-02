@@ -9,19 +9,14 @@ type Tag = {
   id: string;
   name: string;
 }
-type RootState = {
-  tagList: Tag[];
-  recordList: RecordItem[];
-  currentTag?: Tag;
-  localTimeStamp: string;
-}
-type DataSource = { text: string; type: string }
-
 type tagState = {
   tagList: Tag[];
   currentTag: Tag;
+  isDefault: boolean;
 }
 type recordState = {
   recordList: RecordItem[];
   localTimeStamp: string;
+  createRecordError?: Error | null;
 }
+type DataSource = { text: string; type: string }
