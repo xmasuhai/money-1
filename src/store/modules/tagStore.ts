@@ -14,13 +14,13 @@ const tagStore = {
     getDefaultTags() {
       ['衣', '食', '住', '行'].forEach((tagName) => {
         store.commit('createTag', tagName);
-        }
-      );
+      });
     },
     fetchTags(state: tagState) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') ?? '[]');
       if (!state.tagList || state.tagList.length === 0) {
         store.commit('getDefaultTags');
+        state.isDefault = false;
       }
     },
     saveTags(state: tagState) {
@@ -31,14 +31,16 @@ const tagStore = {
       if (names.indexOf(name) >= 0) {
         return window.alert('标签名重复了');
       }
+      if (names.length === 0) {
+        state.isDefault = true;
+        operateId.clearId();
+        window.alert('已还原默认标签');
+      }
       const id = operateId.createId().toString();
       state.tagList.push({id, name});
       store.commit('saveTags');
-      console.log(names);
-      if (names.length === 0) {
-        state.isDefault = true;
-        return window.alert('已还原默认标签');
-      } else if (state.isDefault) {
+
+      if (state.isDefault) {
         return;
       } else {
         return window.alert('添加成功');
