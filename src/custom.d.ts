@@ -20,3 +20,4 @@ type recordState = {
   createRecordError?: Error | null;
 }
 type DataSource = { text: string; type: string }
+type groupedType = { title: string; total?: number; items: RecordItem[] };

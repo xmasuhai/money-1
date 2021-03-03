@@ -77,6 +77,7 @@ export default class Numpad extends Vue {
     this.$emit('submit', number);
     // recover
     this.output = '0';
+    this.$emit('update:Tips', '');
   }
 
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {

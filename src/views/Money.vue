@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     <Tags @update:selectedTags="pickTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
-              @update:inputValue="onUpdateTips"/>
+              @update:inputValue="onUpdateTips" :value="record.tips"/>
     <Tabs :data-source="recordTypeList" :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
             @submit="saveRecord"/>
@@ -43,14 +43,18 @@ export default class Money extends Vue {
     this.record.tips = value;
   }
 
-  pickTags(selectedTags: { id: string; name: string }[]) {
+  pickTags(selectedTags: Tag[]) {
     this.record.tags = selectedTags;
   }
 
   saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
     if (this.$store.state.recordStore.createRecordError === null) {
       window.alert('已保存');
+      this.record.tips = '';
     }
   }
 }
