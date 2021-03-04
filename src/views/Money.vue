@@ -1,8 +1,8 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags @update:selectedTags="pickTags"/>
+    <Tags ref="aTag" @update:selectedTags="pickTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
-              @update:inputValue="onUpdateTips" :value="record.tips"/>
+              :inputValue.sync="record.tips"/>
     <Tabs :data-source="recordTypeList" :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
             @submit="saveRecord"/>
@@ -37,10 +37,6 @@ export default class Money extends Vue {
 
   get recordList() {
     return this.$store.state.recordStore.recordList as RecordItem[];
-  }
-
-  onUpdateTips(value: string) {
-    this.record.tips = value;
   }
 
   pickTags(selectedTags: Tag[]) {
