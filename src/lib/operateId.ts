@@ -5,7 +5,6 @@ const operateId = {
     window.localStorage.setItem('_idMax', this.id.toString());
   },
   createId() {
-    console.log(this.id);
     this.id += 1;
     window.localStorage.setItem('_idMax', this.id.toString());
     return this.id;
