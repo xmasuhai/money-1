@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <router-view></router-view>
+<!--
+    <img v-if="showQRCode()" src="@/public/img/qrcode.png" alt="QRCode">
+    -->
   </div>
 </template>
 
@@ -9,7 +12,12 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
 @Component
-export default class App extends Vue {}
+export default class App extends Vue {
+  showQRCode() {
+    console.log('ddd');
+    return document.documentElement.clientWidth > 500
+  }
+}
 </script>
 
 <style lang="scss">
