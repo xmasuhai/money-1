@@ -17,8 +17,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tabs extends Vue {
-  @Prop({required: true, type: Array})
-  dataSource!: DataSource[];
+  @Prop({required: true, type: Array}) dataSource!: DataSource[];
   @Prop(String) readonly type!: string;
   @Prop(String) classPrefix?: string;
   @Prop({type: String, default: '64px'}) tabsHeight!: string;

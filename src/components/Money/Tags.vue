@@ -10,19 +10,20 @@
     </ul>
     <div class="new">
       <button @click="createTag">添加新标签</button>
-      <br>
-      <button @click="clearSelectedTag">消除选中标签</button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {Component,} from 'vue-property-decorator';
+import {Component, Prop, Watch,} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import tagHelper from '@/mixins/tagHelper.ts';
 
 @Component
 export default class Tags extends mixins(tagHelper) {
+  @Prop(Boolean) isDeselectTags!: boolean;
+
   selectedTags: Tag[] = [];
+
   created() {
     this.$store.commit('fetchTags');
   }
@@ -31,7 +32,7 @@ export default class Tags extends mixins(tagHelper) {
     return this.$store.state.tagStore.tagList;
   }
 
-  // 将点击的标签 推入数组/从数组中删除 并发布套父组件
+  // 将点击的标签 推入数组/从数组中删除 并发布给父组件
   toggle(tag: Tag) {
     const index = this.selectedTags.map(i => i.id).indexOf(tag.id);
     if (index >= 0) {
@@ -41,8 +42,12 @@ export default class Tags extends mixins(tagHelper) {
     }
     this.$emit('update:selectedTags', this.selectedTags);
   }
-  clearSelectedTag() {
-    this.selectedTags = [];
+
+  @Watch('isDeselectTags')
+  deselectTag() {
+    if(this.isDeselectTags) {
+      this.selectedTags = [];
+    }
   }
 }
 </script>

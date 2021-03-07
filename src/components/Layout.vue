@@ -10,21 +10,15 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import hideMenuBar from '@/lib/hideMenuBar';
 
 @Component
 export default class Money extends Vue {
   @Prop(String) ['classPrefix']: string;
 
   mounted() {
-    if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
-      const bodyTag = document.getElementsByTagName('body')[0];
-      bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px';
-    }
-
     window.onload = () => {
-      setTimeout(() => {
-        window.scrollTo(0, window.document.body.offsetHeight);
-      }, 16);
+      hideMenuBar();
     };
   }
 }

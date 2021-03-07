@@ -1,11 +1,12 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags ref="aTag" @update:selectedTags="pickTags"/>
+    <Tags @update:selectedTags="pickTags" :is-deselect-tags="emptyTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
               :inputValue.sync="record.tips"/>
     <Tabs :data-source="recordTypeList" :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
-            @submit="saveRecord"/>
+            @submit="saveRecord"
+            @update:deselectTags="deselectTags"/>
   </Layout>
 </template>
 
@@ -17,6 +18,7 @@ import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList.ts';
+import hideMenuBar from '@/lib/hideMenuBar';
 
 @Component({
   components: {Tabs, FormItem, Tags, Numpad}
@@ -31,8 +33,14 @@ export default class Money extends Vue {
   };
   recordTypeList = recordTypeList;
 
+  emptyTags = false;
+
   created() {
     this.$store.commit('fetchRecords');
+  }
+
+  updated() {
+    hideMenuBar();
   }
 
   get recordList() {
@@ -40,7 +48,15 @@ export default class Money extends Vue {
   }
 
   pickTags(selectedTags: Tag[]) {
+    this.emptyTags = false;
     this.record.tags = selectedTags;
+  }
+
+  deselectTags(deselect: boolean) {
+    if (deselect) {
+      this.record.tags = [];
+      this.emptyTags = true;
+    }
   }
 
   saveRecord() {
