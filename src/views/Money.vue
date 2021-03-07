@@ -8,7 +8,8 @@
           :type.sync="record.type"/>
     <Numpad :amount.sync="record.amount"
             @submit="submit"
-            @update:deselectTags="deselectTags"/>
+            @update:deselectTags="deselectTags"
+            :is-reset="checkoutResult"/>
   </Layout>
 </template>
 
@@ -35,7 +36,7 @@ export default class Money extends Vue {
   };
 
   recordTypeList = recordTypeList;
-
+  checkoutResult = false;
   emptyTags = false;
 
   created() {
@@ -63,12 +64,13 @@ export default class Money extends Vue {
   }
 
   checkoutRecord() {
-    let checkoutResult = true;
+    this.checkoutResult = true;
     if (!this.record.tags || this.record.tags.length === 0) {
       this.alertInform('case2');
-      checkoutResult = false;
+      this.checkoutResult = false;
+      this.deselectTags(false);
     }
-    return checkoutResult;
+    return this.checkoutResult;
   }
 
   alertInform(caseName: 'case1' | 'case2') {

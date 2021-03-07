@@ -12,7 +12,8 @@
       <button @touchstart="inputNum">5</button>
       <button @touchstart="inputNum">6</button>
       <button @touchstart="clearNum">
-        <Icon name="C"/></button>
+        <Icon name="C"/>
+      </button>
       <button @touchstart="inputNum">7</button>
       <button @touchstart="inputNum">8</button>
       <button @touchstart="inputNum">9</button>
@@ -32,8 +33,9 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Numpad extends Vue {
   @Prop(Number) readonly amount!: number;
+  @Prop(Boolean) readonly isReset!: boolean;
 
-  output = this.amount.toString()
+  output = this.amount.toString();
 
   inputNum(event: TouchEvent) {
     const button = (event.target as HTMLButtonElement);
@@ -80,8 +82,17 @@ export default class Numpad extends Vue {
     const number = parseFloat(this.output);
     this.$emit('update:amount', number);
     this.$emit('submit');
-    this.output = '0';
-    this.$emit('update:deselectTags', true);
+    this.$nextTick(() => {
+      this.reset();
+    });
+  }
+
+  reset() {
+    if (this.isReset) {
+      this.output = '0';
+      this.$emit('update:deselectTags', true);
+    }
+    this.$emit('update:deselectTags', false);
   }
 
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
