@@ -33,7 +33,7 @@ export default class Numpad extends Vue {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent as string;
     // 显示的数字长短限制
-    if (this.output.length >= 11) {
+    if (this.output.length >= 15) {
       alert('别做白日梦啦');
       this.removeNum(event, -3);
       return;
@@ -62,7 +62,7 @@ export default class Numpad extends Vue {
   removeNum(event: TouchEvent, number = -1) {
     this.output = this.output.slice(0, number);
     if (this.output === '') {
-      this.output = '0';
+      this.clearNum();
     }
   }
 
@@ -75,9 +75,10 @@ export default class Numpad extends Vue {
     const number = parseFloat(this.output);
     this.$emit('update:value', number);
     this.$emit('submit', number);
-    // recover
+    // Initialize
     this.output = '0';
     this.$emit('update:deselectTags', true);
+    this.$emit('update:Initialize', true);
   }
 
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {

@@ -1,9 +1,11 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags @update:selectedTags="pickTags" :is-deselect-tags="emptyTags"/>
+    <Tags @update:selectedTags="pickTags"
+          :is-deselect-tags="emptyTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
               :inputValue.sync="record.tips"/>
-    <Tabs :data-source="recordTypeList" :type.sync="record.type"/>
+    <Tabs :data-source="recordTypeList"
+          :type.sync="record.type"/>
     <Numpad :value.sync="record.amount"
             @submit="saveRecord"
             @update:deselectTags="deselectTags"/>
@@ -58,16 +60,26 @@ export default class Money extends Vue {
       this.emptyTags = true;
     }
   }
+  checkoutRecord() {
+    let checkoutResult = true;
+    if (!this.record.tags || this.record.tags.length === 0) {
+      window.alert('请至少选择一个标签');
+      checkoutResult = false;
+    }
+    return checkoutResult;
+  }
 
   saveRecord() {
-    if (!this.record.tags || this.record.tags.length === 0) {
-      return window.alert('请至少选择一个标签');
+    if(!this.checkoutRecord()) {
+      return ;
     }
     this.$store.commit('createRecord', this.record);
+
     if (this.$store.state.recordStore.createRecordError === null) {
       window.alert('已保存');
-      this.record.tips = '';
     }
+
+    this.record.tips = '';
   }
 }
 </script>
