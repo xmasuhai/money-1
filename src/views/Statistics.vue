@@ -58,7 +58,7 @@ export default class Statistics extends Vue {
     if (newList.length === 0) {return [] as groupedType[];}
     // 排序后的第一项 newList[0] 处理后 作为初始项
     const result: groupedType[] = [{
-      title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'),
+      title: dayjs(newList[0].createdAt.split('T')[0]).format('YYYY-MM-DD'),
       items: [newList[0],]
     }];
     // 判断 newList[i] 从第二项开始的每一项的title: '20XX-XX-XX'  是否符合当前 分组项

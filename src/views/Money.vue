@@ -65,14 +65,18 @@ export default class Money extends Vue {
   checkoutRecord() {
     let checkoutResult = true;
     if (!this.record.tags || this.record.tags.length === 0) {
-      window.alert('请至少选择一个标签');
+      this.alertInform('case2');
       checkoutResult = false;
     }
     return checkoutResult;
   }
 
-  alertInform() {
-    window.alert('已保存');
+  alertInform(caseName: 'case1' | 'case2') {
+    const maps = {
+      case1: '已保存',
+      case2: '请至少选择一个标签',
+    };
+    window.alert(maps[caseName]);
   }
 
   saveRecord() {
@@ -92,7 +96,7 @@ export default class Money extends Vue {
     }
     this.saveRecord();
     if (this.$store.state.recordStore.createRecordError === null) {
-      this.alertInform();
+      this.alertInform('case1');
     }
     this.reset();
   }

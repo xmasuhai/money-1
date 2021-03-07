@@ -5,15 +5,20 @@
       <button @touchstart="inputNum">1</button>
       <button @touchstart="inputNum">2</button>
       <button @touchstart="inputNum">3</button>
-      <button @touchstart="removeNum">删除</button>
+      <button @touchstart="removeNum">
+        <Icon name="delete"/>
+      </button>
       <button @touchstart="inputNum">4</button>
       <button @touchstart="inputNum">5</button>
       <button @touchstart="inputNum">6</button>
-      <button @touchstart="clearNum">清空</button>
+      <button @touchstart="clearNum">
+        <Icon name="C"/></button>
       <button @touchstart="inputNum">7</button>
       <button @touchstart="inputNum">8</button>
       <button @touchstart="inputNum">9</button>
-      <button @touchstart="confirmNum" class="ok">OK</button>
+      <button @touchstart="confirmNum" class="ok">
+        <Icon name="ok"/>
+      </button>
       <button @touchstart="inputNum" class="zero">0</button>
       <button @touchstart="inputNum">.</button>
     </div>
@@ -75,7 +80,6 @@ export default class Numpad extends Vue {
     const number = parseFloat(this.output);
     this.$emit('update:amount', number);
     this.$emit('submit');
-    // inform Parent saveRecord
     this.output = '0';
     this.$emit('update:deselectTags', true);
   }
@@ -130,6 +134,10 @@ export default class Numpad extends Vue {
       background: transparent;
       border: 2px solid transparent;
       transition: border-color .25s;
+      > .icon {
+        width: 32px;
+        height: 32px;
+        }
       &:hover {
         border-color: #ccc;
         }
