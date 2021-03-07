@@ -6,8 +6,8 @@
               :inputValue.sync="record.tips"/>
     <Tabs :data-source="recordTypeList"
           :type.sync="record.type"/>
-    <Numpad :value.sync="record.amount"
-            @submit="saveRecord"
+    <Numpad :amount.sync="record.amount"
+            @submit="submit"
             @update:deselectTags="deselectTags"/>
   </Layout>
 </template>
@@ -33,6 +33,7 @@ export default class Money extends Vue {
     amount: 0,
     createdAt: new Date().toISOString(),
   };
+
   recordTypeList = recordTypeList;
 
   emptyTags = false;
@@ -60,6 +61,7 @@ export default class Money extends Vue {
       this.emptyTags = true;
     }
   }
+
   checkoutRecord() {
     let checkoutResult = true;
     if (!this.record.tags || this.record.tags.length === 0) {
@@ -69,17 +71,30 @@ export default class Money extends Vue {
     return checkoutResult;
   }
 
+  alertInform() {
+    window.alert('已保存');
+  }
+
   saveRecord() {
-    if(!this.checkoutRecord()) {
-      return ;
-    }
     this.$store.commit('createRecord', this.record);
+  }
 
-    if (this.$store.state.recordStore.createRecordError === null) {
-      window.alert('已保存');
-    }
-
+  reset() {
     this.record.tips = '';
+    this.record.tags = [];
+    this.record.type = '+';
+    this.record.amount = 0;
+  }
+
+  submit() {
+    if (!this.checkoutRecord()) {
+      return;
+    }
+    this.saveRecord();
+    if (this.$store.state.recordStore.createRecordError === null) {
+      this.alertInform();
+    }
+    this.reset();
   }
 }
 </script>

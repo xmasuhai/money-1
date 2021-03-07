@@ -47,6 +47,7 @@ export default class Tags extends mixins(tagHelper) {
   deselectTag() {
     if(this.isDeselectTags) {
       this.selectedTags = [];
+      this.$emit('update:selectedTags', this.selectedTags);
     }
   }
 }

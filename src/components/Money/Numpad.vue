@@ -26,8 +26,9 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Numpad extends Vue {
-  @Prop(Number) readonly value!: number;
-  output = this.value.toString();
+  @Prop(Number) readonly amount!: number;
+
+  output = this.amount.toString()
 
   inputNum(event: TouchEvent) {
     const button = (event.target as HTMLButtonElement);
@@ -71,14 +72,12 @@ export default class Numpad extends Vue {
   }
 
   confirmNum() {
-    // send prop to Tags
     const number = parseFloat(this.output);
-    this.$emit('update:value', number);
-    this.$emit('submit', number);
-    // Initialize
+    this.$emit('update:amount', number);
+    this.$emit('submit');
+    // inform Parent saveRecord
     this.output = '0';
     this.$emit('update:deselectTags', true);
-    this.$emit('update:Initialize', true);
   }
 
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
@@ -120,11 +119,6 @@ export default class Numpad extends Vue {
     grid-gap: 1px;
     height: 256px;
     overflow: hidden;
-    grid-template-areas:
-     '1 2 3 delete'
-     '4 5 6 clear'
-     '7 8 9 ok'
-     'point point point ok';
     justify-items: stretch;
     align-items: stretch;
     &:hover {
