@@ -7,7 +7,8 @@ const tagStore = {
     return {
       tagList: [],
       currentTag: {},
-      isDefault: false
+      isDefault: false,
+      createTagError: null
     };
   },
   mutations: {
@@ -28,9 +29,10 @@ const tagStore = {
       localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
     createTag(state: tagState, name: string) {
+      state.createTagError = null;
       const names = state.tagList.map(tag => tag.name);
       if (names.indexOf(name) >= 0) {
-        return window.alert('标签名重复了');
+        return state.createTagError = new Error('tag name duplicated');
       }
       if (names.length === 0) {
         window.alert('已还原默认标签');

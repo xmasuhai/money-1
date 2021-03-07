@@ -13,6 +13,7 @@ type tagState = {
   tagList: Tag[];
   currentTag: Tag;
   isDefault: boolean;
+  createTagError: Error | null;
 }
 type recordState = {
   recordList: RecordItem[];
