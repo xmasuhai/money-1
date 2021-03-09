@@ -125,6 +125,11 @@ export default class Statistics extends Vue {
     }
 
   ::v-deep {
+    .headerBar {
+      > .left-icon {
+        transform: rotate3d(0, 1, 0, 180deg);
+        }
+      }
     .type-tabs-item {
       background: #fff;
       position: relative;

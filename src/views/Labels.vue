@@ -40,6 +40,11 @@ export default class Labels extends mixins(tagHelper) {
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
 .labels {
+  ::v-deep {
+    .headerBar {
+      flex-direction: row-reverse;
+      }
+    }
   .tags {
     background: white;
     font-size: 16px;

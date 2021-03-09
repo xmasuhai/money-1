@@ -36,7 +36,6 @@ export default class HeaderBar extends Vue {
 
   @extend %tag-shadow;
   > .left-icon {
-    transform: rotate3d(0, 1, 0, 180deg);
     color: #666;
     font-size: 24px;
     }

@@ -50,6 +50,7 @@ export default class EditLabel extends Vue {
       this.goBack();
     }
   }
+
   goBack() {
     this.$router.back();
   }
@@ -58,26 +59,11 @@ export default class EditLabel extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
-.headerBar {
-  text-align: center;
-  font-size: 16px;
-  padding: 12px 16px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  > .left-icon {
-    transform: rotate3d(0, 1, 0, 180deg);
-    color: #666;
-    font-size: 24px;
-    }
-  > .title {
-    }
-  &::after {
-    content: '';
-    display: inline;
-    width: 24px;
-    height: 24px;
+::v-deep {
+  .headerBar {
+    > .left-icon {
+      transform: rotate3d(0, 1, 0, 180deg);
+      }
     }
   }
 .form-item {
