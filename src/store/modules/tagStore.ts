@@ -35,7 +35,7 @@ const tagStore = {
         return state.createTagError = new Error('tag name duplicated');
       }
       if (names.length === 0) {
-        window.alert('已还原默认标签');
+        window.alert('初始化默认标签');
         operateId.clearId();
       }
       const id = operateId.createId().toString();
