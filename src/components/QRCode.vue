@@ -1,8 +1,8 @@
 <template>
-  <div class="mask" ref="mask"
+  <div class="mask"
        @click="mask()"
        @touchmove.prevent
-       :style="{'display':flag?'block':'none'}">
+       :style="{'display':riseFlag?'block':'none'}">
     <div class="floatParts">
       <img src="../assets/qrcode.png" alt="QECode" class="qrcode"/>
       <span class="tipsText">请使用手机扫码打开</span>
@@ -17,9 +17,21 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class QRCode extends Vue {
   flag = true;
+  flagOff = false;
+
+  get riseFlag() {
+    if (document.documentElement.clientWidth > 500 && !this.flagOff) {
+      this.flag = true;
+    } else if (this.flagOff) {
+      this.flag = false;
+    } else {
+      this.flag = false;
+    }
+    return this.flag;
+  }
 
   mask() {
-    this.flag = false;
+    this.flagOff = true;
   }
 }
 </script>
