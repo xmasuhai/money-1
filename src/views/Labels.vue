@@ -1,5 +1,6 @@
 <template>
   <Layout class="labels">
+    <header-bar :headerTitle="'标签'"></header-bar>
     <ul class="tags">
       <li v-for="tag in tags" :key="tag.id">
         <router-link class="tag" :to="`/labels/edit/${tag.id}`">
@@ -19,9 +20,10 @@ import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import Button from '@/components/Button.vue';
 import tagHelper from '@/mixins/tagHelper.ts';
+import HeaderBar from '@/components/HeaderBar.vue';
 
 @Component({
-  components: {Button}
+  components: {HeaderBar, Button}
 })
 
 export default class Labels extends mixins(tagHelper) {

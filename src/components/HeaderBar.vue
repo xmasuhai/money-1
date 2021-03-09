@@ -1,0 +1,53 @@
+<template>
+  <div class="headerBar">
+    <Icon v-if="hasIcon"
+          class="left-icon" name="money_right"
+          @click.native="goBack"/>
+    <span class="title">{{ headerTitle }}</span>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class HeaderBar extends Vue {
+  @Prop({required: true, default: ''}) headerTitle!: string;
+  @Prop({default: true}) hasIcon!: true;
+
+  goBack() {
+    this.$router.back();
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "~@/assets/style/global.scss";
+.headerBar {
+  text-align: center;
+  font-size: 16px;
+  padding: 12px 16px;
+  margin-bottom: 2px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @extend %tag-shadow;
+  > .left-icon {
+    transform: rotate3d(0, 1, 0, 180deg);
+    color: #666;
+    font-size: 24px;
+    }
+  > .title {
+    flex-grow: 1;
+    }
+  &::after {
+    content: '';
+    display: inline;
+    width: 24px;
+    height: 24px;
+    }
+  }
+</style>

@@ -1,9 +1,6 @@
 <template>
   <Layout>
-    <div class="headerBar">
-      <Icon class="left-icon" name="money_right" @click.native="goBack"/>
-      <span class="title">编辑标签</span>
-    </div>
+    <header-bar :header-title="'编辑标签'"></header-bar>
     <FormItem :inputValue="currentTag.name"
               @update:inputValue="update"
               class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
@@ -18,9 +15,10 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import HeaderBar from '@/components/HeaderBar.vue';
 
 @Component({
-  components: {Button, FormItem}
+  components: {HeaderBar, Button, FormItem}
 })
 export default class EditLabel extends Vue {
   get currentTag() {

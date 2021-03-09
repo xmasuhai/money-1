@@ -1,5 +1,6 @@
 <template>
   <Layout class="statistics">
+    <HeaderBar :header-title="'统计'"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -25,6 +26,7 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
+import HeaderBar from '@/components/HeaderBar.vue';
 import recordTypeList from '@/constants/recordTypeList.ts';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
@@ -33,9 +35,10 @@ import clone from '@/lib/clone.ts';
 dayjs.locale('zh-cn');
 
 @Component({
-  components: {Tabs},
+  components: {HeaderBar, Tabs},
 })
 export default class Statistics extends Vue {
+
   type = '-';
   recordTypeList = recordTypeList;
 
@@ -117,9 +120,10 @@ export default class Statistics extends Vue {
     line-height: 24px;
     //min-height: 40px;
     display: flex;
-    justify-content: space-between;;
+    justify-content: space-between;
     align-items: center;
     }
+
   ::v-deep {
     .type-tabs-item {
       background: #fff;
@@ -131,10 +135,8 @@ export default class Statistics extends Vue {
           }
         }
       }
-    .interval-tabs-item {
-      // height: 48px;
-      }
     }
+
   .title {
     @extend %item;
     }

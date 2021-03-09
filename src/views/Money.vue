@@ -1,5 +1,6 @@
 <template>
   <Layout class-prefix="layout">
+    <HeaderBar :header-title="'记账'" :hasIcon="false"></HeaderBar>
     <Tags @update:selectedTags="pickTags"
           :is-deselect-tags="emptyTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
@@ -15,6 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import HeaderBar from '@/components/HeaderBar.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
@@ -24,7 +26,7 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 import hideMenuBar from '@/lib/hideMenuBar';
 
 @Component({
-  components: {Tabs, FormItem, Tags, Numpad}
+  components: {HeaderBar, Tabs, FormItem, Tags, Numpad}
 })
 export default class Money extends Vue {
   record: RecordItem = {
@@ -109,6 +111,14 @@ export default class Money extends Vue {
 ::v-deep .layout-content {
   display: flex;
   flex-direction: column;
+  }
+::v-deep .headerBar {
+  &::before {
+    content: '';
+    display: inline;
+    width: 24px;
+    height: 24px;
+    }
   }
 .form-item {
   padding: 6px 0;
