@@ -2,21 +2,27 @@
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
     <div class="buttons" @mousemove="showMask">
-      <button @touchstart="inputNum">1</button>
-      <button @touchstart="inputNum">2</button>
-      <button @touchstart="inputNum">3</button>
-      <button @touchstart="removeNum">
-        <Icon name="delete"/>
+      <button v-for="(item, index) in numPadText.numPadText123"
+              :data-index="index"
+              :key="item.id"
+              @[clientEvent]="inputNum">
+        {{ item.text }}
+        <Icon v-if="item.name !== 'num'"
+              name='delete'/>
       </button>
-      <button @touchstart="inputNum">4</button>
-      <button @touchstart="inputNum">5</button>
-      <button @touchstart="inputNum">6</button>
+      <button v-for="(item, index) in numPadText.numPadText456"
+              :data-index="index"
+              :key="item.id"
+              @touchstart="inputNum">{{ item.text }}
+      </button>
       <button @touchstart="clearNum">
-        <Icon name="C"/>
+        <Icon name="Clear"/>
       </button>
-      <button @touchstart="inputNum">7</button>
-      <button @touchstart="inputNum">8</button>
-      <button @touchstart="inputNum">9</button>
+      <button v-for="(item, index) in numPadText.numPadText789"
+              :data-index="index"
+              :key="item.id"
+              @touchstart="inputNum">{{ item.text }}
+      </button>
       <button @touchstart="confirmNum" class="ok">
         <Icon name="ok"/>
       </button>
@@ -32,14 +38,60 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Numpad extends Vue {
+
   @Prop(Number) readonly amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
 
+  eventName = 'click';
   output = this.amount.toString();
 
+  get clientEvent() {
+    if (document.documentElement.clientWidth > 500 ) {
+      console.log('PC');
+      this.eventName = 'click'
+    }else {
+      console.log('Mobile');
+      this.eventName = 'touchStart'
+    }
+    return this.eventName;
+  }
+
+  // TODO 待优化重构
+  numPadText = {
+    numPadText123: [
+      {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
+      {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
+      {id: '3', text: '3', name: 'num', bundleEvent: 'inputNum'},
+      {id: 'delete', text: '', name: 'delete', bundleEvent: 'removeNum'},
+    ],
+    numPadText456: [
+      {id: '4', text: '4'},
+      {id: '5', text: '5'},
+      {id: '6', text: '6'},
+    ],
+    numPadText789: [
+      {id: '7', text: '7'},
+      {id: '8', text: '8'},
+      {id: '9', text: '9'},
+    ],
+  };
+
+/*
+  buttonFn(event: TouchEvent, name: 'num' | 'delete' | 'clear') {
+    const fnMap = {
+      num: this.inputNum(event),
+      delete: this.removeNum(event, -1),
+      clear: this.clearNum()
+    };
+    return fnMap[name];
+  }
+*/
+
+
   inputNum(event: TouchEvent) {
+    console.log('HI');
     const button = (event.target as HTMLButtonElement);
-    const input = button.textContent as string;
+    const input = button.textContent?.trim() as string;
     // 显示的数字长短限制
     if (this.output.length >= 15) {
       alert('别做白日梦啦');

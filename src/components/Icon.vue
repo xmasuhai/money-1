@@ -5,16 +5,6 @@
 </template>
 
 <script lang="ts">
-/*
-import Vue from "vue"
-import Component from "vue-class-component"
-*/
-
-/*
-const importAll = (requireContext) => {
-  requireContext.keys().forEach(requireContext)
-}
-*/
 
 const importAll = (requireContext: __WebpackModuleApi.RequireContext) => {
   requireContext.keys().forEach(requireContext);
@@ -30,10 +20,13 @@ try {
   console.log(error);
 }
 
-export default {
-  name: 'Icon',
-  props: ['name']
-};
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class Numpad extends Vue {
+  @Prop({default: ''}) ['name']: string;
+}
 </script>
 
 <style lang="scss" scoped>
