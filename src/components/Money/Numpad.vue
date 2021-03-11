@@ -1,7 +1,7 @@
 <template>
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
-    <div class="buttons" @mousemove="showMask">
+    <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
       <button v-for="(item, index) in numPadText.numPadText123"
               :data-index="index"
               :key="item.id"
@@ -147,26 +147,30 @@ export default class Numpad extends Vue {
     this.$emit('update:deselectTags', false);
   }
 
-
-  // TODO 待优化重构  不用 DOM 操作
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
     while (curEl !== parentEl) {
       curEl = curEl.parentElement as HTMLButtonElement;
     }
     return curEl;
   }
-
-  showMask(e: MouseEvent) {
+  searchlightPosition = {
+    x: 0,
+    y: 0
+  }
+  get searchlightStyle() {
+    return {
+      '--x-pos': this.searchlightPosition.x + 'px',
+      '--y-pos': this.searchlightPosition.y + 'px',
+    }
+  }
+  showSearchlight(e: MouseEvent) {
     let elem = e.target as HTMLButtonElement;
     const wrapper = document.querySelector('.buttons');
     if (e.target && elem !== wrapper) {
       elem = this.getParent(e.target as HTMLButtonElement, wrapper as HTMLElement);
     }
-    const x = e.clientX - elem.offsetLeft;
-    const y = e.clientY - elem.offsetTop;
-
-    document.documentElement.style.setProperty('--x-pos', x + 'px');
-    document.documentElement.style.setProperty('--y-pos', y + 'px');
+    this.searchlightPosition.x = e.clientX - elem.offsetLeft;
+    this.searchlightPosition.y = e.clientY - elem.offsetTop;
   }
 }
 </script>
