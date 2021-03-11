@@ -46,12 +46,12 @@ export default class Numpad extends Vue {
   output = this.amount.toString();
 
   get clientEvent() {
-    if (document.documentElement.clientWidth > 500 ) {
+    if (document.documentElement.clientWidth > 500) {
       console.log('PC');
-      this.eventName = 'click'
-    }else {
+      this.eventName = 'click';
+    } else {
       console.log('Mobile');
-      this.eventName = 'touchStart'
+      this.eventName = 'touchStart';
     }
     return this.eventName;
   }
@@ -76,16 +76,16 @@ export default class Numpad extends Vue {
     ],
   };
 
-/*
-  buttonFn(event: TouchEvent, name: 'num' | 'delete' | 'clear') {
-    const fnMap = {
-      num: this.inputNum(event),
-      delete: this.removeNum(event, -1),
-      clear: this.clearNum()
-    };
-    return fnMap[name];
-  }
-*/
+  /*
+    buttonFn(event: TouchEvent, name: 'num' | 'delete' | 'clear') {
+      const fnMap = {
+        num: this.inputNum(event),
+        delete: this.removeNum(event, -1),
+        clear: this.clearNum()
+      };
+      return fnMap[name];
+    }
+  */
 
 
   inputNum(event: TouchEvent) {
