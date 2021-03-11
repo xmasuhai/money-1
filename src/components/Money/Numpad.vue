@@ -56,7 +56,7 @@ export default class Numpad extends Vue {
     return this.eventName;
   }
 
-  // TODO 待优化重构
+  // TODO 待优化重构 使用事件代理
   numPadText = {
     numPadText123: [
       {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
@@ -87,7 +87,7 @@ export default class Numpad extends Vue {
     }
   */
 
-
+  // TODO 处理输入为 0 时的情况
   inputNum(event: TouchEvent) {
     console.log('HI');
     const button = (event.target as HTMLButtonElement);
@@ -147,6 +147,8 @@ export default class Numpad extends Vue {
     this.$emit('update:deselectTags', false);
   }
 
+
+  // TODO 待优化重构  不用 DOM 操作
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
     while (curEl !== parentEl) {
       curEl = curEl.parentElement as HTMLButtonElement;
