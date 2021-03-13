@@ -87,7 +87,6 @@ export default class Numpad extends Vue {
     }
   */
 
-  // TODO 处理输入为 0 时的情况
   inputNum(event: TouchEvent) {
     console.log('HI');
     const button = (event.target as HTMLButtonElement);
@@ -132,6 +131,10 @@ export default class Numpad extends Vue {
 
   confirmNum() {
     const number = parseFloat(this.output);
+    if (number === 0) {
+      this.$emit('checkZero');
+      return;
+    }
     this.$emit('update:amount', number);
     this.$emit('submit');
     this.$nextTick(() => {
@@ -153,16 +156,19 @@ export default class Numpad extends Vue {
     }
     return curEl;
   }
+
   searchlightPosition = {
     x: 0,
     y: 0
-  }
+  };
+
   get searchlightStyle() {
     return {
       '--x-pos': this.searchlightPosition.x + 'px',
       '--y-pos': this.searchlightPosition.y + 'px',
-    }
+    };
   }
+
   showSearchlight(e: MouseEvent) {
     let elem = e.target as HTMLButtonElement;
     const wrapper = document.querySelector('.buttons');

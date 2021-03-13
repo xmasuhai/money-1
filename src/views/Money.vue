@@ -10,6 +10,7 @@
     <Numpad :amount.sync="record.amount"
             @submit="submit"
             @update:deselectTags="deselectTags"
+            @checkZero="alertInform('case3')"
             :is-reset="checkoutResult"/>
   </Layout>
 </template>
@@ -75,10 +76,11 @@ export default class Money extends Vue {
     return this.checkoutResult;
   }
 
-  alertInform(caseName: 'case1' | 'case2') {
+  alertInform(caseName: 'case1' | 'case2' | 'case3') {
     const maps = {
       case1: '已保存',
       case2: '请至少选择一个标签',
+      case3: '金额为零，不计入'
     };
     window.alert(maps[caseName]);
   }
