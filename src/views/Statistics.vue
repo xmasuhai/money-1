@@ -58,6 +58,7 @@ export default class Statistics extends Vue {
         .sort((a: RecordItem, b: RecordItem) => (
             dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
         ));
+    // newList ?[] return
     if (newList.length === 0) {return [] as groupedType[];}
     // 排序后的第一项 newList[0] 处理后 作为初始项
     const result: groupedType[] = [{
