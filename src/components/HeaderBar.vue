@@ -17,7 +17,7 @@ export default class HeaderBar extends Vue {
   @Prop({required: true, default: ''}) headerTitle!: string;
   @Prop({default: true}) hasIcon!: true;
 
-  goBack(routerPath) {
+  goBack(routerPath: string) {
     this.$router.push({
       path: routerPath,
     });

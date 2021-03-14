@@ -29,7 +29,7 @@ export default class Money extends Vue {
   overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   .content {
     flex-grow: 1;
     overflow: auto;
