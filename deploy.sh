@@ -6,6 +6,9 @@ set -e
 # 构建
 yarn build
 
+# 复制 README.md
+cp ./README.md dist
+
 # cd 到构建输出的目录下
 cd dist
 
@@ -16,8 +19,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# 复制 README.md
-cp README.md dist
 
 # 部署到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
