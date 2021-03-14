@@ -1,3 +1,4 @@
+type TapEvent =  MouseEvent | TouchEvent;
 type RecordItem = {
   tags: Tag[];
   tips: string;

@@ -53,11 +53,11 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e: Event, bundleEvent: string) {
+  handleButtonFn(e: TapEvent, bundleEvent: string) {
     this[bundleEvent](e);
   }
 
-  inputNum(event: TouchEvent) {
+  inputNum(event: TapEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent?.trim() as string;
     // '0'开头的逻辑
@@ -87,7 +87,7 @@ export default class Numpad extends Vue {
     this.output += input;
   }
 
-  removeNum(event: TouchEvent, number = -1) {
+  removeNum(event: TapEvent, number = -1) {
     this.output = this.output.slice(0, number);
     if (this.output === '') {
       this.clearNum();
