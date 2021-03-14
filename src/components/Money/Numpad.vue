@@ -53,13 +53,13 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e, bundleEvent) {
+  handleButtonFn(e: Event, bundleEvent: string) {
     this[bundleEvent](e);
   }
 
   inputNum(event: TouchEvent) {
     const button = (event.target as HTMLButtonElement);
-    const input = button.textContent.trim() as string;
+    const input = button.textContent?.trim() as string;
     // '0'开头的逻辑
     if (this.output === '0') {
       if ('0123456789'.indexOf(input) >= 0) {

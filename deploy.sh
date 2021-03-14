@@ -16,6 +16,9 @@ git init
 git add -A
 git commit -m 'deploy'
 
+# 复制 README.md
+cp README.md dist
+
 # 部署到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
