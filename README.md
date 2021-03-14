@@ -1,7 +1,7 @@
 # 仿微信记账本
 
 - 用 Vue.js + TypeScript 写的一个仿微信记账本。
-- 网站：https://http://xmasuhai.xyz/meowney-0-website/#/
+- 网站：http://xmasuhai.xyz/meowney-0-website/#/
 
 ## 主要技术
 
