@@ -1,6 +1,6 @@
 <template>
   <Layout class="statistics">
-    <HeaderBar :header-title="'统计'"></HeaderBar>
+    <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">

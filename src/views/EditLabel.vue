@@ -1,6 +1,7 @@
 <template>
   <Layout>
-    <header-bar :header-title="'编辑标签'"></header-bar>
+    <header-bar router-path="/labels"
+                :header-title="'编辑标签'"></header-bar>
     <FormItem :inputValue="currentTag.name"
               @update:inputValue="update"
               class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>

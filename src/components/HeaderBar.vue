@@ -2,7 +2,7 @@
   <div class="headerBar">
     <Icon v-if="hasIcon"
           class="left-icon" name="money_right"
-          @click.native="goBack"/>
+          @click.native="goBack(routerPath)"/>
     <span class="title">{{ headerTitle }}</span>
   </div>
 </template>
@@ -13,11 +13,14 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class HeaderBar extends Vue {
+  @Prop({default: '/money'}) routerPath!: string;
   @Prop({required: true, default: ''}) headerTitle!: string;
   @Prop({default: true}) hasIcon!: true;
 
-  goBack() {
-    this.$router.back();
+  goBack(routerPath) {
+    this.$router.push({
+      path: routerPath,
+    });
   }
 }
 </script>

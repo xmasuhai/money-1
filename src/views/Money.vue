@@ -1,6 +1,7 @@
 <template>
   <Layout class-prefix="layout">
-    <HeaderBar :header-title="'记账'" :hasIcon="false"></HeaderBar>
+    <HeaderBar :header-title="'记账'"
+               :hasIcon="false"></HeaderBar>
     <Tags @update:selectedTags="pickTags"
           :is-deselect-tags="emptyTags"/>
     <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
