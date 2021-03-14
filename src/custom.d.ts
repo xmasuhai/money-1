@@ -1,4 +1,5 @@
 type TapEvent =  MouseEvent | TouchEvent;
+type BundleEventString = 'inputNum' | 'removeNum' | 'clearNum' | 'confirmNum';
 type RecordItem = {
   tags: Tag[];
   tips: string;

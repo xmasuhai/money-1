@@ -53,7 +53,7 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e: TapEvent, bundleEvent: string) {
+  handleButtonFn(e: TapEvent, bundleEvent: BundleEventString) {
     this[bundleEvent](e);
   }
 
