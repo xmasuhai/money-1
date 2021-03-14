@@ -2,32 +2,13 @@
   <div class="numpad">
     <div class="output">{{ output || '0' }}</div>
     <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
-      <button v-for="(item, index) in numPadText.numPadText123"
+      <button v-for="(item, index) in numPadText"
               :data-index="index"
               :key="item.id"
-              @[clientEvent]="inputNum">
-        {{ item.text }}
-        <Icon v-if="item.name !== 'num'"
-              name='delete'/>
+              @[clientEvent]="handleButtonFn($event, item.bundleEvent)"
+              :class="{ok: item.id === 'ok', zero: item.id === 'zero' }">{{ item.text }}
+        <Icon v-if="item.name !== 'num'" :name="item.id"/>
       </button>
-      <button v-for="(item, index) in numPadText.numPadText456"
-              :data-index="index"
-              :key="item.id"
-              @touchstart="inputNum">{{ item.text }}
-      </button>
-      <button @touchstart="clearNum">
-        <Icon name="Clear"/>
-      </button>
-      <button v-for="(item, index) in numPadText.numPadText789"
-              :data-index="index"
-              :key="item.id"
-              @touchstart="inputNum">{{ item.text }}
-      </button>
-      <button @touchstart="confirmNum" class="ok">
-        <Icon name="ok"/>
-      </button>
-      <button @touchstart="inputNum" class="zero">0</button>
-      <button @touchstart="inputNum">.</button>
     </div>
   </div>
 </template>
@@ -47,66 +28,48 @@ export default class Numpad extends Vue {
 
   get clientEvent() {
     if (document.documentElement.clientWidth > 500) {
-      console.log('PC');
       this.eventName = 'click';
     } else {
-      console.log('Mobile');
-      this.eventName = 'touchStart';
+      this.eventName = 'touchstart';
     }
     return this.eventName;
   }
 
   // TODO 待优化重构 使用事件代理
-  numPadText = {
-    numPadText123: [
-      {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
-      {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
-      {id: '3', text: '3', name: 'num', bundleEvent: 'inputNum'},
-      {id: 'delete', text: '', name: 'delete', bundleEvent: 'removeNum'},
-    ],
-    numPadText456: [
-      {id: '4', text: '4'},
-      {id: '5', text: '5'},
-      {id: '6', text: '6'},
-    ],
-    numPadText789: [
-      {id: '7', text: '7'},
-      {id: '8', text: '8'},
-      {id: '9', text: '9'},
-    ],
-  };
+  numPadText = [
+    {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
+    {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
+    {id: '3', text: '3', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'delete', text: '', name: 'delete', bundleEvent: 'removeNum'},
+    {id: '4', text: '4', name: 'num', bundleEvent: 'inputNum'},
+    {id: '5', text: '5', name: 'num', bundleEvent: 'inputNum'},
+    {id: '6', text: '6', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'clear', text: '', name: 'clear', bundleEvent: 'clearNum'},
+    {id: '7', text: '7', name: 'num', bundleEvent: 'inputNum'},
+    {id: '8', text: '8', name: 'num', bundleEvent: 'inputNum'},
+    {id: '9', text: '9', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'ok', text: '', name: 'ok', bundleEvent: 'confirmNum'},
+    {id: 'zero', text: '0', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
+  ];
 
-  /*
-    buttonFn(event: TouchEvent, name: 'num' | 'delete' | 'clear') {
-      const fnMap = {
-        num: this.inputNum(event),
-        delete: this.removeNum(event, -1),
-        clear: this.clearNum()
-      };
-      return fnMap[name];
-    }
-  */
+  handleButtonFn(e, bundleEvent) {
+    this[bundleEvent](e);
+  }
 
   inputNum(event: TouchEvent) {
-    console.log('HI');
     const button = (event.target as HTMLButtonElement);
-    const input = button.textContent?.trim() as string;
-    // 显示的数字长短限制
-    if (this.output.length >= 15) {
-      alert('别做白日梦啦');
-      this.removeNum(event, -3);
-      return;
-    }
+    const input = button.textContent.trim() as string;
     // '0'开头的逻辑
     if (this.output === '0') {
       if ('0123456789'.indexOf(input) >= 0) {
-        this.output = input;
-      } else { // '.'的逻辑
-        // 按数字位数 拼接 字符串
-        this.output += input;
+        return this.output = input;
+      } else {
+        // '.'的逻辑 // 按数字位数 拼接 字符串
+        return this.output += input;
       }
-      return;
     }
+
     // '.'开头的逻辑
     const dotIndex = this.output.indexOf('.');
     if (dotIndex >= 0) {
@@ -114,6 +77,12 @@ export default class Numpad extends Vue {
       if (input === '.') {return;}
       // '.'限制小数位 2位
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
+    }
+    // 限制显示数字长度
+    if (this.output.length >= 15) {
+      alert('别做白日梦啦');
+      this.removeNum(event, -3);
+      return;
     }
     this.output += input;
   }
@@ -123,10 +92,11 @@ export default class Numpad extends Vue {
     if (this.output === '') {
       this.clearNum();
     }
+    return;
   }
 
   clearNum() {
-    this.output = '0';
+    return this.output = '0';
   }
 
   confirmNum() {

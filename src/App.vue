@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <QRCode></QRCode>
+    <transition name="fade">
+      <QRCode></QRCode>
+    </transition>
   </div>
 </template>
 
