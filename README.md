@@ -1,7 +1,7 @@
-# Vue记账本
+# 喵内记账本
 
 - 用 Vue.js + TypeScript 写的一个仿微信记账本。
-- 网站：http://xmasuhai.xyz/meowney-0-website/#/
+- 网站：  [Gitee Pages](https://xmasuhai.gitee.io/meowne) 或者 [GitHub Pages](http://xmasuhai.xyz/meowney-0-website/#/)
 
 ## 主要技术
 
