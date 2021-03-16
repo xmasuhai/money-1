@@ -1,6 +1,7 @@
 const hideMenuBar = () => {
   setTimeout(() => {
-    window.scrollTo(0, 60);
+    window.scrollTo(0, 100);
   }, 0);
+
 };
 export default hideMenuBar;

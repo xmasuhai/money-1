@@ -4,8 +4,14 @@
                :hasIcon="false"></HeaderBar>
     <Tags @update:selectedTags="pickTags"
           :is-deselect-tags="emptyTags"/>
-    <FormItem class="form-item" field-name="备注" placeholder="在这里输入备注"
+    <FormItem class="form-item" field-name="备注"
+              placeholder="在这里输入备注"
               :inputValue.sync="record.tips"/>
+    <div class="createdAt">
+      <FormItem class="form-item" field-name="日期"
+                placeholder="在这里选择日期"
+                :inputValue.sync="record.createdAt"/>
+    </div>
     <Tabs :data-source="recordTypeList"
           :type.sync="record.type"/>
     <Numpad :amount.sync="record.amount"
@@ -25,7 +31,6 @@ import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList.ts';
-import hideMenuBar from '@/lib/hideMenuBar';
 
 @Component({
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad}
@@ -42,14 +47,6 @@ export default class Money extends Vue {
   recordTypeList = recordTypeList;
   checkoutResult = false;
   emptyTags = false;
-
-  created() {
-    this.$store.commit('fetchRecords');
-  }
-
-  updated() {
-    hideMenuBar();
-  }
 
   get recordList() {
     return this.$store.state.recordStore.recordList as RecordItem[];
@@ -111,16 +108,18 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .layout-content {
-  display: flex;
-  flex-direction: column;
-  }
-::v-deep .headerBar {
-  &::before {
-    content: '';
-    display: inline;
-    width: 24px;
-    height: 24px;
+::v-deep {
+  .layout-content {
+    display: flex;
+    flex-direction: column;
+    }
+  .headerBar {
+    &::before {
+      content: '';
+      display: inline;
+      width: 24px;
+      height: 24px;
+      }
     }
   }
 .form-item {
