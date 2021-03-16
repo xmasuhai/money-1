@@ -1,6 +1,6 @@
 <template>
   <div class="numpad">
-    <div class="output">{{ output || '0' }}</div>
+    <div class="output">{{ localOutput || '0.00' }}</div>
     <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
       <button v-for="(item, index) in numPadText"
               :data-index="index"
@@ -53,23 +53,39 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e: TapEvent, bundleEvent: BundleEventString) {
-    this[bundleEvent](e);
+  handleButtonFn(e: TapEvent, bundleEvent: string) {
+    this[bundleEvent as BundleEventString](e);
+  }
+
+  // TODO 处理 0.0x 0.x xx.0x
+  get localOutput() {
+    if (['0.00', '0.0', '0'].indexOf(this.output) !== -1) {
+      return this.output;
+    }
+    let localInput = Number(this.output.replace(',', ''));
+    let fraction = '';
+    if (localInput.toString().indexOf('.') !== -1) {
+      fraction = '.' + localInput.toString().split('.')[1]
+      localInput = Math.trunc(localInput);
+    }
+    return localInput.toString().replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + fraction;
   }
 
   inputNum(event: TapEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent?.trim() as string;
+
     // '0'开头的逻辑
-    if (this.output === '0') {
+    if (['0.00', '0.0', '0'].indexOf(this.output) !== -1) {
       if ('0123456789'.indexOf(input) >= 0) {
         return this.output = input;
       } else {
         // '.'的逻辑 // 按数字位数 拼接 字符串
+        console.log('output');
+        console.log(this.output);
         return this.output += input;
       }
     }
-
     // '.'开头的逻辑
     const dotIndex = this.output.indexOf('.');
     if (dotIndex >= 0) {
@@ -79,7 +95,7 @@ export default class Numpad extends Vue {
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
     }
     // 限制显示数字长度
-    if (this.output.length >= 15) {
+    if (this.output.length >= 9) {
       alert('别做白日梦啦');
       this.removeNum(event, -3);
       return;
@@ -96,7 +112,7 @@ export default class Numpad extends Vue {
   }
 
   clearNum() {
-    return this.output = '0';
+    return this.output = '0.00';
   }
 
   confirmNum() {
