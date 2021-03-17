@@ -1,13 +1,13 @@
 <template>
   <div class="numpad">
-    <div class="output">{{ localOutput || '0.00' }}</div>
+    <div class="output">{{ localOutput || '0' }}</div>
     <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
       <button v-for="(item, index) in numPadText"
               :data-index="index"
               :key="item.id"
               @[clientEvent]="handleButtonFn($event, item.bundleEvent)"
               :class="{ok: item.id === 'ok', zero: item.id === 'zero' }">{{ item.text }}
-        <Icon v-if="item.name !== 'num'" :name="item.id"/>
+        <Icon v-if="['num', 'dot'].indexOf(item.name) === -1" :name="item.id"/>
       </button>
     </div>
   </div>
@@ -24,7 +24,7 @@ export default class Numpad extends Vue {
   @Prop(Boolean) readonly isReset!: boolean;
 
   eventName = 'click';
-  output = this.amount.toString();
+  output = this.amount.toString() || '0';
 
   get clientEvent() {
     if (document.documentElement.clientWidth > 500) {
@@ -57,68 +57,79 @@ export default class Numpad extends Vue {
     this[bundleEvent as BundleEventString](e);
   }
 
-  // TODO 处理 0.0x 0.x xx.0x
+  // 实时显示 金额
+  showLocalAmount = true;
   get localOutput() {
-    if (['0.00', '0.0', '0'].indexOf(this.output) !== -1) {
-      return this.output;
-    }
-    let localInput = Number(this.output.replace(',', ''));
-    let fraction = '';
-    if (localInput.toString().indexOf('.') !== -1) {
-      fraction = '.' + localInput.toString().split('.')[1]
-      localInput = Math.trunc(localInput);
-    }
-    return localInput.toString().replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + fraction;
+    // 分别 存 整数部分(integer part) 和小数部分(decimal part)
+    const outPutInteger = Math.trunc(Number(this.output)).toString();
+    const [outPutDecimal = '.00'] = this.output.match(/\.\d{2}/g) || '';
+    const localAmount = outPutInteger
+        .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
+    return this.showLocalAmount ? localAmount : this.output;
   }
 
-  inputNum(event: TapEvent) {
-    const button = (event.target as HTMLButtonElement);
-    const input = button.textContent?.trim() as string;
-
+  checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
     // '0'开头的逻辑
-    if (['0.00', '0.0', '0'].indexOf(this.output) !== -1) {
+    if (['0'].indexOf(this.output) !== -1) {
+      // 输入不含'.' 的数字 1234567890
       if ('0123456789'.indexOf(input) >= 0) {
         return this.output = input;
       } else {
-        // '.'的逻辑 // 按数字位数 拼接 字符串
-        console.log('output');
-        console.log(this.output);
+        // 输入 '.' 字符 '0.'
         return this.output += input;
       }
     }
-    // '.'开头的逻辑
+    // '.'的逻辑
     const dotIndex = this.output.indexOf('.');
+    // 存在'.'的情况 // 特殊 '0.'  不存在单独'.'
     if (dotIndex >= 0) {
-      // '.'重复判断
+      this.showLocalAmount = false;
+      // '.' 判断重复输入
       if (input === '.') {return;}
+      // 判断字符 为 '.'开头
+      if (dotIndex === 0) {return this.output = '0.';}
       // '.'限制小数位 2位
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
+    } else {
+      this.showLocalAmount = true;
     }
     // 限制显示数字长度
-    if (this.output.length >= 9) {
-      alert('别做白日梦啦');
-      this.removeNum(event, -3);
-      return;
+    if (this.output.length >= 11) {
+      alert('你的小目标金额超过喵内记账记录范围');
+      return this.removeNum(event, -3);
     }
-    this.output += input;
+    return this.output += input;
+  }
+
+  inputNum(event: TapEvent) {
+    const button = event.target as HTMLButtonElement;
+    const input = button.textContent?.trim() as string;
+    if(input === '.') {
+      this.showLocalAmount = false;
+    }
+    this.checkInputNum(button, input, event);
   }
 
   removeNum(event: TapEvent, number = -1) {
+    this.showLocalAmount = false;
     this.output = this.output.slice(0, number);
     if (this.output === '') {
       this.clearNum();
     }
-    return;
+    return this.output;
   }
 
   clearNum() {
-    return this.output = '0.00';
+    this.showLocalAmount = true;
+    return this.output = '0';
   }
 
   confirmNum() {
+    this.showLocalAmount = true;
     const number = parseFloat(this.output);
     if (number === 0) {
       this.$emit('checkZero');
+      this.output = '0';
       return;
     }
     this.$emit('update:amount', number);

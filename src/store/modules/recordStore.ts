@@ -12,17 +12,17 @@ const recordStore = {
     };
   },
   mutations: {
-    getLocalTimeStamp(state: recordState) {
+    getLocalTimeStamp(state: RecordState) {
       state.localTimeStamp = clearJetLag(new Date(), '-');
     },
-    fetchRecords(state: recordState) {
+    fetchRecords(state: RecordState) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') ?? '[]') as RecordItem[];
     },
-    saveRecords(state: recordState) {
+    saveRecords(state: RecordState) {
       window.localStorage.setItem('recordList',
         JSON.stringify(state.recordList));
     },
-    createRecord(state: recordState, record: RecordItem) {
+    createRecord(state: RecordState, record: RecordItem) {
       const clonedRecord = clone(record);
       store.commit('getLocalTimeStamp');
       clonedRecord.createdAt = state.localTimeStamp;

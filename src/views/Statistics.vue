@@ -59,9 +59,9 @@ export default class Statistics extends Vue {
             dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
         ));
     // newList ?[] return
-    if (newList.length === 0) {return [] as groupedType[];}
+    if (newList.length === 0) {return [] as GroupedType[];}
     // 排序后的第一项 newList[0] 处理后 作为初始项
-    const result: groupedType[] = [{
+    const result: GroupedType[] = [{
       title: dayjs(newList[0].createdAt.split('T')[0]).format('YYYY-MM-DD'),
       items: [newList[0],]
     }];

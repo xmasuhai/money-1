@@ -1,4 +1,4 @@
-type TapEvent =  MouseEvent | TouchEvent;
+type TapEvent = MouseEvent | TouchEvent;
 type BundleEventString = 'inputNum' | 'removeNum' | 'clearNum' | 'confirmNum';
 type RecordItem = {
   tags: Tag[];
@@ -11,16 +11,18 @@ type Tag = {
   id: string;
   name: string;
 }
-type tagState = {
+type TagState = {
   tagList: Tag[];
   currentTag: Tag;
   isDefault: boolean;
   createTagError: Error | null;
 }
-type recordState = {
+type RecordState = {
   recordList: RecordItem[];
   localTimeStamp: string;
   createRecordError?: Error | null;
 }
 type DataSource = { text: string; type: string }
-type groupedType = { title: string; total?: number; items: RecordItem[] };
+type GroupedType = { title: string; total?: number; items: RecordItem[] };
+type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
+  => { return(output: string) };
