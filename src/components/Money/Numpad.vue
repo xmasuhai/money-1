@@ -58,6 +58,7 @@ export default class Numpad extends Vue {
   }
 
   // 实时显示 金额
+  // TODO 当输入小数点 时 也显示万分位
   showLocalAmount = true;
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
