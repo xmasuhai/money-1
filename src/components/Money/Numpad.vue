@@ -5,6 +5,7 @@
       <numpad-button
           v-for="(item, index) in numPadText"
           @[clientEvent].native="handleButtonFn($event, item.bundleEvent)"
+          @selectBtn="checkBtn(index)"
           :button-index="index"
           :curIndex="curIndex"
           :key="item.id"
@@ -31,6 +32,11 @@ export default class Numpad extends Vue {
 
   eventName = 'click';
   output = this.amount.toString() || '0';
+
+  checkBtn(index) {
+    console.log(index);
+    this.curIndex = index;
+  }
 
   get clientEvent() {
     if (document.documentElement.clientWidth > 500) {

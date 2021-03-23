@@ -1,6 +1,7 @@
 <template>
   <button
-      :class="['basic-btn', {'current': buttonIndex === curIndex}]">
+      :class="['basic-btn', {'current': buttonIndex === curIndex}]"
+      @click="selectBtn(buttonIndex)">
     {{ buttonText }}
     <slot/>
   </button>
@@ -8,13 +9,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Emit, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumpadButton extends Vue {
   @Prop(String) buttonText!: string;
   @Prop(Number) buttonIndex!: number;
   @Prop(Number) curIndex!: number;
+
+  @Emit('selectBtn')
+  selectBtn(index: number) {
+    return index;
+  }
 }
 </script>
 
@@ -26,6 +32,9 @@ $bg: #f2f2f2;
   background: transparent;
   border: 1px solid transparent;
   transition: border-color .25s;
+  &.current {
+    background: red;
+    }
   &.ok {
     grid-column: 4/5;
     grid-row: 3/5;
