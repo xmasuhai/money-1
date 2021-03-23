@@ -64,16 +64,14 @@ export default class Numpad extends Vue {
   }
 
   // 实时显示 金额
-  // TODO 当输入小数点 时 也显示万分位；
   showLocalAmount = true;
 
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();
     const [outPutDecimal = '.00'] = this.output.match(/\.\d{1,2}/g) || '';
-    const localAmount = outPutInteger
+    return outPutInteger
         .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
-    return this.showLocalAmount ? localAmount : this.output;
   }
 
   checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
@@ -102,7 +100,7 @@ export default class Numpad extends Vue {
       this.showLocalAmount = true;
     }
     // 限制显示数字长度
-    if (this.output.length >= 11) {
+    if ((this.output.replace(/\.\d{1,2}/g, '')).length >= 10) {
       alert('你的小目标金额超过喵内记账记录范围');
       return this.removeNum(event, -3);
     }
