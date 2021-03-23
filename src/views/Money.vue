@@ -7,10 +7,13 @@
     <FormItem class="form-item" field-name="备注"
               placeholder="在这里输入备注"
               :inputValue.sync="record.tips"/>
-    <div class="createdAt">
+    <div class="datePicker">
       <FormItem class="form-item" field-name="日期"
                 placeholder="在这里选择日期"
                 :inputValue.sync="record.createdAt"/>
+    </div>
+    <div class="datePicker">
+      <date-getter></date-getter>
     </div>
     <Tabs :data-source="recordTypeList"
           :type.sync="record.type"/>
@@ -31,9 +34,10 @@ import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList.ts';
+import DateGetter from '@/components/Money/DateGetter.vue';
 
 @Component({
-  components: {HeaderBar, Tabs, FormItem, Tags, Numpad}
+  components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter}
 })
 export default class Money extends Vue {
   record: RecordItem = {
@@ -124,5 +128,8 @@ export default class Money extends Vue {
   }
 .form-item {
   padding: 6px 0;
+  }
+.datePicker{
+
   }
 </style>
