@@ -70,7 +70,7 @@ export default class Numpad extends Vue {
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();
-    const [outPutDecimal = '.00'] = this.output.match(/\.\d{2}/g) || '';
+    const [outPutDecimal = '.00'] = this.output.match(/\.\d{1,2}/g) || '';
     const localAmount = outPutInteger
         .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
     return this.showLocalAmount ? localAmount : this.output;

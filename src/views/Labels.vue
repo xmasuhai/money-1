@@ -56,13 +56,13 @@ export default class Labels extends mixins(tagHelper) {
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #e6e6e6;
+        color: #666;
         > span {
           // text overflow mixins
           @include multiline-ellipsis(1, 44px, 4em);
           }
         > svg {
           font-size: 24px;
-          color: #666;
           margin-right: 16px;
           }
         }

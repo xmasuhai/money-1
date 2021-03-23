@@ -127,7 +127,7 @@ export default class Money extends Vue {
     }
   }
 .form-item {
-  padding: 6px 0;
+  padding: 2px 0;
   }
 .datePicker{
 
