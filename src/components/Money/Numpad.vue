@@ -2,13 +2,16 @@
   <div class="numpad">
     <div class="output">{{ localOutput || '0' }}</div>
     <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
-      <button v-for="(item, index) in numPadText"
-              :data-index="index"
-              :key="item.id"
-              @[clientEvent]="handleButtonFn($event, item.bundleEvent)"
-              :class="{ok: item.id === 'ok', zero: item.id === 'zero' }">{{ item.text }}
+      <numpad-button
+          v-for="(item, index) in numPadText"
+          @[clientEvent].native="handleButtonFn($event, item.bundleEvent)"
+          :button-index="index"
+          :curIndex="curIndex"
+          :key="item.id"
+          :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
+          :button-text="item.text">
         <Icon v-if="['num', 'dot'].indexOf(item.name) === -1" :name="item.id"/>
-      </button>
+      </numpad-button>
     </div>
   </div>
 </template>
@@ -16,10 +19,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 
-@Component
+@Component({
+  components: {NumpadButton}
+})
 export default class Numpad extends Vue {
-
+  curIndex = 0;
   @Prop(Number) readonly amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
 
@@ -58,8 +64,9 @@ export default class Numpad extends Vue {
   }
 
   // 实时显示 金额
-  // TODO 当输入小数点 时 也显示万分位
+  // TODO 当输入小数点 时 也显示万分位；
   showLocalAmount = true;
+
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();
@@ -105,7 +112,7 @@ export default class Numpad extends Vue {
   inputNum(event: TapEvent) {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent?.trim() as string;
-    if(input === '.') {
+    if (input === '.') {
       this.showLocalAmount = false;
     }
     this.checkInputNum(button, input, event);
@@ -199,62 +206,7 @@ export default class Numpad extends Vue {
     justify-items: stretch;
     align-items: stretch;
     &:hover {
-      background: radial-gradient(circle at var(--x-pos) var(--y-pos), #aaa, transparent 100px);
-      }
-    > button {
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      border: 2px solid transparent;
-      transition: border-color .25s;
-      > .icon {
-        width: 32px;
-        height: 32px;
-        }
-      &:hover {
-        border-color: #ccc;
-        }
-      &:last-child {
-        grid-column: 2/4;
-        grid-row: 4/5;
-        }
-      &.ok {
-        grid-column: 4/5;
-        grid-row: 3/5;
-        }
-      &.zero {
-        grid-column: 1/2;
-        grid-row: 4/5;
-        }
-      $bg: #f2f2f2;
-      &:nth-child(1) {
-        background: $bg;
-        }
-      &:nth-child(2),
-      &:nth-child(5) {
-        background: darken($bg, 5%);
-        }
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(9) {
-        background: darken($bg, 5 * 2%);
-        }
-      &:nth-child(4),
-      &:nth-child(7),
-      &:nth-child(10) {
-        background: darken($bg, 5 * 3%);
-        }
-      &:nth-child(8),
-      &:nth-child(11),
-      &:nth-child(13) {
-        background: darken($bg, 5 * 4%);
-        }
-      &:nth-child(14) {
-        background: darken($bg, 5 * 5%);
-        }
-      &:nth-child(12) {
-        background: darken($bg, 5 * 6%);
-        }
+      background: radial-gradient(circle at var(--x-pos) var(--y-pos), #bbb, transparent 100px);
       }
     }
   }
