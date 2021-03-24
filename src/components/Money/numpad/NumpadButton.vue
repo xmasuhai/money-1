@@ -15,7 +15,7 @@ import {Component, Emit, Prop} from 'vue-property-decorator';
 export default class NumpadButton extends Vue {
   @Prop(String) buttonText!: string;
   @Prop(Number) buttonIndex!: number;
-  @Prop(Number) curIndex!: number;
+  @Prop({type: Number, default: 13}) curIndex!: number;
 
   @Emit('selectBtn')
   selectBtn(index: number) {
@@ -32,8 +32,21 @@ $bg: #f2f2f2;
   background: transparent;
   border: 1px solid transparent;
   transition: border-color .25s;
-  &.current {
-    background: red;
+  position: relative;
+  &.current::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    box-shadow: 0 0 0 #cccccc,
+    0 0 0 #ffffff,
+    3px 3px 3px #cccccc inset,
+    -3px -3px 3px #ffffff inset;
+    position: absolute;
+    top: .5em;
+    right: .5em;
     }
   &.ok {
     grid-column: 4/5;
@@ -49,15 +62,6 @@ $bg: #f2f2f2;
     }
   &:hover {
     border-color: #ccc;
-    }
-  &.current::after {
-    content: '';
-    display: block;
-    width: 2px;
-    height: 2px;
-    border-radius: 1px;
-    color: #333;
-    border-color: #777;
     }
   &:nth-child(1) {
     background: $bg;
