@@ -33,8 +33,7 @@ export default class Numpad extends Vue {
   eventName = 'click';
   output = this.amount.toString() || '0';
 
-  checkBtn(index) {
-    console.log(index);
+  checkBtn(index: number) {
     this.curIndex = index;
   }
 
@@ -69,14 +68,11 @@ export default class Numpad extends Vue {
     this[bundleEvent as BundleEventString](e);
   }
 
-  // 实时显示 金额
-  showLocalAmount = true;
-
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();
     const [outPutDecimal = '.00'] = this.output.match(/\.\d{1,2}/g) || '';
-    return outPutInteger
+    return '¥ ' + outPutInteger
         .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
   }
 
@@ -95,15 +91,12 @@ export default class Numpad extends Vue {
     const dotIndex = this.output.indexOf('.');
     // 存在'.'的情况 // 特殊 '0.'  不存在单独'.'
     if (dotIndex >= 0) {
-      this.showLocalAmount = false;
       // '.' 判断重复输入
       if (input === '.') {return;}
       // 判断字符 为 '.'开头
       if (dotIndex === 0) {return this.output = '0.';}
       // '.'限制小数位 2位
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
-    } else {
-      this.showLocalAmount = true;
     }
     // 限制显示数字长度
     if ((this.output.replace(/\.\d{1,2}/g, '')).length >= 10) {
@@ -116,14 +109,10 @@ export default class Numpad extends Vue {
   inputNum(event: TapEvent) {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent?.trim() as string;
-    if (input === '.') {
-      this.showLocalAmount = false;
-    }
     this.checkInputNum(button, input, event);
   }
 
   removeNum(event: TapEvent, number = -1) {
-    this.showLocalAmount = false;
     this.output = this.output.slice(0, number);
     if (this.output === '') {
       this.clearNum();
@@ -132,12 +121,10 @@ export default class Numpad extends Vue {
   }
 
   clearNum() {
-    this.showLocalAmount = true;
     return this.output = '0';
   }
 
   confirmNum() {
-    this.showLocalAmount = true;
     const number = parseFloat(this.output);
     if (number === 0) {
       this.$emit('checkZero');
