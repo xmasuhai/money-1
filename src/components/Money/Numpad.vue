@@ -1,11 +1,13 @@
 <template>
   <div class="numpad">
     <div class="output">{{ localOutput || '0' }}</div>
-    <div class="buttons" @mousemove="showSearchlight" :style="searchlightStyle">
+    <div class="buttons"
+         @[clientEvent]="checkBtn($event);handleButtonFn($event)"
+         @mousemove="showSearchlight"
+         :style="searchlightStyle">
       <numpad-button
           v-for="(item, index) in numPadText"
-          @[clientEvent].native="handleButtonFn($event, item.bundleEvent)"
-          @selectBtn="checkBtn(index)"
+          :data-bundle-event="item.bundleEvent"
           :button-index="index"
           :curIndex="curIndex"
           :key="item.id"
@@ -33,8 +35,13 @@ export default class Numpad extends Vue {
   eventName = 'click';
   output = this.amount.toString() || '0';
 
-  checkBtn(index: number) {
-    this.curIndex = index;
+  checkBtn(e: UIEvent) {
+    const target = e.target as HTMLElement;
+    const className = target.className;
+    const index = parseInt(target.dataset.index || '13', 10);
+    if(className === 'basic-btn') {
+      this.curIndex = index;
+    }
   }
 
   get clientEvent() {
@@ -46,7 +53,6 @@ export default class Numpad extends Vue {
     return this.eventName;
   }
 
-  // TODO 待优化重构 使用事件代理
   numPadText = [
     {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
     {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
@@ -64,7 +70,10 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e: TapEvent, bundleEvent: string) {
+  handleButtonFn(e: TapEvent) {
+    const target = e.target as HTMLElement;
+    const bundleEvent = target.dataset.bundleEvent;
+    console.log(target);
     this[bundleEvent as BundleEventString](e);
   }
 
