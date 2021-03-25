@@ -39,7 +39,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   checkBtn(e: UIEvent) {
     const target = e.target as HTMLElement;
     const className = target.className;
-    const index = parseInt(target.dataset.index, 10);
+    const index = parseInt(target.dataset.index ?? '12', 10);
     if(className === 'basic-btn') {
       this.curIndex = index;
     }
