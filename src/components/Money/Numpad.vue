@@ -20,30 +20,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
+import {mixins} from 'vue-class-component';
+import SearchLight from '@/mixins/searchLight';
+import OperateNumpad from '@/mixins/operateNumpad';
 
 @Component({
   components: {NumpadButton}
 })
-export default class Numpad extends Vue {
-  curIndex = 0;
-  @Prop(Number) readonly amount!: number;
-  @Prop(Boolean) readonly isReset!: boolean;
-
+export default class Numpad extends mixins(SearchLight, OperateNumpad) {
+  // 默认当前初始下标
+  curIndex = 12;
+  // 默认绑定事件
   eventName = 'click';
-  output = this.amount.toString() || '0';
 
+  // 事件代理 监听父组件
   checkBtn(e: UIEvent) {
     const target = e.target as HTMLElement;
     const className = target.className;
-    const index = parseInt(target.dataset.index || '13', 10);
+    const index = parseInt(target.dataset.index || '12', 10) || 12;
     if(className === 'basic-btn') {
       this.curIndex = index;
     }
   }
+  // TODO 修改事件代理 判断辨别子组件内部元素
+  handleButtonFn(e: TapEvent) {
+    const target = e.target as HTMLElement;
+    const bundleEvent = target.dataset.bundleEvent;
+    console.log(target);
+    this[bundleEvent as BundleEventString](e);
+  }
 
+  // 判断客户端尺寸
   get clientEvent() {
     if (document.documentElement.clientWidth > 500) {
       this.eventName = 'click';
@@ -53,6 +62,7 @@ export default class Numpad extends Vue {
     return this.eventName;
   }
 
+  // 数字键盘文字图标数据
   numPadText = [
     {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
     {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
@@ -70,13 +80,7 @@ export default class Numpad extends Vue {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  handleButtonFn(e: TapEvent) {
-    const target = e.target as HTMLElement;
-    const bundleEvent = target.dataset.bundleEvent;
-    console.log(target);
-    this[bundleEvent as BundleEventString](e);
-  }
-
+  // 格式化显示金额逻辑
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();
@@ -85,104 +89,6 @@ export default class Numpad extends Vue {
         .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
   }
 
-  checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
-    // '0'开头的逻辑
-    if (['0'].indexOf(this.output) !== -1) {
-      // 输入不含'.' 的数字 1234567890
-      if ('0123456789'.indexOf(input) >= 0) {
-        return this.output = input;
-      } else {
-        // 输入 '.' 字符 '0.'
-        return this.output += input;
-      }
-    }
-    // '.'的逻辑
-    const dotIndex = this.output.indexOf('.');
-    // 存在'.'的情况 // 特殊 '0.'  不存在单独'.'
-    if (dotIndex >= 0) {
-      // '.' 判断重复输入
-      if (input === '.') {return;}
-      // 判断字符 为 '.'开头
-      if (dotIndex === 0) {return this.output = '0.';}
-      // '.'限制小数位 2位
-      if (this.output.slice(dotIndex, -1).length > 1) {return;}
-    }
-    // 限制显示数字长度
-    if ((this.output.replace(/\.\d{1,2}/g, '')).length >= 10) {
-      alert('你的小目标金额超过喵内记账记录范围');
-      return this.removeNum(event, -3);
-    }
-    return this.output += input;
-  }
-
-  inputNum(event: TapEvent) {
-    const button = event.target as HTMLButtonElement;
-    const input = button.textContent?.trim() as string;
-    this.checkInputNum(button, input, event);
-  }
-
-  removeNum(event: TapEvent, number = -1) {
-    this.output = this.output.slice(0, number);
-    if (this.output === '') {
-      this.clearNum();
-    }
-    return this.output;
-  }
-
-  clearNum() {
-    return this.output = '0';
-  }
-
-  confirmNum() {
-    const number = parseFloat(this.output);
-    if (number === 0) {
-      this.$emit('checkZero');
-      this.output = '0';
-      return;
-    }
-    this.$emit('update:amount', number);
-    this.$emit('submit');
-    this.$nextTick(() => {
-      this.reset();
-    });
-  }
-
-  reset() {
-    if (this.isReset) {
-      this.output = '0';
-      this.$emit('update:deselectTags', true);
-    }
-    this.$emit('update:deselectTags', false);
-  }
-
-  getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
-    while (curEl !== parentEl) {
-      curEl = curEl.parentElement as HTMLButtonElement;
-    }
-    return curEl;
-  }
-
-  searchlightPosition = {
-    x: 0,
-    y: 0
-  };
-
-  get searchlightStyle() {
-    return {
-      '--x-pos': this.searchlightPosition.x + 'px',
-      '--y-pos': this.searchlightPosition.y + 'px',
-    };
-  }
-
-  showSearchlight(e: MouseEvent) {
-    let elem = e.target as HTMLButtonElement;
-    const wrapper = document.querySelector('.buttons');
-    if (e.target && elem !== wrapper) {
-      elem = this.getParent(e.target as HTMLButtonElement, wrapper as HTMLElement);
-    }
-    this.searchlightPosition.x = e.clientX - elem.offsetLeft;
-    this.searchlightPosition.y = e.clientY - elem.offsetTop;
-  }
 }
 </script>
 
