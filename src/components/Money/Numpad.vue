@@ -35,7 +35,6 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   // 默认绑定事件
   eventName = 'click';
 
-  // 事件代理 监听父组件
   checkBtn(e: UIEvent) {
     const target = e.target as HTMLElement;
     const className = target.className;
@@ -44,11 +43,14 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
       this.curIndex = index;
     }
   }
-  // TODO 修改事件代理 判断辨别子组件内部元素
+
   handleButtonFn(e: TapEvent) {
-    const target = e.target as HTMLElement;
+    let target = e.target as HTMLElement;
+    while (!target.matches('button')) {
+      // 向外寻找父节点
+      target = target.parentNode as HTMLElement;
+    }
     const bundleEvent = target.dataset.bundleEvent;
-    console.log(target);
     this[bundleEvent as BundleEventString](e);
   }
 
