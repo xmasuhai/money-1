@@ -35,6 +35,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   // 默认绑定事件
   eventName = 'click';
 
+  // 返回当前选中按钮的下标
   checkBtn(e: UIEvent) {
     const target = e.target as HTMLElement;
     const className = target.className;
@@ -44,6 +45,17 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     }
   }
 
+  // 判断客户端尺寸 返回对应的事件类型
+  get clientEvent() {
+    if (document.documentElement.clientWidth > 500) {
+      this.eventName = 'click';
+    } else {
+      this.eventName = 'touchstart';
+    }
+    return this.eventName;
+  }
+
+  // 给不同的按钮绑定对应事件的处理函数
   handleButtonFn(e: TapEvent) {
     let target = e.target as HTMLElement;
     while (!target.matches('button')) {
@@ -52,16 +64,6 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     }
     const bundleEvent = target.dataset.bundleEvent;
     this[bundleEvent as BundleEventString](e);
-  }
-
-  // 判断客户端尺寸
-  get clientEvent() {
-    if (document.documentElement.clientWidth > 500) {
-      this.eventName = 'click';
-    } else {
-      this.eventName = 'touchstart';
-    }
-    return this.eventName;
   }
 
   // 数字键盘文字图标数据
