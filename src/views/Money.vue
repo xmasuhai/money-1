@@ -16,7 +16,8 @@
       <date-getter></date-getter>
     </div>
     <Tabs :data-source="recordTypeList"
-          :type.sync="record.type"/>
+          :type.sync="record.type"
+          class-prefix="fuckAnt"/>
     <Numpad :amount.sync="record.amount"
             @submit="submit"
             @update:deselectTags="deselectTags"
@@ -125,11 +126,14 @@ export default class Money extends Vue {
       height: 24px;
       }
     }
+  .fuckAnt-tabs {
+    margin-bottom: 0;
+    }
   }
 .form-item {
   padding: 2px 0;
   }
-.datePicker{
+.datePicker {
 
   }
 </style>

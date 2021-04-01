@@ -7,6 +7,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+
 @Component
 export default class DateGetter extends Vue {
   onChange(date: Date, dateString: string) {

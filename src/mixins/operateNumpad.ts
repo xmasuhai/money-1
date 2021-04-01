@@ -7,8 +7,8 @@ import {Prop} from 'vue-property-decorator';
 export default class OperateNumpad extends Vue {
   @Prop(Number) readonly amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
-  output = this.amount.toString() || '0';
-  curIndex = 12;
+  output = this.amount.toString() || '0.00';
+  currentIndex = 12;
 
   checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
     // '0'开头的逻辑
@@ -55,7 +55,7 @@ export default class OperateNumpad extends Vue {
   }
 
   clearNum() {
-    this.curIndex = 12;
+    this.currentIndex = 12;
     return this.output = '0';
   }
 
@@ -79,7 +79,7 @@ export default class OperateNumpad extends Vue {
       this.$emit('update:deselectTags', true);
     }
     this.$emit('update:deselectTags', false);
-    this.curIndex = 12;
+    this.currentIndex = 12;
   }
 
 }

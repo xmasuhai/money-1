@@ -1,6 +1,6 @@
 <template>
   <button
-      :class="['basic-btn', {'current': buttonIndex === curIndex}]"
+      :class="['basic-btn', {'current': buttonIndex === currentIndex}]"
       :data-index="buttonIndex">
     {{ buttonText }}
     <slot/>
@@ -15,7 +15,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class NumpadButton extends Vue {
   @Prop(String) buttonText!: string;
   @Prop(Number) buttonIndex!: number;
-  @Prop({type: Number, default: 13}) curIndex!: number;
+  @Prop({type: Number, default: 13}) currentIndex!: number;
 }
 </script>
 

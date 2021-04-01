@@ -1,6 +1,6 @@
 <template>
   <div class="numpad">
-    <div class="output">{{ localOutput || '0' }}</div>
+    <numpad-output :output="output"></numpad-output>
     <div class="buttons"
          @[clientEvent]="checkBtn($event);handleButtonFn($event)"
          @mousemove="showSearchlight"
@@ -9,7 +9,7 @@
           v-for="(item, index) in numPadText"
           :data-bundle-event="item.bundleEvent"
           :button-index="index"
-          :curIndex="curIndex"
+          :currentIndex="currentIndex"
           :key="item.id"
           :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
           :button-text="item.text">
@@ -25,13 +25,14 @@ import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 import {mixins} from 'vue-class-component';
 import SearchLight from '@/mixins/searchLight';
 import OperateNumpad from '@/mixins/operateNumpad';
+import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
 
 @Component({
-  components: {NumpadButton}
+  components: {NumpadOutput, NumpadButton}
 })
 export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   // 默认当前初始下标
-  curIndex = 12;
+  currentIndex = 12;
   // 默认绑定事件
   eventName = 'click';
 
@@ -41,7 +42,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     const className = target.className;
     const index = parseInt(target.dataset.index ?? '12', 10);
     if(className === 'basic-btn') {
-      this.curIndex = index;
+      this.currentIndex = index;
     }
   }
 
