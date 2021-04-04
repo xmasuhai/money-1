@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-
-const importAll = (requireContext: __WebpackModuleApi.RequireContext) => {
+const importAll =
+    (requireContext: __WebpackModuleApi.RequireContext) => {
   requireContext.keys().forEach(requireContext);
 };
 // 指定目录 只能用相对路径 不支持@别名路径

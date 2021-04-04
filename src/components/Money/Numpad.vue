@@ -13,7 +13,8 @@
           :key="item.id"
           :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
           :button-text="item.text">
-        <Icon v-if="['num', 'dot'].indexOf(item.name) === -1" :name="item.id"/>
+        <Icon v-if="['num', 'dot'].indexOf(item.name) === -1"
+              :name="item.id"/>
       </numpad-button>
     </div>
   </div>
