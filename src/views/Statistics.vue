@@ -80,7 +80,7 @@ export default class Statistics extends Vue {
       }
     }
     // result.group.items: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
-    result.map(group => {
+    result.forEach(group => {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
     });
     return result;

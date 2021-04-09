@@ -7,7 +7,7 @@
 <script lang="ts">
 const importAll =
     (requireContext: __WebpackModuleApi.RequireContext) => {
-  requireContext.keys().forEach(requireContext);
+      requireContext.keys().forEach(requireContext);
 };
 // 指定目录 只能用相对路径 不支持@别名路径
 // 使用importAll加载所有的svg

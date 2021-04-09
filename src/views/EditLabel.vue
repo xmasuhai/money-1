@@ -75,6 +75,6 @@ export default class EditLabel extends Vue {
 .button-wrapper {
   text-align: center;
   padding: 16px;
-  margin-top: 44-16px;
+  margin-top: 28px;
   }
 </style>
