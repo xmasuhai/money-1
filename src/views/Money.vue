@@ -4,12 +4,15 @@
                :hasIcon="false"></HeaderBar>
     <Tags @update:selectedTags="pickTags"
           :is-deselect-tags="emptyTags"/>
-    <FormItem class="form-item" field-name="备注"
+    <FormItem class="form-item"
+              field-name="备注"
               placeholder="在这里输入备注"
               :inputValue.sync="record.tips"/>
-    <div class="datePicker">
-      <FormItem class="form-item" field-name="日期"
+    <div class="creatAt">
+      <FormItem class="form-item"
+                field-name="日期"
                 placeholder="在这里选择日期"
+                type="date"
                 :inputValue.sync="record.createdAt"/>
     </div>
     <div class="datePicker">
@@ -117,23 +120,27 @@ export default class Money extends Vue {
   .layout-content {
     display: flex;
     flex-direction: column;
-    }
+  }
+
   .headerBar {
     &::before {
       content: '';
       display: inline;
       width: 24px;
       height: 24px;
-      }
     }
+  }
+
   .fuckAnt-tabs {
     margin-bottom: 0;
-    }
   }
+}
+
 .form-item {
   padding: 2px 0;
-  }
-.datePicker {
+}
 
-  }
+.creatAt {
+
+}
 </style>

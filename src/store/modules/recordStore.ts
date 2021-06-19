@@ -25,7 +25,8 @@ const recordStore = {
     createRecord(state: RecordState, record: RecordItem) {
       const clonedRecord = clone(record);
       store.commit('getLocalTimeStamp');
-      clonedRecord.createdAt = state.localTimeStamp;
+      // 不覆盖原来的日期记录
+      clonedRecord.createdAt = clonedRecord.createdAt || state.localTimeStamp;
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     },
