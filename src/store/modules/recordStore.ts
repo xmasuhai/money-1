@@ -26,7 +26,7 @@ const recordStore = {
       const clonedRecord = clone(record);
       store.commit('getLocalTimeStamp');
       // 不覆盖原来的日期记录
-      clonedRecord.createdAt = clonedRecord.createdAt || state.localTimeStamp;
+      clonedRecord.createdAt = clearJetLag(new Date(clonedRecord.createdAt), '-') || state.localTimeStamp;
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     },

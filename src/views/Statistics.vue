@@ -31,6 +31,7 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import clone from '@/lib/clone.ts';
+import clearJetLag from '@/lib/clearJetLag';
 
 dayjs.locale('zh-cn');
 
@@ -54,10 +55,10 @@ export default class Statistics extends Vue {
     const {recordList} = this;
     // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
     const newList = clone(recordList)
-        .filter((r: RecordItem) => r.type === this.type)
-        .sort((a: RecordItem, b: RecordItem) => (
-            dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
-        ));
+      .filter((r: RecordItem) => r.type === this.type)
+      .sort((a: RecordItem, b: RecordItem) => (
+        dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+      ));
     // newList ?[] return
     if (newList.length === 0) {return [] as GroupedType[];}
     // 排序后的第一项 newList[0] 处理后 作为初始项
@@ -91,8 +92,9 @@ export default class Statistics extends Vue {
   }
 
   showDay(someday: string) {
-    const now = dayjs(new Date());
-    const thatDay = dayjs(someday);
+    const now = dayjs(new Date().toISOString());
+    const thatDay = dayjs(clearJetLag(new Date(someday), '-'));
+    console.log(thatDay);
     if (thatDay.isSame(now, 'day')) {
       return '今天';
     } else if (thatDay.isSame(now.subtract(1, 'day'), 'day')) {
@@ -111,11 +113,13 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 .statistics {
   .noResult {
     padding: 16px;
     text-align: center;
-    }
+  }
+
   %item {
     padding: 8px 16px;
     line-height: 24px;
@@ -123,47 +127,55 @@ export default class Statistics extends Vue {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    }
+  }
 
   ::v-deep {
     .headerBar {
       > .left-icon {
         transform: rotate3d(0, 1, 0, 180deg);
-        }
-      }
-    .type-tabs-item {
-      background: #fff;
-      position: relative;
-      &.selected {
-        background: #c4c4c4;
-        &::after {
-          display: none;
-          }
-        }
       }
     }
 
+    .type-tabs-item {
+      background: #fff;
+      position: relative;
+
+      &.selected {
+        background: #c4c4c4;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
   .title {
     @extend %item;
-    }
+  }
+
   .record {
     background: #fff;
     @extend %item;
+
     .recordTag {
       @include multiline-ellipsis(2, 40px, 5em);
-      }
+    }
+
     .notes {
       display: flex;
       margin-right: auto;
       margin-left: 16px;
       color: #999;
+
       .tips {
         @include multiline-ellipsis(1, 40px, 3em);
-        }
+      }
+
       .text {
         @include multiline-ellipsis(1, 40px, 3em);
-        }
       }
     }
   }
+}
 </style>
