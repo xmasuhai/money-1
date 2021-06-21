@@ -1,18 +1,19 @@
 <template>
   <div class="numpad">
-    <numpad-output :output="output"></numpad-output>
+    <numpad-output :output="output"
+    ></numpad-output>
     <div class="buttons"
          @[clientEvent]="checkBtn($event);handleButtonFn($event)"
          @mousemove="showSearchlight"
          :style="searchlightStyle">
       <numpad-button
-          v-for="(item, index) in numPadText"
-          :data-bundle-event="item.bundleEvent"
-          :button-index="index"
-          :currentIndex="currentIndex"
-          :key="item.id"
-          :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
-          :button-text="item.text">
+        v-for="(item, index) in numPadText"
+        :data-bundle-event="item.bundleEvent"
+        :button-index="index"
+        :currentIndex="currentIndex"
+        :key="item.id"
+        :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
+        :button-text="item.text">
         <Icon v-if="['num', 'dot'].indexOf(item.name) === -1"
               :name="item.id"/>
       </numpad-button>
@@ -42,7 +43,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     const target = e.target as HTMLElement;
     const className = target.className;
     const index = parseInt(target.dataset.index ?? '12', 10);
-    if(className === 'basic-btn') {
+    if (className === 'basic-btn') {
       this.currentIndex = index;
     }
   }
@@ -92,7 +93,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     const outPutInteger = Math.trunc(Number(this.output)).toString();
     const [outPutDecimal = '.00'] = this.output.match(/\.\d{1,2}/g) || '';
     return '¥ ' + outPutInteger
-        .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
+      .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
   }
 
 }
@@ -100,6 +101,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 .numpad {
   .output {
     @extend %inner-shadow;
@@ -107,7 +109,8 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     font-family: Consolas, monospace;
     padding: 9px 16px;
     text-align: right;
-    }
+  }
+
   .buttons {
     display: grid;
     grid-template: repeat(4, 1fr) / repeat(4, 1fr);
@@ -117,9 +120,10 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     overflow: hidden;
     justify-items: stretch;
     align-items: stretch;
+
     &:hover {
       background: radial-gradient(circle at var(--x-pos) var(--y-pos), #bbb, transparent 100px);
-      }
     }
   }
+}
 </style>

@@ -22,7 +22,14 @@ type RecordState = {
   localTimeStamp: string;
   createRecordError?: Error | null;
 }
-type DataSource = { text: string; type: string }
-type GroupedType = { title: string; total?: number; items: RecordItem[] };
+type DataSource = {
+  text: string;
+  type: string;
+}
+type GroupedType = {
+  title: string;
+  total?: number;
+  items: RecordItem[];
+};
 type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
   => { return(output: string) };

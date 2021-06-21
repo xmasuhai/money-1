@@ -13,7 +13,7 @@ import {Component, Prop} from 'vue-property-decorator';
 import hideMenuBar from '@/lib/hideMenuBar';
 
 @Component
-export default class Money extends Vue {
+export default class Layout extends Vue {
   @Prop(String) ['classPrefix']: string;
 
   mounted() {
@@ -26,13 +26,14 @@ export default class Money extends Vue {
 
 <style lang="scss" scoped>
 .layout-wrapper {
-  overflow-scrolling: touch;
   display: flex;
+  overflow-scrolling: touch;
   flex-direction: column;
   height: 100vh;
+
   .content {
     flex-grow: 1;
     overflow: auto;
-    }
   }
+}
 </style>

@@ -94,7 +94,6 @@ export default class Statistics extends Vue {
   showDay(someday: string) {
     const now = dayjs(new Date().toISOString());
     const thatDay = dayjs(clearJetLag(new Date(someday), '-'));
-    console.log(thatDay);
     if (thatDay.isSame(now, 'day')) {
       return '今天';
     } else if (thatDay.isSame(now.subtract(1, 'day'), 'day')) {

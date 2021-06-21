@@ -1,9 +1,11 @@
 <template>
-  <Layout class-prefix="layout">
+  <Layout class-prefix="layout" class="layout-content">
     <HeaderBar :header-title="'记账'"
-               :hasIcon="false"></HeaderBar>
+               :hasIcon="false">
+    </HeaderBar>
     <Tags @update:selectedTags="pickTags"
-          :is-deselect-tags="emptyTags"/>
+          :is-deselect-tags="emptyTags"
+          class="tags"/>
     <FormItem class="form-item"
               field-name="备注"
               placeholder="在这里输入备注"
@@ -20,7 +22,7 @@
     </div>
     <Tabs :data-source="recordTypeList"
           :type.sync="record.type"
-          class-prefix="fuckAnt"/>
+          class="fuckAnt-tabs"/>
     <Numpad :amount.sync="record.amount"
             @submit="submit"
             @update:deselectTags="deselectTags"
@@ -44,6 +46,7 @@ import DateGetter from '@/components/Money/DateGetter.vue';
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter}
 })
 export default class Money extends Vue {
+  // data
   record: RecordItem = {
     tags: [],
     tips: '',
@@ -51,15 +54,16 @@ export default class Money extends Vue {
     amount: 0,
     createdAt: new Date().toISOString(),
   };
-
   recordTypeList = recordTypeList;
   checkoutResult = false;
   emptyTags = false;
 
+  // computed
   get recordList() {
     return this.$store.state.recordStore.recordList as RecordItem[];
   }
 
+  // methods
   pickTags(selectedTags: Tag[]) {
     this.emptyTags = false;
     this.record.tags = selectedTags;
@@ -98,8 +102,8 @@ export default class Money extends Vue {
   reset() {
     this.record.tips = '';
     this.record.tags = [];
-    this.record.type = '+';
     this.record.amount = 0;
+    return this.record.type;
   }
 
   submit() {
@@ -140,7 +144,4 @@ export default class Money extends Vue {
   padding: 2px 0;
 }
 
-.creatAt {
-
-}
 </style>

@@ -23,7 +23,7 @@ import {Component} from 'vue-property-decorator';
 @Component({
   components: {Icon}
 })
-export default class Button extends Vue {
+export default class Nav extends Vue {
 }
 </script>
 

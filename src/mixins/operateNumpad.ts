@@ -8,19 +8,10 @@ export default class OperateNumpad extends Vue {
   @Prop(Number) readonly amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
   output = this.amount.toString() || '0.00';
+  // 当前按钮点记号下标
   currentIndex = 12;
 
   checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
-    // '0'开头的逻辑
-    if (['0'].indexOf(this.output) !== -1) {
-      // 输入不含'.' 的数字 1234567890
-      if ('0123456789'.indexOf(input) >= 0) {
-        return this.output = input;
-      } else {
-        // 输入 '.' 字符 '0.'
-        return this.output += input;
-      }
-    }
     // '.'的逻辑
     const dotIndex = this.output.indexOf('.');
     // 存在'.'的情况 // 特殊 '0.'  不存在单独'.'
@@ -28,7 +19,6 @@ export default class OperateNumpad extends Vue {
       // '.' 判断重复输入
       if (input === '.') {return;}
       // 判断字符 为 '.'开头
-      if (dotIndex === 0) {return this.output = '0.';}
       // '.'限制小数位 2位
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
     }
@@ -37,7 +27,7 @@ export default class OperateNumpad extends Vue {
       alert('你的小目标金额超过喵内记账记录范围');
       return this.removeNum(event, -3);
     }
-    return this.output += input;
+    this.output += input;
   }
 
   inputNum(event: TapEvent) {
@@ -56,7 +46,7 @@ export default class OperateNumpad extends Vue {
 
   clearNum() {
     this.currentIndex = 12;
-    return this.output = '0';
+    this.output = '0';
   }
 
   confirmNum() {
