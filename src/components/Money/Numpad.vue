@@ -3,7 +3,7 @@
     <numpad-output :output="output"
     ></numpad-output>
     <div class="buttons"
-         @[clientEvent]="checkBtn($event);handleButtonFn($event)"
+         @[clientEvent]="checkBtn($event); handleButtonFn($event)"
          @mousemove="showSearchlight"
          :style="searchlightStyle">
       <numpad-button
@@ -34,7 +34,7 @@ import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
 })
 export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   // 默认当前初始下标
-  currentIndex = 12;
+  currentIndex = -1;
   // 默认绑定事件
   eventName = 'click';
 
@@ -42,9 +42,11 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   checkBtn(e: UIEvent) {
     const target = e.target as HTMLElement;
     const className = target.className;
-    const index = parseInt(target.dataset.index ?? '12', 10);
-    if (className === 'basic-btn') {
-      this.currentIndex = index;
+    const index = parseInt(target.dataset.index || '-1', 10);
+    if (index !== -1) {
+      if (className === 'basic-btn' || className.includes('zero')) {
+        this.currentIndex = index;
+      }
     }
   }
 
