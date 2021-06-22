@@ -1,10 +1,13 @@
 <template>
   <Layout>
     <header-bar router-path="/labels"
-                :header-title="'编辑标签'"></header-bar>
+                :header-title="'编辑标签'">
+    </header-bar>
     <FormItem :inputValue="currentTag.name"
               @update:inputValue="update"
-              class="form-item" field-name="标签名" placeholder="在这里输入标签名"/>
+              class="form-item"
+              field-name="标签名"
+              placeholder="在这里输入标签名"/>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
     </div>
@@ -41,7 +44,8 @@ export default class EditLabel extends Vue {
       this.$router.back();
       return;
     }
-    this.$store.commit('updateTag', {id: this.currentTag.id, name});
+    this.$store.commit('updateTag',
+      {id: this.currentTag.id, name});
   }
 
   remove() {
@@ -60,21 +64,24 @@ export default class EditLabel extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 ::v-deep {
   .headerBar {
     > .left-icon {
       transform: rotate3d(0, 1, 0, 180deg);
-      }
     }
   }
+}
+
 .form-item {
   margin-top: 8px;
   background: #fff;
   @extend %tag-shadow;
-  }
+}
+
 .button-wrapper {
   text-align: center;
   padding: 16px;
   margin-top: 28px;
-  }
+}
 </style>

@@ -23,10 +23,10 @@
 
 <script lang="ts">
 import {Component} from 'vue-property-decorator';
-import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 import {mixins} from 'vue-class-component';
-import SearchLight from '@/mixins/searchLight';
-import OperateNumpad from '@/mixins/operateNumpad';
+import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
+import SearchLight from '@/mixins/searchLight.ts';
+import OperateNumpad from '@/mixins/operateNumpad.ts';
 import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
 
 @Component({

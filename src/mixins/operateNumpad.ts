@@ -45,7 +45,7 @@ export default class OperateNumpad extends Vue {
   }
 
   clearNum() {
-    this.currentIndex = 12;
+    this.currentIndex = -1;
     this.output = '0';
   }
 
@@ -69,7 +69,7 @@ export default class OperateNumpad extends Vue {
       this.$emit('update:deselectTags', true);
     }
     this.$emit('update:deselectTags', false);
-    this.currentIndex = 12;
+    this.currentIndex = -1;
   }
 
 }

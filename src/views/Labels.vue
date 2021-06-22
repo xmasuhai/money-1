@@ -28,7 +28,7 @@ import HeaderBar from '@/components/HeaderBar.vue';
 
 export default class Labels extends mixins(tagHelper) {
   get tags() {
-    return this.$store.state.tagStore.tagList;
+    return this.$store.state.tagStore.tagsList;
   }
 
   beforeCreate() {
@@ -39,16 +39,19 @@ export default class Labels extends mixins(tagHelper) {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 .labels {
   ::v-deep {
     .headerBar {
       flex-direction: row-reverse;
-      }
     }
+  }
+
   .tags {
     background: white;
     font-size: 16px;
     padding-left: 16px;
+
     > li {
       > .tag {
         min-height: 44px;
@@ -57,28 +60,32 @@ export default class Labels extends mixins(tagHelper) {
         justify-content: space-between;
         border-bottom: 1px solid #e6e6e6;
         color: #666;
+
         > span {
           // text overflow mixins
           @include multiline-ellipsis(1, 44px, 4em);
-          }
+        }
+
         > svg {
           font-size: 24px;
           margin-right: 16px;
-          }
         }
       }
     }
+  }
+
   .createTag {
     background: #767676;
     color: #fff;
     border-radius: 4px;
     height: 40px;
     padding: 0 16px;
+
     &-wrapper {
       text-align: center;
       padding: 16px;
       margin-top: 28px;
-      }
     }
   }
+}
 </style>

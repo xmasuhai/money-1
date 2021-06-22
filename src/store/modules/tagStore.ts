@@ -5,7 +5,7 @@ const tagStore = {
   namespace: true,
   state() {
     return {
-      tagList: [],
+      tagsList: [],
       currentTag: {},
       isDefault: false,
       createTagError: null
