@@ -32,18 +32,33 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Numpad from '@/components/Money/Numpad.vue';
+import {Component, Vue} from 'vue-property-decorator';
+import { Route } from 'vue-router';
+// 页面模块组件
 import HeaderBar from '@/components/HeaderBar.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
-import Numpad from '@/components/Money/Numpad.vue';
-import {Component} from 'vue-property-decorator';
-import recordTypeList from '@/constants/recordTypeList.ts';
 import DateGetter from '@/components/Money/DateGetter.vue';
+// 数据
+import recordTypeList from '@/constants/recordTypeList.ts';
 
 @Component({
-  components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter}
+  components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
+
+  beforeRouteEnter(to: Route, from: Route, next: () => void): void {
+    console.log('beforeRouteEnter');
+    next();
+  },
+  beforeRouteLeave(to: Route, from: Route, next: () => void): void {
+    console.log('beforeRouteLeave');
+    next();
+  },
+  beforeRouteUpdate(to: Route, from: Route, next: () => void): void {
+    console.log('beforeRouteUpdate'); //暂时不生效，版本问题
+    next();
+  }
 })
 export default class Money extends Vue {
   // data
@@ -116,7 +131,11 @@ export default class Money extends Vue {
     }
     this.reset();
   }
+
+
 }
+
+
 </script>
 
 <style lang="scss" scoped>

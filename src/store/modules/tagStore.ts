@@ -20,17 +20,17 @@ const tagStore = {
       state.isDefault = false;
     },
     fetchTags(state: TagState) {
-      state.tagList = JSON.parse(window.localStorage.getItem('tagList') ?? '[]');
-      if (!state.tagList || state.tagList.length === 0) {
+      state.tagsList = JSON.parse(window.localStorage.getItem('tagsList') ?? '[]');
+      if (!state.tagsList || state.tagsList.length === 0) {
         store.commit('getDefaultTags');
       }
     },
     saveTags(state: TagState) {
-      localStorage.setItem('tagList', JSON.stringify(state.tagList));
+      localStorage.setItem('tagsList', JSON.stringify(state.tagsList));
     },
     createTag(state: TagState, name: string) {
       state.createTagError = null;
-      const names = state.tagList.map(tag => tag.name);
+      const names = state.tagsList.map(tag => tag.name);
       if (names.indexOf(name) >= 0) {
         return state.createTagError = new Error('tag name duplicated');
       }
@@ -39,7 +39,7 @@ const tagStore = {
         operateId.clearId();
       }
       const id = operateId.createId().toString();
-      state.tagList.push({id, name});
+      state.tagsList.push({id, name});
       store.commit('saveTags');
       if (!state.isDefault) {
         return window.alert('添加成功');
@@ -47,14 +47,14 @@ const tagStore = {
     },
     removeTag(state: TagState, id: string) {
       let index = -1;
-      for (let i = 0; i < state.tagList.length; i++) {
-        if (state.tagList[i].id === id) {
+      for (let i = 0; i < state.tagsList.length; i++) {
+        if (state.tagsList[i].id === id) {
           index = i;
           break;
         }
       }
       if (index >= 0) {
-        state.tagList.splice(index, 1);
+        state.tagsList.splice(index, 1);
         store.commit('saveTags');
       } else {
         return window.alert('删除失败');
@@ -62,21 +62,20 @@ const tagStore = {
     },
     updateTag(state: TagState, tag: { id: string; name: string }) {
       const {id, name} = tag;
-      const idList = state.tagList.map(item => item.id);
+      const idList = state.tagsList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
-        const nameList = state.tagList.map(item => item.name);
+        const nameList = state.tagsList.map(item => item.name);
         if (nameList.indexOf(name) >= 0) {
           return window.alert('标签名重复了');
         } else {
-          const tagItem = state.tagList.filter(item => item.id === id)[0];
+          const tagItem = state.tagsList.filter(item => item.id === id)[0];
           tagItem.name = name;
           store.commit('saveTags');
         }
       }
     },
     setCurrentTag(state: TagState, id: string) {
-      // state.currentTag = state.tagList.find(t => t.id === id);
-      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+      state.currentTag = state.tagsList.filter(t => t.id === id)[0];
     }
   }
 };

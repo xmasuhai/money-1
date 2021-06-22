@@ -12,7 +12,7 @@ type Tag = {
   name: string;
 }
 type TagState = {
-  tagList: Tag[];
+  tagsList: Tag[];
   currentTag: Tag;
   isDefault: boolean;
   createTagError: Error | null;
@@ -31,5 +31,14 @@ type GroupedType = {
   total?: number;
   items: RecordItem[];
 };
-type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
-  => { return(output: string) };
+
+// type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
+//   => { return(output: string) };
+
+type MoneySession = {
+  tagsList: {};
+  tipsText: {};
+  dateStore: {};
+  typeStore: {};
+  moneyStore: {};
+}
