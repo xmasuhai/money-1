@@ -27,6 +27,7 @@ export default class HeaderBar extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 .headerBar {
   text-align: center;
   font-size: 16px;
@@ -38,18 +39,21 @@ export default class HeaderBar extends Vue {
   justify-content: space-between;
 
   @extend %tag-shadow;
+
   > .left-icon {
     color: #666;
     font-size: 24px;
-    }
+  }
+
   > .title {
     flex-grow: 1;
-    }
+  }
+
   &::after {
     content: '';
     display: inline;
     width: 24px;
     height: 24px;
-    }
   }
+}
 </style>

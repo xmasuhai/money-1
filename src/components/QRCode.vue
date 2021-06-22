@@ -31,7 +31,7 @@ export default class QRCode extends Vue {
   }
 
   mask() {
-    this.flagOff = true;
+    this.$emit('updateMask')
   }
 }
 </script>
@@ -46,6 +46,7 @@ export default class QRCode extends Vue {
   bottom: 0;
   position: fixed;
   z-index: 998;
+
   .floatParts {
     display: flex;
     flex-direction: column;
@@ -57,17 +58,19 @@ export default class QRCode extends Vue {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+
     .qrcode {
       height: 200px;
       width: 200px;
       box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.25);
-      }
+    }
+
     .tipsText {
       padding: 20px;
       text-align: center;
       color: #fff;
       text-shadow: 1px 1px 2px whitesmoke;
-      }
     }
   }
+}
 </style>
