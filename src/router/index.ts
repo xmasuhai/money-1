@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import VueRouter, {RouteConfig} from 'vue-router';
+// 路由组件
 import Money from '@/views/Money.vue';
 import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
-import NotFound from '@/views/NotFound.vue';
 import EditLabel from '@/views/EditLabel.vue';
+import NotFound from '@/views/NotFound.vue';
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,12 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/money',
-    component: Money
+    component: Money,
+    beforeEnter: (to, from, next) => {
+      // 读取 moneySessionStore
+      console.log('get moneySessionStore');
+      next()
+    },
   },
   {
     path: '/labels',
@@ -36,6 +42,8 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
+  mode: 'hash',
+  base: process.env.BASE_URL,
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

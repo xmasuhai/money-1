@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <ul class="current">
-      <li v-for="tag in tagList"
+      <li v-for="tag in tagsList"
           :key="tag.id"
           @click="toggle(tag)"
           :class="{selected: selectedTags.indexOf(tag)>=0 }">
@@ -28,8 +28,8 @@ export default class Tags extends mixins(tagHelper) {
     this.$store.commit('fetchTags');
   }
 
-  get tagList() {
-    return this.$store.state.tagStore.tagList;
+  get tagsList() {
+    return this.$store.state.tagStore.tagsList;
   }
 
   // 将点击的标签 推入数组/从数组中删除 并发布给父组件
@@ -45,7 +45,7 @@ export default class Tags extends mixins(tagHelper) {
 
   @Watch('isDeselectTags')
   deselectTag() {
-    if(this.isDeselectTags) {
+    if (this.isDeselectTags) {
       this.selectedTags = [];
       this.$emit('update:selectedTags', this.selectedTags);
     }
@@ -54,6 +54,7 @@ export default class Tags extends mixins(tagHelper) {
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
 .tags {
   background: #fff;
   display: flex;
@@ -61,10 +62,12 @@ export default class Tags extends mixins(tagHelper) {
   flex-grow: 1;
   font-size: 14px;
   padding: 16px;
+
   > .current {
     order: 1;
     display: flex;
     flex-wrap: wrap;
+
     > li {
       $h: 24px;
       $bg: #d9d9d9;
@@ -75,20 +78,23 @@ export default class Tags extends mixins(tagHelper) {
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
+
       &.selected {
         background: darken($bg, 50%);
         color: #fff;
-        }
       }
     }
+  }
+
   > .new {
     padding-top: 16px;
+
     button {
       background: transparent;
       border-bottom: 1px solid;
       color: #999;
       padding: 0 4px;
-      }
     }
   }
+}
 </style>
