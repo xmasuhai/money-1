@@ -25,6 +25,7 @@ export default class QRCode extends Vue {
     } else if (this.flagOff) {
       this.flag = false;
     } else {
+      this.$emit('updateMask')
       this.flag = false;
     }
     return this.flag;
