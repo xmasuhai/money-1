@@ -32,9 +32,10 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import Numpad from '@/components/Money/Numpad.vue';
-import {Component, Vue} from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import {Component, /*Vue*/} from 'vue-property-decorator';
+import {NavigationGuardNext, Route} from 'vue-router';
 // 页面模块组件
 import HeaderBar from '@/components/HeaderBar.vue';
 import Tags from '@/components/Money/Tags.vue';
@@ -46,20 +47,21 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 
 @Component({
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
-
-  beforeRouteEnter(to: Route, from: Route, next: () => void): void {
+  beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext): void {
     console.log('beforeRouteEnter');
-    next();
+    next(vm => {
+      // 通过 `vm` 访问组件实例 代替this
+      vm.$store.commit('loadMoneySessionStore');
+    });
+    next()
   },
-  beforeRouteLeave(to: Route, from: Route, next: () => void): void {
+  beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext): void {
     console.log('beforeRouteLeave');
-    next();
-  },
-  beforeRouteUpdate(to: Route, from: Route, next: () => void): void {
-    console.log('beforeRouteUpdate'); //暂时不生效，版本问题
+    this.$store.commit('saveMoneySessionStore');
     next();
   }
 })
+
 export default class Money extends Vue {
   // data
   record: RecordItem = {
@@ -82,6 +84,8 @@ export default class Money extends Vue {
   pickTags(selectedTags: Tag[]) {
     this.emptyTags = false;
     this.record.tags = selectedTags;
+    // 页面暂存 selectedTags
+    console.log(selectedTags);
   }
 
   deselectTags(deselect: boolean) {
@@ -131,7 +135,6 @@ export default class Money extends Vue {
     }
     this.reset();
   }
-
 
 }
 

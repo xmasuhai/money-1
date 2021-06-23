@@ -36,7 +36,7 @@ type GroupedType = {
 //   => { return(output: string) };
 
 type MoneySession = {
-  tagsList: {};
+  tagsList: Tag[];
   tipsText: {};
   dateStore: {};
   typeStore: {};
