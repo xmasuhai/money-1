@@ -9,7 +9,7 @@ export default class OperateNumpad extends Vue {
   @Prop(Boolean) readonly isReset!: boolean;
   output = this.amount.toString() || '0.00';
   // 当前按钮点记号下标
-  currentIndex = 12;
+  currentIndex = -1;
 
   checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
     // '.'的逻辑
@@ -34,6 +34,8 @@ export default class OperateNumpad extends Vue {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent?.trim() as string;
     this.checkInputNum(button, input, event);
+    console.log(this.output);
+    this.$store.commit('updateMoneyStore', this.output);
   }
 
   removeNum(event: TapEvent, number = -1) {
@@ -41,12 +43,14 @@ export default class OperateNumpad extends Vue {
     if (this.output === '') {
       this.clearNum();
     }
+    this.$store.commit('updateMoneyStore', this.output);
     return this.output;
   }
 
   clearNum() {
     this.currentIndex = -1;
     this.output = '0';
+    this.$store.commit('updateMoneyStore', this.output);
   }
 
   confirmNum() {
@@ -70,6 +74,7 @@ export default class OperateNumpad extends Vue {
     }
     this.$emit('update:deselectTags', false);
     this.currentIndex = -1;
+    this.$store.commit('updateMoneyStore', this.output);
   }
 
 }

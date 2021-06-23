@@ -9,6 +9,7 @@
     <FormItem class="form-item"
               field-name="备注"
               placeholder="在这里输入备注"
+              type="text"
               :inputValue.sync="record.tips"/>
     <div class="creatAt">
       <FormItem class="form-item"
@@ -32,6 +33,7 @@
 </template>
 
 <script lang="ts">
+// 框架组件
 import Vue from 'vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import {Component, /*Vue*/} from 'vue-property-decorator';
@@ -85,7 +87,7 @@ export default class Money extends Vue {
     this.emptyTags = false;
     this.record.tags = selectedTags;
     // 页面暂存 selectedTags
-    console.log(selectedTags);
+    this.$store.commit('updateTagsList', selectedTags);
   }
 
   deselectTags(deselect: boolean) {

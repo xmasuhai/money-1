@@ -31,6 +31,7 @@ export default class Tabs extends Vue {
 
   select(item: DataSource) {
     this.$emit('update:type', item.type);
+    this.$store.commit('updateTypeStore', item.type);
   }
 }
 </script>

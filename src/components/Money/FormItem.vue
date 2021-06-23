@@ -31,6 +31,11 @@ export default class FormItem extends Vue {
 
   oninputValueChanged(newValue: string) {
     this.$emit('update:inputValue', newValue);
+    if(this.type === 'date') {
+      this.$store.commit('updateDateStore', newValue)
+    } else if(this.type === 'text') {
+      this.$store.commit('updateTipsText', newValue)
+    }
   }
   x(isoString: string) {
     return dayjs(isoString).format('YYYY-MM-DD')

@@ -1,7 +1,6 @@
 <template>
   <div class="numpad">
-    <numpad-output :output="output"
-    ></numpad-output>
+    <numpad-output :output="output"></numpad-output>
     <div class="buttons"
          @[clientEvent]="checkBtn($event); handleButtonFn($event)"
          @mousemove="showSearchlight"
