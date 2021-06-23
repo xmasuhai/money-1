@@ -5,7 +5,7 @@
       <template v-if="type === 'date'">
         <input :type="type || 'text'"
                :placeholder="placeholder"
-               :value="x(inputValue)"
+               :value="dateFormat(inputValue)"
                @input="oninputValueChanged($event.target.value)"/>
       </template>
       <template v-else>
@@ -37,7 +37,8 @@ export default class FormItem extends Vue {
       this.$store.commit('updateTipsText', newValue)
     }
   }
-  x(isoString: string) {
+
+  dateFormat(isoString: string) {
     return dayjs(isoString).format('YYYY-MM-DD')
   }
 }

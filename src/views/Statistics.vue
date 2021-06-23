@@ -2,6 +2,7 @@
   <Layout class="statistics">
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
+    <ECharts :options="x"/>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
@@ -23,20 +24,28 @@
 </template>
 
 <script lang="ts">
+// basic
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+// vendor
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('zh-cn');
+// utils
+import clone from '@/lib/clone.ts';
+import clearJetLag from '@/lib/clearJetLag';
+// components
 import Tabs from '@/components/Tabs.vue';
 import HeaderBar from '@/components/HeaderBar.vue';
 import recordTypeList from '@/constants/recordTypeList.ts';
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-import clone from '@/lib/clone.ts';
-import clearJetLag from '@/lib/clearJetLag';
-
-dayjs.locale('zh-cn');
+// echarts
+const ECharts = require('vue-echarts').default;
+import 'echarts/lib/chart/bar';
+import 'echarts/lib/component/tooltip';
 
 @Component({
-  components: {HeaderBar, Tabs},
+  components: {HeaderBar, Tabs, ECharts},
 })
 export default class Statistics extends Vue {
 
@@ -45,6 +54,50 @@ export default class Statistics extends Vue {
 
   beforeCreate() {
     this.$store.commit('fetchRecords');
+  }
+
+  get x() {
+    const data = [];
+    for (let i = 0; i <= 360; i++) {
+      const t = i / 180 * Math.PI;
+      const r = Math.sin(2 * t) * Math.cos(2 * t);
+      data.push([r, i]);
+    }
+    return {
+      title: {
+        text: '极坐标双数值轴'
+      },
+      legend: {
+        data: ['line']
+      },
+      polar: {
+        center: ['50%', '54%']
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      angleAxis: {
+        type: 'value',
+        startAngle: 0
+      },
+      radiusAxis: {
+        min: 0
+      },
+      series: [
+        {
+          coordinateSystem: 'polar',
+          name: 'line',
+          type: 'line',
+          showSymbol: false,
+          data: data
+        }
+      ],
+      animationDuration: 2000
+    };
+
   }
 
   get recordList() {
@@ -112,6 +165,11 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
+.echarts {
+  max-width: 100%;
+  height: 400px;
+}
 
 .statistics {
   .noResult {
