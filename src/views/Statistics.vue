@@ -2,7 +2,8 @@
   <Layout class="statistics">
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
-    <ECharts :options="x"/>
+    <ECharts :options="showEChart"/>
+    <Chart :options="showEChart"/>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
@@ -30,6 +31,7 @@ import {Component} from 'vue-property-decorator';
 // vendor
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
+
 dayjs.locale('zh-cn');
 
 // utils
@@ -42,13 +44,13 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 
 // echarts
 const ECharts = require('vue-echarts').default;
-
+import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/chart/line'
-import 'echarts/lib/component/polar'
+// my echarts
+import Chart from '@/components/Statistics/Chart.vue'
 
 @Component({
-  components: {HeaderBar, Tabs, ECharts},
+  components: {HeaderBar, Tabs, ECharts, Chart},
 })
 export default class Statistics extends Vue {
 
@@ -59,46 +61,37 @@ export default class Statistics extends Vue {
     this.$store.commit('fetchRecords');
   }
 
-  get x() {
-    const data = [];
-    for (let i = 0; i <= 360; i++) {
-      const t = i / 180 * Math.PI;
-      const r = Math.sin(2 * t) * Math.cos(2 * t);
-      data.push([r, i]);
-    }
+  get showEChart() {
     return {
-      title: {
-        text: '极坐标双数值轴'
+      xAxis: {
+        type: 'category',
+        data: [
+          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+          'Mon', 'Tue'
+        ]
       },
-      legend: {
-        data: ['line']
-      },
-      polar: {
-        center: ['50%', '54%']
+      yAxis: {
+        type: 'value'
       },
       tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross'
-        }
+        show: true,
+        triggeron: 'click'
       },
-      angleAxis: {
-        type: 'value',
-        startAngle: 0
-      },
-      radiusAxis: {
-        min: 0
-      },
-      series: [
-        {
-          coordinateSystem: 'polar',
-          name: 'line',
-          type: 'line',
-          showSymbol: false,
-          data: data
-        }
-      ],
-      animationDuration: 2000
+      series: [{
+        data: [
+          820, 932, 901, 934, 1290, 1330, 1320,
+          820, 932, 901, 934, 1290, 1330, 1320,
+          820, 932, 901, 934, 1290, 1330, 1320,
+          820, 932, 901, 934, 1290, 1330, 1320,
+          820, 932
+        ],
+        type: 'line',
+        showBackground: true
+      }],
+      animationDuration: 888
     };
 
   }
@@ -186,7 +179,7 @@ export default class Statistics extends Vue {
 
   .echarts {
     margin: 0 auto;
-    max-width: 80%;
+    max-width: 90%;
     max-height: 50%;
   }
 
