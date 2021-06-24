@@ -13,26 +13,28 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import getClientType from '@/lib/getClientWidth';
 
 @Component
 export default class QRCode extends Vue {
   flag = true;
   flagOff = false;
+  clientType = getClientType();
 
   get riseFlag() {
-    if (document.documentElement.clientWidth > 500 && !this.flagOff) {
+    if (this.clientType === 'PC' && !this.flagOff) {
       this.flag = true;
     } else if (this.flagOff) {
       this.flag = false;
-    } else {
-      this.$emit('updateMask')
+    } else if (this.clientType === 'mobile') {
+      this.$emit('updateMask');
       this.flag = false;
     }
     return this.flag;
   }
 
   mask() {
-    this.$emit('updateMask')
+    this.$emit('updateMask');
   }
 }
 </script>

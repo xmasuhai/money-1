@@ -47,7 +47,7 @@ const ECharts = require('vue-echarts').default;
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 // my echarts
-import Chart from '@/components/Statistics/Chart.vue'
+import Chart from '@/components/Statistics/Chart.vue';
 
 @Component({
   components: {HeaderBar, Tabs, ECharts, Chart},
@@ -89,9 +89,18 @@ export default class Statistics extends Vue {
           820, 932
         ],
         type: 'line',
+        itemStyle: {
+          borderWidth: 3
+        },
+        symbolSize: 12,
         showBackground: true
       }],
-      animationDuration: 888
+      animationDuration: 888,
+      grid: {
+        left: 8,
+        right: 0,
+        top: 0
+      }
     };
 
   }
@@ -181,6 +190,12 @@ export default class Statistics extends Vue {
     margin: 0 auto;
     max-width: 90%;
     max-height: 50%;
+    &-wrapper {
+      overflow: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   %item {

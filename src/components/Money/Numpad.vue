@@ -27,6 +27,7 @@ import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 import SearchLight from '@/mixins/searchLight.ts';
 import OperateNumpad from '@/mixins/operateNumpad.ts';
 import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
+import getClientType from '@/lib/getClientWidth';
 
 @Component({
   components: {NumpadOutput, NumpadButton}
@@ -36,6 +37,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   currentIndex = -1;
   // 默认绑定事件
   eventName = 'click';
+  clientType = getClientType();
 
   // 返回当前选中按钮的下标
   checkBtn(e: UIEvent) {
@@ -51,9 +53,9 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
 
   // 判断客户端尺寸 返回对应的事件类型
   get clientEvent() {
-    if (document.documentElement.clientWidth > 500) {
+    if (this.clientType === 'PC') {
       this.eventName = 'click';
-    } else {
+    } else if (this.clientType === 'mobile') {
       this.eventName = 'touchstart';
     }
     return this.eventName;
@@ -87,7 +89,6 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     {id: 'zero', text: '0', name: 'num', bundleEvent: 'inputNum'},
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
-
 
 
 }
