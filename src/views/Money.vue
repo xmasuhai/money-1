@@ -124,6 +124,7 @@ export default class Money extends Vue {
     this.record.tips = '';
     this.record.tags = [];
     this.record.amount = 0;
+    this.$store.commit('resetMoneySessionStore');
     return this.record.type;
   }
 

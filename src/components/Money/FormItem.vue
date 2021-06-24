@@ -3,7 +3,7 @@
     <label class="form-item">
       <span class="name">{{ fieldName }}</span>
       <template v-if="type === 'date'">
-        <input :type="type || 'text'"
+        <input :type="type"
                :placeholder="placeholder"
                :value="dateFormat(inputValue)"
                @input="oninputValueChanged($event.target.value)"/>

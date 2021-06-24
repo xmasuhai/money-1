@@ -30,8 +30,8 @@ import {Component} from 'vue-property-decorator';
 // vendor
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-
 dayjs.locale('zh-cn');
+
 // utils
 import clone from '@/lib/clone.ts';
 import clearJetLag from '@/lib/clearJetLag';
@@ -39,10 +39,13 @@ import clearJetLag from '@/lib/clearJetLag';
 import Tabs from '@/components/Tabs.vue';
 import HeaderBar from '@/components/HeaderBar.vue';
 import recordTypeList from '@/constants/recordTypeList.ts';
+
 // echarts
 const ECharts = require('vue-echarts').default;
-import 'echarts/lib/chart/bar';
+
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/polar'
 
 @Component({
   components: {HeaderBar, Tabs, ECharts},
@@ -166,15 +169,25 @@ export default class Statistics extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
 
-.echarts {
-  max-width: 100%;
-  height: 400px;
-}
-
 .statistics {
+  &::v-deep {
+    .layout-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
   .noResult {
     padding: 16px;
     text-align: center;
+  }
+
+  .echarts {
+    margin: 0 auto;
+    max-width: 80%;
+    max-height: 50%;
   }
 
   %item {

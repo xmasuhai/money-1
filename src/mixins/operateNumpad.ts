@@ -34,7 +34,6 @@ export default class OperateNumpad extends Vue {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent?.trim() as string;
     this.checkInputNum(button, input, event);
-    console.log(this.output);
     this.$store.commit('updateMoneyStore', this.output);
   }
 

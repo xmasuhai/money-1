@@ -12,7 +12,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class NumpadOutput extends Vue {
   @Prop() output!: string;
 
-  // computed 格式化显示金额逻辑
+  // computed // 格式化显示金额逻辑
   get localOutput() {
     // 分别 存 整数部分(integer part) 和小数部分(decimal part)
     const outPutInteger = Math.trunc(Number(this.output)).toString();

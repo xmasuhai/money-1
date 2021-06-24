@@ -88,14 +88,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
-  // 格式化显示金额逻辑
-  get localOutput() {
-    // 分别 存 整数部分(integer part) 和小数部分(decimal part)
-    const outPutInteger = Math.trunc(Number(this.output)).toString();
-    const [outPutDecimal = '.00'] = this.output.match(/\.\d{1,2}/g) || '';
-    return '¥ ' + outPutInteger
-      .replace(/(\d)(?=(?:\d{4})+$)/g, '$1,') + outPutDecimal;
-  }
+
 
 }
 </script>

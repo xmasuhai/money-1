@@ -11,12 +11,17 @@ const moneySessionStore = {
   },
   mutations: {
     loadMoneySessionStore(state: MoneySession) {
-      console.log('loadMoneySessionStore');
+      console.log('-----------------');
       state.tagsList = JSON.parse(window.sessionStorage.getItem('tagsList') ?? '[]');
       state.tipsText = JSON.parse(window.sessionStorage.getItem('tipsText') ?? '[]');
       state.dateStore = JSON.parse(window.sessionStorage.getItem('dateStore') ?? '[]');
       state.typeStore = JSON.parse(window.sessionStorage.getItem('typeStore') ?? '[]');
       state.moneyStore = JSON.parse(window.sessionStorage.getItem('moneyStore') ?? '[]');
+      console.log('state.tagsList: ', state.tagsList);
+      console.log('state.tipsText: ', state.tipsText);
+      console.log('state.dateStore: ', state.dateStore);
+      console.log('state.typeStore: ', state.typeStore);
+      console.log('state.moneyStore: ', state.moneyStore);
       // 并且 更新数据 渲染到页面
     },
     saveMoneySessionStore(state: MoneySession) {
@@ -32,7 +37,7 @@ const moneySessionStore = {
       console.log('updateTagsList: ', state.tagsList);
     },
     updateTipsText(state: MoneySession, newValue: string) {
-      state.dateStore = newValue;
+      state.tipsText = newValue;
       console.log('updateTipsText:', state.tipsText);
     },
     updateDateStore(state: MoneySession, newValue: string) {
@@ -44,8 +49,15 @@ const moneySessionStore = {
       console.log('updateTypeStore', state.typeStore);
     },
     updateMoneyStore(state: MoneySession, output: string) {
-      state.moneyStore = output;
+      state.moneyStore = output.slice(1);
       console.log('updateMoneyStore', state.moneyStore);
+    },
+    resetMoneySessionStore(state: MoneySession) {
+      state.tagsList = [];
+      state.tipsText = {};
+      state.dateStore = {};
+      state.typeStore = {};
+      state.moneyStore = {};
     }
   }
 };
