@@ -15,7 +15,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class NumpadButton extends Vue {
   @Prop(String) buttonText!: string;
   @Prop(Number) buttonIndex!: number;
-  @Prop({type: Number, default: 13}) currentIndex!: number;
+  @Prop({type: Number, default: -1}) currentIndex!: number;
 }
 </script>
 

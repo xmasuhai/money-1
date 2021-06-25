@@ -4,6 +4,7 @@
                :hasIcon="false">
     </HeaderBar>
     <Tags @update:selectedTags="pickTags"
+          :sessionSelectedTags="sessionSelectedTags"
           :is-deselect-tags="emptyTags"
           class="tags"/>
     <FormItem class="form-item"
@@ -55,7 +56,7 @@ import recordTypeList from '@/constants/recordTypeList.ts';
       // 通过 `vm` 访问组件实例 代替this
       vm.$store.commit('loadMoneySessionStore');
     });
-    next()
+    next();
   },
   beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext): void {
     console.log('beforeRouteLeave');
@@ -73,6 +74,7 @@ export default class Money extends Vue {
     amount: 0,
     createdAt: new Date().toISOString(),
   };
+  sessionSelectedTags = [];
   recordTypeList = recordTypeList;
   checkoutResult = false;
   emptyTags = false;
@@ -139,9 +141,18 @@ export default class Money extends Vue {
     this.reset();
   }
 
+  initSessionStore() {
+    console.log('更新数据 渲染到页面');
+    // 更新数据 渲染到页面
+    this.$store.commit('loadMoneySessionStore');
+    this.sessionSelectedTags = this.$store.state.moneySessionStore.tagsList;
+  }
+
+  // hooks
+  beforeMount() {
+    this.initSessionStore();
+  }
 }
-
-
 </script>
 
 <style lang="scss" scoped>

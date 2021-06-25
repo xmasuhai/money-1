@@ -36,6 +36,23 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   currentIndex = -1;
   // 默认绑定事件
   eventName = 'click';
+  // 数字键盘文字图标数据
+  numPadText = [
+    {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
+    {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
+    {id: '3', text: '3', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'delete', text: '', name: 'delete', bundleEvent: 'removeNum'},
+    {id: '4', text: '4', name: 'num', bundleEvent: 'inputNum'},
+    {id: '5', text: '5', name: 'num', bundleEvent: 'inputNum'},
+    {id: '6', text: '6', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'clear', text: '', name: 'clear', bundleEvent: 'clearNum'},
+    {id: '7', text: '7', name: 'num', bundleEvent: 'inputNum'},
+    {id: '8', text: '8', name: 'num', bundleEvent: 'inputNum'},
+    {id: '9', text: '9', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'ok', text: '', name: 'ok', bundleEvent: 'confirmNum'},
+    {id: 'zero', text: '0', name: 'num', bundleEvent: 'inputNum'},
+    {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
+  ];
 
   // 返回当前选中按钮的下标
   checkBtn(e: UIEvent) {
@@ -69,26 +86,6 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     const bundleEvent = target.dataset.bundleEvent;
     this[bundleEvent as BundleEventString](e);
   }
-
-  // 数字键盘文字图标数据
-  numPadText = [
-    {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
-    {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
-    {id: '3', text: '3', name: 'num', bundleEvent: 'inputNum'},
-    {id: 'delete', text: '', name: 'delete', bundleEvent: 'removeNum'},
-    {id: '4', text: '4', name: 'num', bundleEvent: 'inputNum'},
-    {id: '5', text: '5', name: 'num', bundleEvent: 'inputNum'},
-    {id: '6', text: '6', name: 'num', bundleEvent: 'inputNum'},
-    {id: 'clear', text: '', name: 'clear', bundleEvent: 'clearNum'},
-    {id: '7', text: '7', name: 'num', bundleEvent: 'inputNum'},
-    {id: '8', text: '8', name: 'num', bundleEvent: 'inputNum'},
-    {id: '9', text: '9', name: 'num', bundleEvent: 'inputNum'},
-    {id: 'ok', text: '', name: 'ok', bundleEvent: 'confirmNum'},
-    {id: 'zero', text: '0', name: 'num', bundleEvent: 'inputNum'},
-    {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
-  ];
-
-
 
 }
 </script>
