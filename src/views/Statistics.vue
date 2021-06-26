@@ -172,6 +172,12 @@ export default class Statistics extends Vue {
 @import "~@/assets/style/global.scss";
 
 .statistics {
+  max-width: 100%;
+  min-height: 50%;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
   &::v-deep {
     .layout-content {
       display: flex;
@@ -188,13 +194,10 @@ export default class Statistics extends Vue {
 
   .echarts {
     margin: 0 auto;
-    max-width: 90%;
+    max-width: 500%;
     max-height: 50%;
     &-wrapper {
-      overflow: auto;
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      overflow: scroll;
     }
   }
 

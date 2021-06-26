@@ -2,7 +2,7 @@
   <div class="numpad">
     <numpad-output :output="output"></numpad-output>
     <div class="buttons"
-         @[clientEvent]="checkBtn($event); handleButtonFn($event)"
+         @[clientEvent]="markButton($event); handleButtonFn($event)"
          @mousemove="showSearchlight"
          :style="searchlightStyle">
       <numpad-button
@@ -39,39 +39,6 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   eventName = 'click';
   clientType = getClientType();
 
-  // 返回当前选中按钮的下标
-  checkBtn(e: UIEvent) {
-    const target = e.target as HTMLElement;
-    const className = target.className;
-    const index = parseInt(target.dataset.index || '-1', 10);
-    if (index !== -1) {
-      if (className === 'basic-btn' || className.includes('zero')) {
-        this.currentIndex = index;
-      }
-    }
-  }
-
-  // 判断客户端尺寸 返回对应的事件类型
-  get clientEvent() {
-    if (this.clientType === 'PC') {
-      this.eventName = 'click';
-    } else if (this.clientType === 'mobile') {
-      this.eventName = 'touchstart';
-    }
-    return this.eventName;
-  }
-
-  // 给不同的按钮绑定对应事件的处理函数
-  handleButtonFn(e: TapEvent) {
-    let target = e.target as HTMLElement;
-    while (!target.matches('button')) {
-      // 向外寻找父节点
-      target = target.parentNode as HTMLElement;
-    }
-    const bundleEvent = target.dataset.bundleEvent;
-    this[bundleEvent as BundleEventString](e);
-  }
-
   // 数字键盘文字图标数据
   numPadText = [
     {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
@@ -90,7 +57,38 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     {id: 'dot', text: '.', name: 'dot', bundleEvent: 'inputNum'},
   ];
 
+  // 返回当前选中按钮的下标
+  markButton(e: UIEvent) {
+    const target = e.target as HTMLElement;
+    const className = target.className;
+    const index = parseInt(target.dataset.index || '-1', 10);
+    if (index !== -1) {
+      if (className === 'basic-btn' || className.includes('zero')) {
+        this.currentIndex = index;
+      }
+    }
+  }
 
+  // 判断客户端尺寸 返回对应的事件类型
+  get clientEvent(): string {
+    if (this.clientType === 'PC') {
+      this.eventName = 'click';
+    } else if (this.clientType === 'mobile') {
+      this.eventName = 'touchstart';
+    }
+    return this.eventName;
+  }
+
+  // 给不同的按钮绑定对应事件的处理函数
+  handleButtonFn(e: TapEvent) {
+    let target = e.target as HTMLElement;
+    while (!target.matches('button')) {
+      // 向外寻找父节点
+      target = target.parentNode as HTMLElement;
+    }
+    const bundleEvent = target.dataset.bundleEvent;
+    this[bundleEvent as BundleEventString](e);
+  }
 }
 </script>
 

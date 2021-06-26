@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @resize="window.location.reload();">
     <QRCode v-show="show"
             @updateMask="hideQRCode">
     </QRCode>

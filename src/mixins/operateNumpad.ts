@@ -30,6 +30,10 @@ export default class OperateNumpad extends Vue {
     this.output += input;
   }
 
+  clearNumpadMark() {
+    this.currentIndex = -1;
+  }
+
   inputNum(event: TapEvent) {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent?.trim() as string;
@@ -43,11 +47,12 @@ export default class OperateNumpad extends Vue {
       this.clearNum();
     }
     this.$store.commit('updateMoneyStore', this.output);
+    this.clearNumpadMark();
     return this.output;
   }
 
   clearNum() {
-    this.currentIndex = -1;
+    this.clearNumpadMark();
     this.output = '0';
     this.$store.commit('updateMoneyStore', this.output);
   }
@@ -72,7 +77,7 @@ export default class OperateNumpad extends Vue {
       this.$emit('update:deselectTags', true);
     }
     this.$emit('update:deselectTags', false);
-    this.currentIndex = -1;
+    this.clearNumpadMark();
     this.$store.commit('updateMoneyStore', this.output);
   }
 
