@@ -3,17 +3,17 @@
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <ECharts :options="showEChart"/>
-    <Chart :options="showEChart"/>
+    <Chart class="echarts" :options="showEChart"/>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
         <ol>
-          <li class="record" v-for="item in group.items" :key="item.id">
-            <span class="recordTag">{{ tagToString(item.tags) }}</span>
+          <li class="record" v-for="{amount, id, tags, tips} in group.items" :key="id">
+            <span class="recordTag">{{ tagToString(tags) }}</span>
             <div class="notes">
-              <span class="tips">备注：</span><span class="text">{{ item.tips }}</span>
+              <span class="tips">备注：</span><span class="text">{{ tips }}</span>
             </div>
-            <span>￥ {{ item.amount }}</span>
+            <span>￥ {{ amount }}</span>
           </li>
         </ol>
       </li>
@@ -57,7 +57,7 @@ export default class Statistics extends Vue {
   type = '-';
   recordTypeList = recordTypeList;
 
-  beforeCreate() {
+  protected beforeCreate(): void {
     this.$store.commit('fetchRecords');
   }
 
@@ -175,9 +175,11 @@ export default class Statistics extends Vue {
   max-width: 100%;
   min-height: 50%;
   overflow: auto;
+
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
+
   &::v-deep {
     .layout-content {
       display: flex;
@@ -185,20 +187,36 @@ export default class Statistics extends Vue {
       align-items: center;
       flex-direction: column;
     }
-  }
 
-  .noResult {
-    padding: 16px;
-    text-align: center;
-  }
-
-  .echarts {
-    margin: 0 auto;
-    max-width: 500%;
-    max-height: 50%;
-    &-wrapper {
-      overflow: scroll;
+    %sticky {
+      position: sticky;
+      z-index: 1;
     }
+
+    .headerBar {
+      @extend %sticky;
+      top: 0;
+
+      > .left-icon {
+        transform: rotate3d(0, 1, 0, 180deg);
+      }
+    }
+
+    .type-tabs {
+      @extend %sticky;
+      top: 50px;
+    }
+
+    .echarts {
+      margin: 0 auto;
+      max-width: 500%;
+      max-height: 30%;
+
+      &-wrapper {
+        overflow: scroll;
+      }
+    }
+
   }
 
   %item {
@@ -208,31 +226,13 @@ export default class Statistics extends Vue {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  ::v-deep {
-    .headerBar {
-      > .left-icon {
-        transform: rotate3d(0, 1, 0, 180deg);
-      }
-    }
-
-    .type-tabs-item {
-      background: #fff;
-      position: relative;
-
-      &.selected {
-        background: #c4c4c4;
-
-        &::after {
-          display: none;
-        }
-      }
-    }
+    margin-top: 1px;
   }
 
   .title {
     @extend %item;
+    margin-top: 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 3px 3px 0, rgba(7, 7, 7, 0.05) 0 0 0 1px;
   }
 
   .record {
@@ -258,5 +258,12 @@ export default class Statistics extends Vue {
       }
     }
   }
+
+  .noResult {
+    padding: 16px;
+    text-align: center;
+  }
+
 }
+
 </style>

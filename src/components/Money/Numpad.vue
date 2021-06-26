@@ -27,7 +27,7 @@ import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 import SearchLight from '@/mixins/searchLight.ts';
 import OperateNumpad from '@/mixins/operateNumpad.ts';
 import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
-import getClientType from '@/lib/getClientWidth';
+import getClientType from '@/lib/getClientWidth.ts';
 
 @Component({
   components: {NumpadOutput, NumpadButton}
@@ -37,6 +37,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   currentIndex = -1;
   // 默认绑定事件
   eventName = 'click';
+  // 客户端设备信息
   clientType = getClientType();
 
   // 数字键盘文字图标数据
