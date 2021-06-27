@@ -30,7 +30,7 @@ export default class Tags extends mixins(tagHelper) {
     return this.$store.state.tagStore.tagsList;
   }
 
-  renderSessionTag() {
+  renderSessionTags() {
     this.selectedTags = this.sessionSelectedTags || [];
     // session 数据 循环推入 selectedTags 将样式染到页面
     this.sessionSelectedTags?.forEach((tag) => {
@@ -75,7 +75,7 @@ export default class Tags extends mixins(tagHelper) {
   }
 
   mounted() {
-    this.renderSessionTag();
+    this.renderSessionTags();
   }
 
 }

@@ -5,8 +5,9 @@ import {Prop} from 'vue-property-decorator';
 // 操作数字键盘的所有逻辑
 @Component
 export default class OperateNumpad extends Vue {
-  @Prop(Number) readonly amount!: number;
+  @Prop(Number) amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
+
   output = this.amount.toString() || '0.00';
   // 当前按钮点记号下标
   currentIndex = -1;

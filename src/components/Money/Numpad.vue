@@ -1,6 +1,7 @@
 <template>
   <div class="numpad">
-    <numpad-output :output="output"></numpad-output>
+    <numpad-output :output="output"
+                   @update:output="getSessionOutput"/>
     <div class="buttons"
          @[clientEvent]="markButton($event); handleButtonFn($event)"
          @mousemove="showSearchlight"
@@ -90,6 +91,11 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     const bundleEvent = target.dataset.bundleEvent;
     this[bundleEvent as BundleEventString](e);
   }
+
+  getSessionOutput(output: string) {
+    this.output = output.toString();
+  }
+
 }
 </script>
 

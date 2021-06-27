@@ -3,10 +3,10 @@ const moneySessionStore = {
   state() {
     return {
       tagsList: [],
-      tipsText: {},
-      dateStore: {},
-      typeStore: {},
-      moneyStore: {},
+      tipsText: '',
+      dateStore: '',
+      typeStore: '-',
+      moneyStore: '',
     };
   },
   mutations: {
@@ -15,7 +15,7 @@ const moneySessionStore = {
       state.tipsText = JSON.parse(window.sessionStorage.getItem('tipsText') ?? '[]');
       state.dateStore = JSON.parse(window.sessionStorage.getItem('dateStore') ?? '[]');
       state.typeStore = JSON.parse(window.sessionStorage.getItem('typeStore') ?? '[]');
-      state.moneyStore = JSON.parse(window.sessionStorage.getItem('moneyStore') ?? '[]')
+      state.moneyStore = JSON.parse(window.sessionStorage.getItem('moneyStore') ?? '[]');
     },
     saveMoneySessionStore(state: MoneySession) {
       window.sessionStorage.setItem('tagsList', JSON.stringify(state.tagsList));
@@ -38,7 +38,7 @@ const moneySessionStore = {
       state.typeStore = type;
     },
     updateMoneyStore(state: MoneySession, output: string) {
-      state.moneyStore = output.slice(1);
+      state.moneyStore = output;
     },
     resetMoneySessionStore(state: MoneySession) {
       state.tagsList = [];

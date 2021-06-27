@@ -6,7 +6,7 @@
         <input :type="type"
                :placeholder="placeholder"
                :value="dateFormat(inputValue)"
-               @input="oninputValueChanged($event.target.value)"/>
+               @change="oninputValueChanged($event.target.value)"/>
       </template>
       <template v-else>
         <input :type="type || 'text'"
@@ -31,16 +31,33 @@ export default class FormItem extends Vue {
 
   oninputValueChanged(newValue: string) {
     this.$emit('update:inputValue', newValue);
-    if(this.type === 'date') {
-      this.$store.commit('updateDateStore', newValue)
-    } else if(this.type === 'text') {
-      this.$store.commit('updateTipsText', newValue)
+    if (this.type === 'date') {
+      this.$store.commit('updateDateStore', newValue);
+    } else if (this.type === 'text') {
+      this.$store.commit('updateTipsText', newValue);
+      this.$store.state.moneySessionStore.tipsText = newValue;
     }
   }
 
   dateFormat(isoString: string) {
-    return dayjs(isoString).format('YYYY-MM-DD')
+    return dayjs(isoString).format('YYYY-MM-DD');
   }
+
+  renderSessionInfo() {
+    if (this.type === 'text') {
+      this.oninputValueChanged(this.$store.state.moneySessionStore.tipsText);
+    } else if (this.type === 'date') {
+      if (this.$store.state.moneySessionStore.dateStore?.length === 0) {
+        this.$store.commit('updateDateStore', dayjs((new Date()).toISOString()).format('YYYY-MM-DD'));
+      }
+      this.oninputValueChanged(this.$store.state.moneySessionStore.dateStore);
+    }
+  }
+
+  mounted() {
+    this.renderSessionInfo();
+  }
+
 }
 </script>
 

@@ -18,7 +18,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Tabs extends Vue {
   @Prop({required: true, type: Array}) dataSource!: DataSource[];
-  @Prop(String) readonly type!: string;
+  @Prop(String) type!: string;
   @Prop(String) classPrefix?: string;
   @Prop({type: String, default: '64px'}) tabsHeight!: string;
 
@@ -33,6 +33,13 @@ export default class Tabs extends Vue {
     this.$emit('update:type', item.type);
     this.$store.commit('updateTypeStore', item.type);
   }
+
+  mounted() {
+    if (this.$store.state.moneySessionStore.typeStore.length === 0) {
+      this.$store.commit('updateTypeStore', '-');
+    }
+    this.$emit('update:type', this.$store.state.moneySessionStore.typeStore);
+  }
 }
 </script>
 
@@ -43,6 +50,7 @@ export default class Tabs extends Vue {
   text-align: center;
   justify-content: center;
   align-items: center;
+
   &-item {
     flex-grow: 1;
     font-size: 24px;

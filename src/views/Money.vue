@@ -47,21 +47,17 @@ import Tabs from '@/components/Tabs.vue';
 import DateGetter from '@/components/Money/DateGetter.vue';
 // 数据
 import recordTypeList from '@/constants/recordTypeList.ts';
+import dayjs from 'dayjs';
 
 @Component({
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
   beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext): void {
-    console.log('-------------------------------------');
-    console.log('beforeRouteEnter');
     next(vm => {
       // 通过 `vm` 访问组件实例 代替this
-      console.log("读取 session 数据");
       vm.$store.commit('loadMoneySessionStore'); // 读取 session 数据
     });
   },
   beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext): void {
-    console.log('-------------------------------------');
-    console.log('beforeRouteLeave');
     this.$store.commit('saveMoneySessionStore');
     next();
   }
@@ -74,8 +70,9 @@ export default class Money extends Vue {
     tips: '',
     type: '-',
     amount: 0,
-    createdAt: new Date().toISOString(),
+    createdAt: dayjs((new Date()).toISOString()).format('YYYY-MM-DD'),
   };
+
   sessionSelectedTags ? = this.$store.state.moneySessionStore.tagsList;
   recordTypeList = recordTypeList;
   checkoutResult = false;
