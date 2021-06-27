@@ -211,10 +211,12 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    (this.$refs.eChartWrapper as HTMLDivElement).scrollLeft = 99999;
-    (this.$refs.vChartWrapper as HTMLDivElement).scrollLeft = 99999;
-    (this.$refs.vChartContent as HTMLDivElement).scrollBy(999999, 0);
-    (this.$refs.eChartContent as HTMLDivElement).scrollBy(999999, 0);
+    const vchartDiv = (this.$refs.eChartWrapper as HTMLDivElement);
+    vchartDiv.scrollLeft = vchartDiv.scrollWidth;
+    const echartDiv = (this.$refs.vChartWrapper as HTMLDivElement);
+    echartDiv.scrollLeft = echartDiv.scrollWidth;
+    vchartDiv.scrollBy(vchartDiv.scrollWidth, 0);
+    echartDiv.scrollBy(echartDiv.scrollWidth, 0);
   }
 
 }
