@@ -57,10 +57,6 @@ export default class Statistics extends Vue {
   type = '-';
   recordTypeList = recordTypeList;
 
-  protected beforeCreate(): void {
-    this.$store.commit('fetchRecords');
-  }
-
   get showEChart() {
     return {
       xAxis: {
@@ -109,6 +105,7 @@ export default class Statistics extends Vue {
     return this.$store.state.recordStore.recordList;
   }
 
+  // 计算 分组列表
   get groupedList() {
     const {recordList} = this;
     // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
@@ -124,11 +121,13 @@ export default class Statistics extends Vue {
       title: dayjs(newList[0].createdAt.split('T')[0]).format('YYYY-MM-DD'),
       items: [newList[0],]
     }];
-    // 判断 newList[i] 从第二项开始的每一项的title: '20XX-XX-XX'  是否符合当前 分组项
+
+    // 判断 newList[i] 从第二项开始的每一项的 title: '20XX-XX-XX'  是否符合当前 分组项
     for (let i = 1; i < newList.length; i++) {
       const current = newList[i]; // 当前项
       const lastGroupItem = result[result.length - 1]; // 分组数据的最后一项
       const localDay = dayjs(current.createdAt.split('T')[0]);
+
       if (dayjs(lastGroupItem.title).isSame(localDay, 'day')) {
         lastGroupItem.items.push(current);
       } else {
@@ -138,6 +137,8 @@ export default class Statistics extends Vue {
         });
       }
     }
+
+    // 为 result.group 添加 计算总额 group.total 属性
     // result.group.items: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
     result.forEach(group => {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
@@ -145,24 +146,37 @@ export default class Statistics extends Vue {
     return result;
   }
 
+  // 显示项目 title 标签组合
   tagToString(tags: Tag[]) {
     return tags.length === 0 ? '无' : tags.map(tag => tag.name).join('、');
   }
 
+  // 显示标题为 日期分组
+  /**
+   * @param {string} someday: from group.title YY-MM-DD
+   * @return {string} formattedDate:
+   */
   showDay(someday: string) {
     const now = dayjs(new Date().toISOString());
     const thatDay = dayjs(clearJetLag(new Date(someday), '-'));
+    let formattedDate;
     if (thatDay.isSame(now, 'day')) {
-      return '今天';
+      formattedDate = '今天';
     } else if (thatDay.isSame(now.subtract(1, 'day'), 'day')) {
-      return '昨天';
+      formattedDate = '昨天';
     } else if (thatDay.isSame(now.subtract(2, 'day'), 'day')) {
-      return '前天';
+      formattedDate = '前天';
     } else if (thatDay.isSame(now, 'year')) {
-      return thatDay.format('M月D日');
+      formattedDate = thatDay.format('M月D日');
     } else {
-      return thatDay.format('YYYY年M月D日');
+      formattedDate = thatDay.format('YYYY年M月D日');
     }
+    return formattedDate;
+  }
+
+  // hooks
+  protected beforeCreate(): void {
+    this.$store.commit('fetchRecords');
   }
 
 }

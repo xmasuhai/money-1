@@ -3,12 +3,9 @@
     <ul class="current">
       <li v-for="tag in tagsList"
           :ref="tag.name"
-          :style="dymClass"
           :key="tag.id"
           @click="toggle(tag)"
-          :class="{selected: (selectedTags.indexOf(tag) >= 0),
-          initSelected: (sessionSelectedTags.indexOf(tag) >= 0)
-          }">
+          :class="{selected: (selectedTags.indexOf(tag) >= 0)}">
         {{ tag.name }}
       </li>
     </ul>
@@ -29,42 +26,40 @@ export default class Tags extends mixins(tagHelper) {
 
   selectedTags: Tag[] = [];
 
-  created() {
-    this.$store.commit('fetchTags');
-  }
-
   get tagsList() {
     return this.$store.state.tagStore.tagsList;
   }
 
-  get dymClass() {
-    console.log('this.tagsList: ', this.tagsList);
-    for(const tag of this.tagsList) {
-      console.log('tag.name: ', tag.name);
-    }
-    if(this.sessionSelectedTags) {
-      for(const tag of this.sessionSelectedTags) {
-        console.log('tag.name: ', tag.name);
-
-      }
-    }
-    return {
-    }
+  renderSessionTag() {
+    this.selectedTags = this.sessionSelectedTags || [];
+    // session 数据 循环推入 selectedTags 将样式染到页面
+    this.sessionSelectedTags?.forEach((tag) => {
+      // 将 selected 样式 加到 selectedTags 中的 tag 上
+      (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = 'selected';
+    });
   }
 
-  // 将点击的标签 推入数组/从数组中删除 并发布给父组件
+  // 将点击的标签 推入数组/从数组中删除 并将 标签列表 发布给父组件
   toggle(tag: Tag) {
     // 得到 本次 点击标签下标 在 被选中标签列表下标的位置
-    const index = this.selectedTags.map(itemTag => itemTag.id)
+    const index = this.selectedTags.map(itemTag => itemTag.id) // 得到被选中标签下标数组 []
       .indexOf(tag.id);
+
     // 下标是否存在于 被选中标签列表中
-    (index >= 0) ?
-      this.selectedTags.splice(index, 1) :
+    if (index >= 0) {
+      // 存在就 去除 标签列表中 下标对应的那项
+      this.selectedTags.splice(index, 1);
+      // 并去除 对应样式
+      (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = '';
+    } else {
+      // 不存在就将标签推入列表
       this.selectedTags.push(tag);
-    // 选中的标签传给父组件
+    }
+    // 将选中的标签 列表 传给父组件
     this.$emit('update:selectedTags', this.selectedTags);
   }
 
+  // 是否取消选取标签
   @Watch('isDeselectTags')
   deselectTag() {
     if (this.isDeselectTags) {
@@ -74,11 +69,15 @@ export default class Tags extends mixins(tagHelper) {
   }
 
   // hooks
-  mounted() {
-    if (this.sessionSelectedTags) {
-      console.log(this.sessionSelectedTags);
-    }
+  created() {
+    // 读取所有标签
+    this.$store.commit('fetchTags');
   }
+
+  mounted() {
+    this.renderSessionTag();
+  }
+
 }
 </script>
 
@@ -113,6 +112,7 @@ export default class Tags extends mixins(tagHelper) {
         background: darken($bg, 50%);
         color: #fff;
       }
+
       &.selected {
         background: darken($bg, 50%);
         color: #fff;

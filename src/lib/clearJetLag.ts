@@ -1,3 +1,10 @@
+/**
+ * 描述
+ * @date 2021-06-27
+ * @param {Date} isoDate
+ * @param {string} offsetType: new Date()
+ * @returns {Date}
+ */
 function clearJetLag(isoDate: Date = new Date(), offsetType: '-' | '+' | '' = '') {
   let localClock;
   if (offsetType === '') {

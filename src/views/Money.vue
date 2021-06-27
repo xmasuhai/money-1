@@ -3,7 +3,7 @@
     <HeaderBar :header-title="'记账'"
                :hasIcon="false">
     </HeaderBar>
-    <Tags @update:selectedTags="pickTags"
+    <Tags @update:selectedTags="updatePickedTags"
           :sessionSelectedTags="sessionSelectedTags"
           :is-deselect-tags="emptyTags"
           class="tags"/>
@@ -51,14 +51,16 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 @Component({
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
   beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext): void {
+    console.log('-------------------------------------');
     console.log('beforeRouteEnter');
     next(vm => {
       // 通过 `vm` 访问组件实例 代替this
-      vm.$store.commit('loadMoneySessionStore');
+      console.log("读取 session 数据");
+      vm.$store.commit('loadMoneySessionStore'); // 读取 session 数据
     });
-    next();
   },
   beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext): void {
+    console.log('-------------------------------------');
     console.log('beforeRouteLeave');
     this.$store.commit('saveMoneySessionStore');
     next();
@@ -74,7 +76,7 @@ export default class Money extends Vue {
     amount: 0,
     createdAt: new Date().toISOString(),
   };
-  sessionSelectedTags = [];
+  sessionSelectedTags ? = this.$store.state.moneySessionStore.tagsList;
   recordTypeList = recordTypeList;
   checkoutResult = false;
   emptyTags = false;
@@ -85,10 +87,11 @@ export default class Money extends Vue {
   }
 
   // methods
-  pickTags(selectedTags: Tag[]) {
+  updatePickedTags(selectedTags: Tag[]) {
     this.emptyTags = false;
+    // 记录 选中的标签
     this.record.tags = selectedTags;
-    // 页面暂存 selectedTags
+    // 页面暂存 session selectedTags
     this.$store.commit('updateTagsList', selectedTags);
   }
 
@@ -141,17 +144,6 @@ export default class Money extends Vue {
     this.reset();
   }
 
-  initSessionStore() {
-    console.log('更新数据 渲染到页面');
-    // 更新数据 渲染到页面
-    this.$store.commit('loadMoneySessionStore');
-    this.sessionSelectedTags = this.$store.state.moneySessionStore.tagsList;
-  }
-
-  // hooks
-  beforeMount() {
-    this.initSessionStore();
-  }
 }
 </script>
 
