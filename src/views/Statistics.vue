@@ -2,8 +2,12 @@
   <Layout class="statistics">
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
-    <ECharts :options="showEChart"/>
-    <Chart class="echarts" :options="showEChart"/>
+    <div class="echarts-wrapper" ref="vChartWrapper">
+      <ECharts class="echarts" :options="showEChart" ref="vChartContent"/>
+    </div>
+    <div class="echarts-wrapper" ref="eChartWrapper">
+      <Chart class="echarts" :options="showEChart" ref="eChartContent"/>
+    </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
@@ -48,6 +52,7 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 // my echarts
 import Chart from '@/components/Statistics/Chart.vue';
+import getClientWidth from '@/lib/getClientWidth.ts';
 
 @Component({
   components: {HeaderBar, Tabs, ECharts, Chart},
@@ -56,6 +61,17 @@ export default class Statistics extends Vue {
 
   type = '-';
   recordTypeList = recordTypeList;
+  client = getClientWidth();
+
+  get triggerMethod(): 'click' | 'mousemove' {
+    if (this.client === 'mobile') {
+      return 'click';
+    } else if (this.client === 'PC') {
+      return 'mousemove';
+    } else {
+      return 'click';
+    }
+  }
 
   get showEChart() {
     return {
@@ -67,16 +83,29 @@ export default class Statistics extends Vue {
           'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
           'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
           'Mon', 'Tue'
-        ]
+        ],
+        axisTick: {
+          alignWithLabel: true
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#666'
+          }
+        }
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: false
       },
       tooltip: {
         show: true,
-        triggeron: 'click'
+        triggeron: this.triggerMethod,
+        confine: true,
+        position: 'top',
+        formatter: '{c}'
       },
       series: [{
+        symbol: 'circle',
         data: [
           820, 932, 901, 934, 1290, 1330, 1320,
           820, 932, 901, 934, 1290, 1330, 1320,
@@ -86,14 +115,16 @@ export default class Statistics extends Vue {
         ],
         type: 'line',
         itemStyle: {
-          borderWidth: 3
+          borderWidth: 3,
+          borderColor: '#aaa',
+          color: '#666'
         },
         symbolSize: 12,
         showBackground: true
       }],
       animationDuration: 888,
       grid: {
-        left: 8,
+        left: 3,
         right: 0,
         top: 0
       }
@@ -179,6 +210,13 @@ export default class Statistics extends Vue {
     this.$store.commit('fetchRecords');
   }
 
+  mounted() {
+    (this.$refs.eChartWrapper as HTMLDivElement).scrollLeft = 99999;
+    (this.$refs.vChartWrapper as HTMLDivElement).scrollLeft = 99999;
+    (this.$refs.vChartContent as HTMLDivElement).scrollBy(999999, 0);
+    (this.$refs.eChartContent as HTMLDivElement).scrollBy(999999, 0);
+  }
+
 }
 </script>
 
@@ -187,12 +225,12 @@ export default class Statistics extends Vue {
 
 .statistics {
   max-width: 100%;
-  min-height: 50%;
-  overflow: auto;
 
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
+
+  scroll-behavior: smooth;
 
   &::v-deep {
     .layout-content {
@@ -221,13 +259,24 @@ export default class Statistics extends Vue {
       top: 50px;
     }
 
+    @media (min-width: 500px) {
+      .echarts-wrapper {
+        margin: 0 auto;
+
+        .echarts {
+          max-width: 100%;
+          overflow: auto;
+        }
+      }
+    }
+
     .echarts {
       margin: 0 auto;
-      max-width: 500%;
-      max-height: 30%;
+      width: 430%;
+      height: 220px;
 
       &-wrapper {
-        overflow: scroll;
+        overflow: auto;
       }
     }
 

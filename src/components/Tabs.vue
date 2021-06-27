@@ -59,11 +59,37 @@ export default class Tabs extends Vue {
     justify-content: center;
     align-items: center;
     position: relative;
-    background: #fff;
-    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    background: #efefef;
+    cursor: pointer;
+
+    transition: all 300ms cubic-bezier(.79, .21, .06, .81);
+
+    box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+    -6px -6px 10px rgba(255, 255, 255, .5),
+    6px 6px 8px rgba(255, 255, 255, .075),
+    6px 6px 10px rgba(0, 0, 0, .15);
+
+    text-shadow: 1px 1px 3px #ccd0d4, 0 0 0 rgba(0, 0, 0, 0.8), 1px 1px 4px #fff;
+    text-align: center;
+    font-weight: 700;
+    opacity: 0.9;
+    color: rgba(0, 0, 0, 0.4);
 
     &.selected {
-      background: #c4c4c4;
+      background: #cfcfcf;
+      box-shadow: inset -2px -2px 6px rgba(255, 255, 255, .7),
+      inset -2px -2px 4px rgba(255, 255, 255, .5),
+      inset 2px 2px 2px rgba(255, 255, 255, .075),
+      inset 2px 2px 4px rgba(0, 0, 0, .15);
+
+      color: rgba(0, 0, 0, 0.45);
+
+      &:hover {
+        box-shadow: -2px -2px 6px rgba(255, 255, 255, .6),
+        -2px -2px 4px rgba(255, 255, 255, .4),
+        2px 2px 2px rgba(255, 255, 255, .05),
+        2px 2px 4px rgba(0, 0, 0, .1);
+      }
 
       &::after {
         content: "";

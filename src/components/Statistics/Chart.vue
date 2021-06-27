@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" ref="wrapper">
+  <div class="content" ref="content">
   </div>
 </template>
 
@@ -17,16 +17,14 @@ export default class Chart extends Vue {
     if (this.options === undefined) {
       return console.error('options is empty');
     }
-    const chart = echart.init(this.$refs.wrapper as HTMLDivElement);
+    const chart = echart.init(this.$refs.content as HTMLDivElement);
     chart.setOption(this.options);
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  width: 90%;
-  height: 50%;
+.content {
   margin: 0 auto;
 }
 </style>
