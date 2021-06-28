@@ -3,10 +3,10 @@
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
     <div class="echarts-wrapper" ref="vChartWrapper">
-      <ECharts class="echarts" :options="showEChart" ref="vChartContent"/>
+      <ECharts class="echarts" :options="myChartOption" ref="vChartContent"/>
     </div>
     <div class="echarts-wrapper" ref="eChartWrapper">
-      <Chart class="echarts" :options="showEChart" ref="eChartContent"/>
+      <Chart class="echarts" :options="myChartOption" ref="eChartContent"/>
     </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -35,6 +35,7 @@ import {Component} from 'vue-property-decorator';
 // vendor
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
+import _ from 'lodash';
 
 dayjs.locale('zh-cn');
 
@@ -58,7 +59,6 @@ import getClientWidth from '@/lib/getClientWidth.ts';
   components: {HeaderBar, Tabs, ECharts, Chart},
 })
 export default class Statistics extends Vue {
-
   type = '-';
   recordTypeList = recordTypeList;
   client = getClientWidth();
@@ -73,7 +73,11 @@ export default class Statistics extends Vue {
     }
   }
 
-  get showEChart() {
+  get myChartOption() {
+
+    // 原数据按录入的顺序排列，数据先要排序，按时间排序
+    console.log(this.recordList.map(record=> _.pick(record, ['createdAt', 'amount'])));
+    // const lastDay = new Date();
     return {
       xAxis: {
         type: 'category',
@@ -129,9 +133,9 @@ export default class Statistics extends Vue {
         top: 0
       }
     };
-
   }
 
+  // 读取 记录列表
   get recordList() {
     return this.$store.state.recordStore.recordList;
   }
@@ -212,13 +216,14 @@ export default class Statistics extends Vue {
 
   mounted() {
     const vchartDiv = (this.$refs.eChartWrapper as HTMLDivElement);
-    vchartDiv.scrollLeft = vchartDiv.scrollWidth;
     const echartDiv = (this.$refs.vChartWrapper as HTMLDivElement);
-    echartDiv.scrollLeft = echartDiv.scrollWidth;
-    vchartDiv.scrollBy(vchartDiv.scrollWidth, 0);
-    echartDiv.scrollBy(echartDiv.scrollWidth, 0);
+    setTimeout(() => {
+      vchartDiv.scrollLeft = vchartDiv.scrollWidth;
+      echartDiv.scrollLeft = echartDiv.scrollWidth;
+      vchartDiv.scrollBy(vchartDiv.scrollWidth, 0);
+      echartDiv.scrollBy(echartDiv.scrollWidth, 0);
+    }, 50);
   }
-
 }
 </script>
 
@@ -264,10 +269,10 @@ export default class Statistics extends Vue {
     @media (min-width: 500px) {
       .echarts-wrapper {
         margin: 0 auto;
+        overflow: auto;
 
         .echarts {
           max-width: 100%;
-          overflow: auto;
         }
       }
     }

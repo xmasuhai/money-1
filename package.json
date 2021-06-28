@@ -15,6 +15,7 @@
     "cross-env": "^7.0.3",
     "dayjs": "1.8.20",
     "echarts": "4.8.0",
+    "lodash": "^4.17.21",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/echarts": "^4.9.8",
     "@types/jest": "^24.0.19",
+    "@types/lodash": "^4.14.170",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
