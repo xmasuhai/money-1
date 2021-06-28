@@ -34,7 +34,6 @@
 <script lang="ts">
 // 框架组件
 import Vue from 'vue';
-import Numpad from '@/components/Money/Numpad.vue';
 import {Component, /*Vue*/} from 'vue-property-decorator';
 import {NavigationGuardNext, Route} from 'vue-router';
 // 页面模块组件
@@ -42,6 +41,7 @@ import HeaderBar from '@/components/HeaderBar.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
+import Numpad from '@/components/Money/Numpad.vue';
 import DateGetter from '@/components/Money/DateGetter.vue';
 // 数据
 import recordTypeList from '@/constants/recordTypeList.ts';
@@ -71,7 +71,7 @@ export default class Money extends Vue {
     createdAt: dayjs((new Date()).toISOString()).format('YYYY-MM-DD'),
   };
 
-  sessionSelectedTags ? = this.$store.state.moneySessionStore.tagsList;
+  sessionSelectedTags ? = this.$store.state.moneySessionStore.tagsStore;
   recordTypeList = recordTypeList;
   checkoutResult = false;
   emptyTags = false;
@@ -87,7 +87,7 @@ export default class Money extends Vue {
     // 记录 选中的标签
     this.record.tags = selectedTags;
     // 页面暂存 session selectedTags
-    this.$store.commit('updateTagsList', selectedTags);
+    this.$store.commit('updateTagsStore', selectedTags);
   }
 
   deselectTags(deselect: boolean) {

@@ -34,8 +34,7 @@ export default class FormItem extends Vue {
     if (this.type === 'date') {
       this.$store.commit('updateDateStore', newValue);
     } else if (this.type === 'text') {
-      this.$store.commit('updateTipsText', newValue);
-      this.$store.state.moneySessionStore.tipsStore = newValue;
+      this.$store.commit('updateTipsStore', newValue);
     }
   }
 
@@ -48,13 +47,14 @@ export default class FormItem extends Vue {
       this.oninputValueChanged(this.$store.state.moneySessionStore.tipsStore);
     } else if (this.type === 'date') {
       if (this.$store.state.moneySessionStore.dateStore?.length === 0) {
-        this.$store.commit('updateDateStore', dayjs((new Date()).toISOString()).format('YYYY-MM-DD'));
+        this.$store.commit('updateDateStore', this.dateFormat((new Date()).toISOString()));
       }
       this.oninputValueChanged(this.$store.state.moneySessionStore.dateStore);
     }
   }
 
   mounted() {
+    // 读取session信息 渲染页面
     this.renderSessionInfo();
   }
 

@@ -25,6 +25,7 @@ export default class NumpadOutput extends Vue {
   }
 
   mounted() {
+    // 读取session信息 渲染页面
     this.renderSessionMoneyOutput();
   }
 

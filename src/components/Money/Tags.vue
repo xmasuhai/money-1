@@ -26,7 +26,7 @@ export default class Tags extends mixins(tagHelper) {
 
   selectedTags: Tag[] = [];
 
-  get tagsStore() {
+  get tagsList() {
     return this.$store.state.tagStore.tagsList;
   }
 
@@ -75,6 +75,7 @@ export default class Tags extends mixins(tagHelper) {
   }
 
   mounted() {
+    // 读取session信息 渲染页面
     this.renderSessionTags();
   }
 

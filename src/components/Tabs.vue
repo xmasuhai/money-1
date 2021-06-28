@@ -35,6 +35,7 @@ export default class Tabs extends Vue {
   }
 
   mounted() {
+    // 读取session信息 渲染页面
     if (this.$store.state.moneySessionStore.typeStore.length === 0) {
       this.$store.commit('updateTypeStore', '-');
     }
