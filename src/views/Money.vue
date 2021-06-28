@@ -12,13 +12,11 @@
               placeholder="在这里输入备注"
               type="text"
               :inputValue.sync="record.tips"/>
-    <div class="creatAt">
-      <FormItem class="form-item"
-                field-name="日期"
-                placeholder="在这里选择日期"
-                type="date"
-                :inputValue.sync="record.createdAt"/>
-    </div>
+    <FormItem class="form-item"
+              field-name="日期"
+              placeholder="在这里选择日期"
+              type="date"
+              :inputValue.sync="record.createdAt"/>
     <div class="datePicker">
       <date-getter></date-getter>
     </div>

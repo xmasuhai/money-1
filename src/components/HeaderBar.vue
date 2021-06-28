@@ -1,10 +1,10 @@
 <template>
-  <div class="headerBar">
+  <header class="headerBar">
     <Icon v-if="hasIcon"
           class="left-icon" name="money_right"
           @click.native="goBack(routerPath)"/>
     <span class="title">{{ headerTitle }}</span>
-  </div>
+  </header>
 </template>
 
 <script lang="ts">

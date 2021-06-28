@@ -2,50 +2,50 @@ const moneySessionStore = {
   namespace: true,
   state() {
     return {
-      tagsList: [],
-      tipsText: '',
+      tagsStore: [],
+      tipsStore: '',
       dateStore: '',
       typeStore: '-',
-      moneyStore: '',
+      amountStore: '',
     };
   },
   mutations: {
-    loadMoneySessionStore(state: MoneySession) {
-      state.tagsList = JSON.parse(window.sessionStorage.getItem('tagsList') ?? '[]');
-      state.tipsText = JSON.parse(window.sessionStorage.getItem('tipsText') ?? '[]');
+    loadMoneySessionStore(state: MoneySessionStore) {
+      state.tagsStore = JSON.parse(window.sessionStorage.getItem('tagsList') ?? '[]');
+      state.tipsStore = JSON.parse(window.sessionStorage.getItem('tipsText') ?? '[]');
       state.dateStore = JSON.parse(window.sessionStorage.getItem('dateStore') ?? '[]');
       state.typeStore = JSON.parse(window.sessionStorage.getItem('typeStore') ?? '[]');
-      state.moneyStore = JSON.parse(window.sessionStorage.getItem('moneyStore') ?? '[]');
+      state.amountStore = JSON.parse(window.sessionStorage.getItem('amountStore') ?? '[]');
     },
-    saveMoneySessionStore(state: MoneySession) {
-      window.sessionStorage.setItem('tagsList', JSON.stringify(state.tagsList));
-      window.sessionStorage.setItem('tipsText', JSON.stringify(state.tipsText));
+    saveMoneySessionStore(state: MoneySessionStore) {
+      window.sessionStorage.setItem('tagsList', JSON.stringify(state.tagsStore));
+      window.sessionStorage.setItem('tipsText', JSON.stringify(state.tipsStore));
       window.sessionStorage.setItem('dateStore', JSON.stringify(state.dateStore));
       window.sessionStorage.setItem('typeStore', JSON.stringify(state.typeStore));
-      window.sessionStorage.setItem('moneyStore', JSON.stringify(state.moneyStore));
+      window.sessionStorage.setItem('amountStore', JSON.stringify(state.amountStore));
     },
-    updateTagsList(state: MoneySession, tagsList: Tag[]) {
+    updateTagsList(state: MoneySessionStore, tagsList: Tag[]) {
       // 暂存选中的标签
-      state.tagsList = tagsList;
+      state.tagsStore = tagsList;
     },
-    updateTipsText(state: MoneySession, newValue: string) {
-      state.tipsText = newValue;
+    updateTipsText(state: MoneySessionStore, newValue: string) {
+      state.tipsStore = newValue;
     },
-    updateDateStore(state: MoneySession, newValue: string) {
+    updateDateStore(state: MoneySessionStore, newValue: string) {
       state.dateStore = newValue;
     },
-    updateTypeStore(state: MoneySession, type: string) {
+    updateTypeStore(state: MoneySessionStore, type: string) {
       state.typeStore = type;
     },
-    updateMoneyStore(state: MoneySession, output: string) {
-      state.moneyStore = output;
+    updateMoneyStore(state: MoneySessionStore, output: string) {
+      state.amountStore = output;
     },
-    resetMoneySessionStore(state: MoneySession) {
-      state.tagsList = [];
-      state.tipsText = {};
+    resetMoneySessionStore(state: MoneySessionStore) {
+      state.tagsStore = [];
+      state.tipsStore = {};
       state.dateStore = {};
       state.typeStore = {};
-      state.moneyStore = {};
+      state.amountStore = {};
     }
   }
 };

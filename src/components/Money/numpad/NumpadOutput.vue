@@ -21,7 +21,7 @@ export default class NumpadOutput extends Vue {
   }
 
   renderSessionMoneyOutput() {
-    this.$emit('update:output', this.$store.state.moneySessionStore.moneyStore);
+    this.$emit('update:output', this.$store.state.moneySessionStore.amountStore);
   }
 
   mounted() {

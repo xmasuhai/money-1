@@ -1,10 +1,10 @@
 <template>
-  <div class="layout-wrapper" :class="classPrefix && `${classPrefix}-wrapper`">
+  <section class="layout-wrapper" :class="classPrefix && `${classPrefix}-wrapper`">
     <div class="content" :class="classPrefix && `${classPrefix}-content`">
       <slot/>
     </div>
     <Nav/>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">

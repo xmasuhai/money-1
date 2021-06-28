@@ -1,5 +1,5 @@
 <template>
-  <div class="tags">
+  <section class="tags">
     <ul class="current">
       <li v-for="tag in tagsList"
           :ref="tag.name"
@@ -12,7 +12,7 @@
     <div class="new">
       <button @click="createTag">添加新标签</button>
     </div>
-  </div>
+  </section>
 </template>
 <script lang="ts">
 import {Component, Prop, Watch,} from 'vue-property-decorator';
@@ -26,7 +26,7 @@ export default class Tags extends mixins(tagHelper) {
 
   selectedTags: Tag[] = [];
 
-  get tagsList() {
+  get tagsStore() {
     return this.$store.state.tagStore.tagsList;
   }
 

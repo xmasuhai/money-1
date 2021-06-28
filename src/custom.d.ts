@@ -35,10 +35,10 @@ type GroupedType = {
 // type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
 //   => { return(output: string) };
 
-type MoneySession = {
-  tagsList: Tag[];
-  tipsText: {};
+type MoneySessionStore = {
+  tagsStore: Tag[];
+  tipsStore: {};
   dateStore: {};
   typeStore: {};
-  moneyStore: {};
+  amountStore: {};
 }

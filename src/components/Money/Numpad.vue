@@ -1,5 +1,5 @@
 <template>
-  <div class="numpad">
+  <section class="numpad">
     <numpad-output :output="output"
                    @update:output="getSessionOutput"/>
     <div class="buttons"
@@ -18,7 +18,7 @@
               :name="item.id"/>
       </numpad-button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">

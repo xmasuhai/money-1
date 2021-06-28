@@ -1,10 +1,10 @@
 <template>
-  <div id="app" @resize="window.location.reload();">
+  <main id="app" @resize="window.location.reload();">
     <QRCode v-show="show"
             @updateMask="hideQRCode">
     </QRCode>
     <router-view></router-view>
-  </div>
+  </main>
 </template>
 
 <script lang="ts">

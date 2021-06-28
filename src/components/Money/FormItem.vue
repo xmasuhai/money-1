@@ -1,5 +1,5 @@
 <template>
-  <div class="form-wrapper">
+  <section class="form-wrapper">
     <label class="form-item">
       <span class="name">{{ fieldName }}</span>
       <template v-if="type === 'date'">
@@ -15,7 +15,7 @@
                @input="oninputValueChanged($event.target.value)"/>
       </template>
     </label>
-  </div>
+  </section>
 </template>
 <script lang="ts">
 import Vue from 'vue';
@@ -35,7 +35,7 @@ export default class FormItem extends Vue {
       this.$store.commit('updateDateStore', newValue);
     } else if (this.type === 'text') {
       this.$store.commit('updateTipsText', newValue);
-      this.$store.state.moneySessionStore.tipsText = newValue;
+      this.$store.state.moneySessionStore.tipsStore = newValue;
     }
   }
 
@@ -45,7 +45,7 @@ export default class FormItem extends Vue {
 
   renderSessionInfo() {
     if (this.type === 'text') {
-      this.oninputValueChanged(this.$store.state.moneySessionStore.tipsText);
+      this.oninputValueChanged(this.$store.state.moneySessionStore.tipsStore);
     } else if (this.type === 'date') {
       if (this.$store.state.moneySessionStore.dateStore?.length === 0) {
         this.$store.commit('updateDateStore', dayjs((new Date()).toISOString()).format('YYYY-MM-DD'));
