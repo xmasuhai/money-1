@@ -37,8 +37,8 @@ type GroupedType = {
 
 type MoneySessionStore = {
   tagsStore: Tag[];
-  tipsStore: {};
-  dateStore: {};
-  typeStore: {};
-  amountStore: {};
+  tipsStore: string;
+  dateStore: string;
+  typeStore: string;
+  amountStore: string;
 }

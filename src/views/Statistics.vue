@@ -74,9 +74,10 @@ export default class Statistics extends Vue {
   }
 
   get myChartOption() {
-
     // 原数据按录入的顺序排列，数据先要排序，按时间排序
-    console.log(this.recordList.map(record=> _.pick(record, ['createdAt', 'amount'])));
+    console.log(this.groupedList
+      .map(record => _.pick(record, ['createdAt', 'amount']))
+    );
     // const lastDay = new Date();
     return {
       xAxis: {
