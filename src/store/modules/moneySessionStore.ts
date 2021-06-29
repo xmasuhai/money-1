@@ -1,10 +1,13 @@
+import dateFormat from '@/lib/dateFormat.ts';
+import store from '@/store';
+
 const moneySessionStore = {
   namespace: true,
   state() {
     return {
       tagsStore: [],
       tipsStore: '',
-      dateStore: '',
+      dateStore: dateFormat(new Date().toISOString()),
       typeStore: '-',
       amountStore: '',
     };
@@ -42,10 +45,11 @@ const moneySessionStore = {
     },
     resetMoneySessionStore(state: MoneySessionStore) {
       state.tagsStore = [];
-      state.tipsStore = {};
-      state.dateStore = {};
-      state.typeStore = {};
-      state.amountStore = {};
+      state.tipsStore = '';
+      state.dateStore = dateFormat(new Date().toISOString());
+      state.typeStore = '-';
+      state.amountStore = '';
+      store.commit('saveMoneySessionStore');
     }
   }
 };

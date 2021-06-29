@@ -5,7 +5,7 @@
       <template v-if="type === 'date'">
         <input :type="type"
                :placeholder="placeholder"
-               :value="dateFormat(inputValue)"
+               :value="inputValue"
                @change="oninputValueChanged($event.target.value)"/>
       </template>
       <template v-else>
@@ -20,7 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import dayjs from 'dayjs';
+import dateFormat from '@/lib/dateFormat.ts';
 
 @Component
 export default class FormItem extends Vue {
@@ -39,7 +39,7 @@ export default class FormItem extends Vue {
   }
 
   dateFormat(isoString: string) {
-    return dayjs(isoString).format('YYYY-MM-DD');
+    dateFormat(isoString);
   }
 
   renderSessionInfo() {
@@ -47,7 +47,7 @@ export default class FormItem extends Vue {
       this.oninputValueChanged(this.$store.state.moneySessionStore.tipsStore);
     } else if (this.type === 'date') {
       if (this.$store.state.moneySessionStore.dateStore?.length === 0) {
-        this.$store.commit('updateDateStore', this.dateFormat((new Date()).toISOString()));
+        this.$store.commit('updateDateStore', dateFormat((new Date()).toISOString()));
       }
       this.oninputValueChanged(this.$store.state.moneySessionStore.dateStore);
     }

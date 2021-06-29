@@ -27,6 +27,7 @@
             @submit="submit"
             @update:deselectTags="deselectTags"
             @checkZero="alertInform('case3')"
+            @update:rerender="rerender"
             :is-reset="checkoutResult"/>
   </Layout>
 </template>
@@ -43,9 +44,10 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
 import DateGetter from '@/components/Money/DateGetter.vue';
+// 工具函数
+import dateFormat from '@/lib/dateFormat.ts';
 // 数据
 import recordTypeList from '@/constants/recordTypeList.ts';
-import dayjs from 'dayjs';
 
 @Component({
   components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
@@ -68,7 +70,7 @@ export default class Money extends Vue {
     tips: '',
     type: '-',
     amount: 0,
-    createdAt: dayjs((new Date()).toISOString()).format('YYYY-MM-DD'),
+    createdAt: dateFormat(new Date().toISOString()),
   };
 
   sessionSelectedTags ? = this.$store.state.moneySessionStore.tagsStore;
@@ -114,6 +116,7 @@ export default class Money extends Vue {
       case3: '金额为零，不计入'
     };
     window.alert(maps[caseName]);
+    this.reset();
   }
 
   saveRecord() {
@@ -123,12 +126,19 @@ export default class Money extends Vue {
   reset() {
     this.record.tips = '';
     this.record.tags = [];
+    this.record.type = '-';
     this.record.amount = 0;
+    this.record.createdAt = dateFormat(new Date().toISOString());
     this.$store.commit('resetMoneySessionStore');
-    return this.record.type;
+  }
+
+  rerender() {
+    this.deselectTags(true);
+    this.reset();
   }
 
   submit() {
+    // 检查记录是否存在
     if (!this.checkoutRecord()) {
       return;
     }
@@ -136,7 +146,7 @@ export default class Money extends Vue {
     if (this.$store.state.recordStore.createRecordError === null) {
       this.alertInform('case1');
     }
-    this.reset();
+    this.rerender();
   }
 
 }

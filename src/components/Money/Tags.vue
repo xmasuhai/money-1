@@ -22,7 +22,7 @@ import tagHelper from '@/mixins/tagHelper.ts';
 @Component
 export default class Tags extends mixins(tagHelper) {
   @Prop(Boolean) isDeselectTags!: boolean;
-  @Prop() sessionSelectedTags?: Tag[];
+  @Prop() sessionSelectedTags!: Tag[];
 
   selectedTags: Tag[] = [];
 
@@ -31,12 +31,18 @@ export default class Tags extends mixins(tagHelper) {
   }
 
   renderSessionTags() {
-    this.selectedTags = this.sessionSelectedTags || [];
-    // session 数据 循环推入 selectedTags 将样式染到页面
-    this.sessionSelectedTags?.forEach((tag) => {
-      // 将 selected 样式 加到 selectedTags 中的 tag 上
-      (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = 'selected';
-    });
+    if (this.selectedTags) {
+      // 拷贝 session 数据
+      // this.selectedTags = [...(this.sessionSelectedTags as Tag[])] || [];
+      // 遍历 session 数据 推入 selectedTags
+      this.sessionSelectedTags.forEach(tag => {
+        this.selectedTags.push(tag);
+        // 将 selected 样式 加到 selectedTags 中的 tag 上
+        // session 数据 循环推入 selectedTags 将样式染到页面
+        (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = 'selected';
+      });
+      this.$emit('update:selectedTags', this.selectedTags);
+    }
   }
 
   // 将点击的标签 推入数组/从数组中删除 并将 标签列表 发布给父组件
@@ -63,8 +69,14 @@ export default class Tags extends mixins(tagHelper) {
   @Watch('isDeselectTags')
   deselectTag() {
     if (this.isDeselectTags) {
+      // 去除 对应样式
+      this.selectedTags.forEach(tag => {
+        (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = '';
+      });
+
       this.selectedTags = [];
       this.$emit('update:selectedTags', this.selectedTags);
+
     }
   }
 

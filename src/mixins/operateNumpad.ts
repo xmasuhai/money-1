@@ -53,7 +53,6 @@ export default class OperateNumpad extends Vue {
   }
 
   clearNum() {
-    this.clearNumpadMark();
     this.output = '0';
     this.$store.commit('updateMoneyStore', this.output);
   }
@@ -67,19 +66,27 @@ export default class OperateNumpad extends Vue {
     }
     this.$emit('update:amount', number);
     this.$emit('submit');
-    this.$nextTick(() => {
-      this.reset();
-    });
+    this.reset();
   }
 
   reset() {
     if (this.isReset) {
+      // 清零
       this.output = '0';
       this.$emit('update:deselectTags', true);
     }
+    // 取消选择标签
+    this.$emit('update:deselectTags', true);
+    // 取消选中标签
     this.$emit('update:deselectTags', false);
+    // 移除数字盘 记号
     this.clearNumpadMark();
-    this.$store.commit('updateMoneyStore', this.output);
+    // 重置数字 0
+    this.clearNum();
+    // 清空 session
+    this.$store.commit('resetMoneySessionStore');
+    // 重渲染
+    this.$emit('update:rerender');
   }
 
 }

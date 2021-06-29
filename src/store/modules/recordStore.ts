@@ -29,7 +29,7 @@ const recordStore = {
       clonedRecord.createdAt = clearJetLag(new Date(clonedRecord.createdAt), '-') || state.localTimeStamp;
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
-    },
+    }
   }
 };
 
