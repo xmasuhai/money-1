@@ -73,21 +73,44 @@ export default class Statistics extends Vue {
     }
   }
 
-  get myChartOption() {
+  get chartArray() {
+    let array = []; // 排序桶
     // 原数据按录入的顺序排列，数据先要排序，按时间排序
-    console.log(this.groupedList
-      .map(record => _.pick(record, ['createdAt', 'amount']))
-    ); // const lastDay = new Date();
+    // 显示最多 31 天的数据， 获取 最近 31天的日期
+    // key为日期， value为当天总计金额
+    // lastDay - i * 24 * 3600 * 1000 得到每天的日期
+    // 等价于 day(lastDay).subtract(i, 'day') 每次减去一天
+    for (let i = 0; i <= 30; i++) {
+      const everyLastDateString = dayjs(new Date())
+        .subtract(i, 'day') // 每次减去一天
+        .format('YYYY-MM-DD'); // 格式化
+      // 找到 在 recordList 中， 每项日期对应的记录
+      const foundRecord = _.find(this.recordList, {
+        createdAt: everyLastDateString
+      });
+      // foundRecord?.amount 相当于 foundRecord ? foundRecord.amount: 0
+      array.push(
+        {
+          date: everyLastDateString,
+          value: foundRecord?.amount || 0
+        }
+      );
+    }
+    // 图表的数据
+    array = array.reverse();
+    return array;
+  }
+
+  get myChartOption() {
+    const keys = this.chartArray.map(item => item.date);
+    const values = this.chartArray.map(item => item.value);
+    this.groupedList
+      .map(record => _.pick(record, ['createdAt', 'amount']));
+
     return {
       xAxis: {
         type: 'category',
-        data: [
-          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-          'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-          'Mon', 'Tue'
-        ],
+        data: keys,
         axisTick: {
           alignWithLabel: true
         },
@@ -110,13 +133,7 @@ export default class Statistics extends Vue {
       },
       series: [{
         symbol: 'circle',
-        data: [
-          820, 932, 901, 934, 1290, 1330, 1320,
-          820, 932, 901, 934, 1290, 1330, 1320,
-          820, 932, 901, 934, 1290, 1330, 1320,
-          820, 932, 901, 934, 1290, 1330, 1320,
-          820, 932
-        ],
+        data: values,
         type: 'line',
         itemStyle: {
           borderWidth: 3,
@@ -137,7 +154,7 @@ export default class Statistics extends Vue {
 
   // 读取 记录列表 // computed
   get recordList() {
-    return this.$store.getters.recordList
+    return this.$store.getters.recordList;
   }
 
   // 计算 分组列表
@@ -185,7 +202,7 @@ export default class Statistics extends Vue {
     console.log(this.$store.getters.groupedList);
     console.log(this.$store.getters.switchTriggerMethod);
     console.log(this.$store.getters.myChartOption);
-    return 'test tempResult'
+    return 'test tempResult';
   }
 
   // 显示项目 title 标签组合

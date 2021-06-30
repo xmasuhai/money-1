@@ -1,6 +1,7 @@
 import clone from '@/lib/clone';
 import store from '@/store';
 import clearJetLag from '@/lib/clearJetLag.ts';
+import dateFormat from '@/lib/dateFormat';
 
 const recordStore = {
   namespace: true,
@@ -26,7 +27,7 @@ const recordStore = {
       const clonedRecord = clone(record);
       store.commit('getLocalTimeStamp');
       // 不覆盖原来的日期记录
-      clonedRecord.createdAt = clearJetLag(new Date(clonedRecord.createdAt), '-') || state.localTimeStamp;
+      clonedRecord.createdAt = dateFormat(clearJetLag(new Date(clonedRecord.createdAt), '-') || state.localTimeStamp);
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     }
