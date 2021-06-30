@@ -77,8 +77,7 @@ export default class Statistics extends Vue {
     // 原数据按录入的顺序排列，数据先要排序，按时间排序
     console.log(this.groupedList
       .map(record => _.pick(record, ['createdAt', 'amount']))
-    );
-    // const lastDay = new Date();
+    ); // const lastDay = new Date();
     return {
       xAxis: {
         type: 'category',
@@ -136,9 +135,9 @@ export default class Statistics extends Vue {
     };
   }
 
-  // 读取 记录列表
+  // 读取 记录列表 // computed
   get recordList() {
-    return this.$store.state.recordStore.recordList;
+    return this.$store.getters.recordList
   }
 
   // 计算 分组列表
@@ -180,6 +179,13 @@ export default class Statistics extends Vue {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
     });
     return result;
+  }
+
+  get tempResult() {
+    console.log(this.$store.getters.groupedList);
+    console.log(this.$store.getters.switchTriggerMethod);
+    console.log(this.$store.getters.myChartOption);
+    return 'test tempResult'
   }
 
   // 显示项目 title 标签组合
@@ -224,6 +230,7 @@ export default class Statistics extends Vue {
       vchartDiv.scrollBy(vchartDiv.scrollWidth, 0);
       echartDiv.scrollBy(echartDiv.scrollWidth, 0);
     }, 50);
+    console.log(this.tempResult);
   }
 }
 </script>

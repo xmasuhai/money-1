@@ -78,11 +78,6 @@ export default class Money extends Vue {
   checkoutResult = false;
   emptyTags = false;
 
-  // computed
-  get recordList() {
-    return this.$store.state.recordStore.recordList as RecordItem[];
-  }
-
   // methods
   updatePickedTags(selectedTags: Tag[]) {
     this.emptyTags = false;

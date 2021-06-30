@@ -30,6 +30,11 @@ const recordStore = {
       state.recordList.push(clonedRecord);
       store.commit('saveRecords');
     }
+  },
+  getters: {
+    recordList(state: RecordState) {
+      return state.recordList as RecordItem[];
+    }
   }
 };
 

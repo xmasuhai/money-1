@@ -22,6 +22,11 @@ type RecordState = {
   localTimeStamp: string;
   createRecordError?: Error | null;
 }
+
+type StatisticsState = {
+  triggerMethod: string;
+  groupedResult: GroupedType[];
+}
 type DataSource = {
   text: string;
   type: string;
