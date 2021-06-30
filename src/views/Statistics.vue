@@ -73,7 +73,7 @@ export default class Statistics extends Vue {
     }
   }
 
-  get chartArray() {
+  get chartDataKeyValueList() {
     let array = []; // 排序桶
     // 原数据按录入的顺序排列，数据先要排序，按时间排序
     // 显示最多 31 天的数据， 获取 最近 31天的日期
@@ -85,28 +85,27 @@ export default class Statistics extends Vue {
         .subtract(i, 'day') // 每次减去一天
         .format('YYYY-MM-DD'); // 格式化
       // 找到 在 recordList 中， 每项日期对应的记录
-      const foundRecord = _.find(this.recordList, {
-        createdAt: everyLastDateString
+      const foundRecord = _.find(this.groupedList, {
+        title: everyLastDateString
       });
       // foundRecord?.amount 相当于 foundRecord ? foundRecord.amount: 0
       array.push(
         {
-          date: everyLastDateString,
-          value: foundRecord?.amount || 0
+          key: everyLastDateString,
+          value: foundRecord?.total || 0
         }
       );
     }
     // 图表的数据
     array = array.reverse();
+    this.groupedList
+      .map(record => _.pick(record, ['createdAt', 'amount']));
     return array;
   }
 
   get myChartOption() {
-    const keys = this.chartArray.map(item => item.date);
-    const values = this.chartArray.map(item => item.value);
-    this.groupedList
-      .map(record => _.pick(record, ['createdAt', 'amount']));
-
+    const keys = this.chartDataKeyValueList.map(item => item.key);
+    const values = this.chartDataKeyValueList.map(item => item.value);
     return {
       xAxis: {
         type: 'category',
@@ -117,6 +116,11 @@ export default class Statistics extends Vue {
         axisLine: {
           lineStyle: {
             color: '#666'
+          }
+        },
+        axisLabel: {
+          formatter: (value: string) => {
+            return value.substr(5);
           }
         }
       },
@@ -154,6 +158,7 @@ export default class Statistics extends Vue {
 
   // 读取 记录列表 // computed
   get recordList() {
+    // 包括 支出和收入
     return this.$store.getters.recordList;
   }
 
