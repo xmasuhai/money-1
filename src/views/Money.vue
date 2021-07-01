@@ -17,9 +17,6 @@
               placeholder="在这里选择日期"
               type="date"
               :inputValue.sync="record.createdAt"/>
-    <div class="datePicker">
-      <date-getter></date-getter>
-    </div>
     <Tabs :data-source="recordTypeList"
           :type.sync="record.type"
           class="fuckAnt-tabs"/>
@@ -35,7 +32,7 @@
 <script lang="ts">
 // 框架组件
 import Vue from 'vue';
-import {Component, /*Vue*/} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import {NavigationGuardNext, Route} from 'vue-router';
 // 页面模块组件
 import HeaderBar from '@/components/HeaderBar.vue';
@@ -43,14 +40,13 @@ import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
 import Numpad from '@/components/Money/Numpad.vue';
-import DateGetter from '@/components/Money/DateGetter.vue';
 // 工具函数
 import dateFormat from '@/lib/dateFormat.ts';
 // 数据
 import recordTypeList from '@/constants/recordTypeList.ts';
 
 @Component({
-  components: {HeaderBar, Tabs, FormItem, Tags, Numpad, DateGetter},
+  components: {HeaderBar, Tabs, FormItem, Tags, Numpad},
   beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext): void {
     next(vm => {
       // 通过 `vm` 访问组件实例 代替this
