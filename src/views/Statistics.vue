@@ -2,6 +2,12 @@
   <Layout class="statistics">
     <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
     <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
+    <div class="echarts-wrapper" ref="vChartWrapper">
+      <ECharts class="echarts" :options="myChartOption" ref="vChartContent"/>
+    </div>
+    <div class="echarts-wrapper" ref="eChartWrapper">
+      <Chart class="echarts" :options="myChartOption" ref="eChartContent"/>
+    </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
@@ -47,8 +53,12 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import getClientWidth from '@/lib/getClientWidth.ts';
 
+
+// my echarts
+import Chart from '@/components/Statistics/Chart.vue';
+
 @Component({
-  components: {HeaderBar, Tabs, ECharts}
+  components: {HeaderBar, Tabs, ECharts, Chart}
 })
 export default class Statistics extends Vue {
   type = '-';
