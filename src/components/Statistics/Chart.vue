@@ -14,8 +14,7 @@ export default class Chart extends Vue {
   chart?: ECharts;
 
   @Prop() options?: EChartOption;
-
-  @Watch('options', {deep: true})
+  @Watch('options', {immediate: true, deep: true})
   onOptionChange(newOption: EChartOption) {
     if (this.chart) {
       this.chart.setOption(newOption);
@@ -27,17 +26,10 @@ export default class Chart extends Vue {
     if (this.options === undefined) {
       return console.error('options is empty');
     }
-    if (this.chart) {
-      this.chart = echart.init(this.$refs.content as HTMLDivElement);
-      this.chart.setOption(this.options);
-    }
+    this.chart = echart.init(this.$refs.content as HTMLDivElement);
+    this.chart.setOption(this.options);
   }
+
 
 }
 </script>
-
-<style lang="scss" scoped>
-.content {
-  margin: 0 auto;
-}
-</style>

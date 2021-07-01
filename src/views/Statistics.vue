@@ -99,7 +99,7 @@ export default class Statistics extends Vue {
     // 图表的数据
     array = array.reverse();
     this.groupedList
-      .map(record => _.pick(record, ['createdAt', 'amount']));
+      .forEach(record => _.pick(record, ['createdAt', 'amount']));
     return array;
   }
 
@@ -162,12 +162,12 @@ export default class Statistics extends Vue {
     return this.$store.getters.recordList;
   }
 
-  // 计算 分组列表
+  // 计算 分组列表 分为 支出/收入
   get groupedList() {
     const {recordList} = this;
     // newList: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
     const newList = clone(recordList)
-      .filter((r: RecordItem) => r.type === this.type)
+      .filter((r: RecordItem) => r.type === this.type) // 按 支出/收入 type: '-' || '+'
       .sort((a: RecordItem, b: RecordItem) => (
         dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
       ));
@@ -194,7 +194,6 @@ export default class Statistics extends Vue {
         });
       }
     }
-
     // 为 result.group 添加 计算总额 group.total 属性
     // result.group.items: { tags: Tag[]; tips: string; type: string; amount: number; createdAt: string; }[]
     result.forEach(group => {
