@@ -5,9 +5,6 @@
     <div class="echarts-wrapper" ref="vChartWrapper">
       <ECharts class="echarts" :options="myChartOption" ref="vChartContent"/>
     </div>
-    <div class="echarts-wrapper" ref="eChartWrapper">
-      <Chart class="echarts" :options="myChartOption" ref="eChartContent"/>
-    </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
@@ -153,7 +150,7 @@ export default class Statistics extends Vue {
       grid: {
         left: 3,
         right: 0,
-        top: 0
+        top: 8
       }
     };
   }
@@ -245,14 +242,11 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    const vchartDiv = (this.$refs.eChartWrapper as HTMLDivElement);
     const echartDiv = (this.$refs.vChartWrapper as HTMLDivElement);
     setTimeout(() => {
-      vchartDiv.scrollLeft = vchartDiv.scrollWidth;
       echartDiv.scrollLeft = echartDiv.scrollWidth;
-      vchartDiv.scrollBy(vchartDiv.scrollWidth, 0);
       echartDiv.scrollBy(echartDiv.scrollWidth, 0);
-    }, 50);
+    }, 800);
     console.log(this.tempResult);
   }
 }
@@ -260,6 +254,11 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/global.scss";
+
+%sticky {
+  position: sticky;
+  z-index: 1;
+}
 
 .statistics {
   max-width: 100%;
@@ -278,11 +277,6 @@ export default class Statistics extends Vue {
       flex-direction: column;
     }
 
-    %sticky {
-      position: sticky;
-      z-index: 1;
-    }
-
     .headerBar {
       @extend %sticky;
       top: 0;
@@ -297,27 +291,26 @@ export default class Statistics extends Vue {
       top: 50px;
     }
 
-    @media (min-width: 500px) {
-      .echarts-wrapper {
-        margin: 0 auto;
-        overflow: auto;
-
-        .echarts {
-          max-width: 100%;
-        }
-      }
-    }
-
     .echarts {
       margin: 0 auto;
       width: 430%;
       height: 220px;
+      overflow: auto;
 
       &-wrapper {
         overflow: auto;
       }
     }
-
+    @media (min-width:500px) {
+      .echarts {
+        width: 430%;
+        height: 220px;
+        overflow: auto;
+        &-wrapper {
+          overflow: auto;
+        }
+      }
+    }
   }
 
   %item {
