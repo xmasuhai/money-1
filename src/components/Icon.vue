@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts">
+// 批量导入 svg
 const importAll =
-    (requireContext: __WebpackModuleApi.RequireContext) => {
-      requireContext.keys().forEach(requireContext);
-};
+  (requireContext: __WebpackModuleApi.RequireContext) => {
+    requireContext.keys().forEach(requireContext);
+  };
 // 指定目录 只能用相对路径 不支持@别名路径
 // 使用importAll加载所有的svg
 importAll(require.context('../assets/icons/', true, /\.svg$/));
@@ -20,20 +21,21 @@ try {
   console.log(error);
 }
 
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component
 export default class Numpad extends Vue {
+  // 动态引入 svg name
   @Prop({default: ''}) ['name']: string;
 }
 </script>
 
 <style lang="scss" scoped>
 .icon {
-  width: 1em; height: 1em;
+  width: 1em;
+  height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
-  }
+}
 </style>

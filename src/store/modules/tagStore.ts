@@ -75,6 +75,7 @@ const tagStore = {
       }
     },
     setCurrentTag(state: TagState, id: string) {
+      // 使用 唯一id 获取 当前标签
       state.currentTag = state.tagsList.filter(t => t.id === id)[0];
     }
   }

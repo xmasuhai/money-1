@@ -27,15 +27,13 @@
 
 <script lang="ts">
 // basic
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 // vendor
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import _ from 'lodash';
 
 dayjs.locale('zh-cn');
-
 // utils
 import clone from '@/lib/clone.ts';
 import clearJetLag from '@/lib/clearJetLag';
@@ -50,12 +48,8 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import getClientWidth from '@/lib/getClientWidth.ts';
 
-
-// my echarts
-import Chart from '@/components/Statistics/Chart.vue';
-
 @Component({
-  components: {HeaderBar, Tabs, ECharts, Chart}
+  components: {HeaderBar, Tabs, ECharts}
 })
 export default class Statistics extends Vue {
   type = '-';
@@ -301,11 +295,13 @@ export default class Statistics extends Vue {
         overflow: auto;
       }
     }
-    @media (min-width:500px) {
+
+    @media (min-width: 500px) {
       .echarts {
         width: 430%;
         height: 220px;
         overflow: auto;
+
         &-wrapper {
           overflow: auto;
         }

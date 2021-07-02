@@ -1,6 +1,4 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 // 操作数字键盘的所有逻辑
 @Component
@@ -8,8 +6,9 @@ export default class OperateNumpad extends Vue {
   @Prop(Number) amount!: number;
   @Prop(Boolean) readonly isReset!: boolean;
 
+  // 初始化 输出数字
   output = this.amount.toString() || '0.00';
-  // 当前按钮点记号下标
+  // 初始化 当前 按钮点 记号 下标
   currentIndex = -1;
 
   checkInputNum(button: HTMLButtonElement, input: string, event: TapEvent) {
@@ -23,9 +22,10 @@ export default class OperateNumpad extends Vue {
       // '.'限制小数位 2位
       if (this.output.slice(dotIndex, -1).length > 1) {return;}
     }
+
     // 限制显示数字长度
     if ((this.output.replace(/\.\d{1,2}/g, '')).length >= 10) {
-      alert('你的小目标金额超过喵内记账记录范围');
+      alert('你的小目标金额超过记账记录范围');
       return this.removeNum(event, -3);
     }
     this.output += input;
@@ -73,12 +73,9 @@ export default class OperateNumpad extends Vue {
     if (this.isReset) {
       // 清零
       this.output = '0';
-      this.$emit('update:deselectTags', true);
     }
     // 取消选择标签
     this.$emit('update:deselectTags', true);
-    // 取消选中标签
-    this.$emit('update:deselectTags', false);
     // 移除数字盘 记号
     this.clearNumpadMark();
     // 重置数字 0

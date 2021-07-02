@@ -31,8 +31,7 @@
 
 <script lang="ts">
 // 框架组件
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import {NavigationGuardNext, Route} from 'vue-router';
 // 页面模块组件
 import HeaderBar from '@/components/HeaderBar.vue';
@@ -79,7 +78,7 @@ export default class Money extends Vue {
     this.emptyTags = false;
     // 记录 选中的标签
     this.record.tags = selectedTags;
-    // 页面暂存 session selectedTags
+    // 页面暂存 session selectedTags // 作为子组件外部数据传给子组件
     this.$store.commit('updateTagsStore', selectedTags);
   }
 
@@ -91,6 +90,7 @@ export default class Money extends Vue {
   }
 
   checkoutRecord() {
+    // 检查记录 是否存在
     this.checkoutResult = true;
     if (!this.record.tags || this.record.tags.length === 0) {
       this.alertInform('case2');
@@ -137,6 +137,7 @@ export default class Money extends Vue {
     if (this.$store.state.recordStore.createRecordError === null) {
       this.alertInform('case1');
     }
+    // 提交后 重置页面
     this.rerender();
   }
 

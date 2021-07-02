@@ -5,7 +5,7 @@
     <div class="buttons"
          @[clientEvent]="markButton($event); handleButtonFn($event)"
          @mousemove="showSearchlight"
-         :style="searchlightStyle">
+         :style="searchlightCoordinate">
       <numpad-button
         v-for="(item, index) in numPadText"
         :data-bundle-event="item.bundleEvent"
@@ -40,8 +40,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   eventName = 'click';
   // 客户端设备信息
   clientType = getClientType();
-
-  // 数字键盘文字图标数据
+  // 数字键盘文字图标数据 0~9 delete ok clear
   numPadText = [
     {id: '1', text: '1', name: 'num', bundleEvent: 'inputNum'},
     {id: '2', text: '2', name: 'num', bundleEvent: 'inputNum'},
@@ -82,10 +81,12 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
   }
 
   // 给不同的按钮绑定对应事件的处理函数
+  // 事件代理
   handleButtonFn(e: TapEvent) {
     let target = e.target as HTMLElement;
+    // 获取 按钮 节点
     while (!target.matches('button')) {
-      // 向外寻找父节点
+      // 非按钮  则获取 父节点
       target = target.parentNode as HTMLElement;
     }
     const bundleEvent = target.dataset.bundleEvent;

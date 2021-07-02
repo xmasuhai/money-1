@@ -5,13 +5,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 @Component
-export default class Button extends Vue {
-
-}
+export default class Button extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -21,10 +18,11 @@ export default class Button extends Vue {
   border-radius: 4px;
   height: 40px;
   padding: 0 16px;
+
   &-wrapper {
     text-align: center;
     padding: 16px;
     margin-top: 28px;
-    }
   }
+}
 </style>

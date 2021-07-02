@@ -1,21 +1,23 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import {Component, Vue} from 'vue-property-decorator';
 
 // 探照灯蒙层的所有逻辑
 @Component
 export default class SearchLight extends Vue {
+  // 初始化 探照灯 坐标
   searchlightPosition = {
     x: 0,
     y: 0
   };
 
-  get searchlightStyle() {
+  // 计算 探照灯 坐标
+  get searchlightCoordinate() {
     return {
       '--x-pos': this.searchlightPosition.x + 'px',
       '--y-pos': this.searchlightPosition.y + 'px',
     };
   }
 
+  // 获取 冒泡 父节点
   getParent(curEl: HTMLButtonElement, parentEl: HTMLElement) {
     while (curEl !== parentEl) {
       curEl = curEl.parentElement as HTMLButtonElement;

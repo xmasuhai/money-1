@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import {Component} from 'vue-property-decorator';
+// mixins 中继承 Vue
 import {mixins} from 'vue-class-component';
 import Button from '@/components/Button.vue';
 import tagHelper from '@/mixins/tagHelper.ts';
@@ -27,10 +28,12 @@ import HeaderBar from '@/components/HeaderBar.vue';
 })
 
 export default class Labels extends mixins(tagHelper) {
+  // 读取Vuex中标签列表
   get tags() {
     return this.$store.state.tagStore.tagsList;
   }
 
+  // hooks
   beforeCreate() {
     this.$store.commit('fetchTags');
   }

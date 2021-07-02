@@ -2,7 +2,7 @@
   <ul class="tabs" :class="{[classPrefix + '-tabs']: classPrefix}">
     <li v-for="item in dataSource"
         :key="item.type"
-        :class="liClass(item)"
+        :class="setLiClass(item)"
         @click="select(item)"
         class="tabs-item"
         :style="{height: tabsHeight}">
@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component
 export default class Tabs extends Vue {
@@ -22,7 +21,8 @@ export default class Tabs extends Vue {
   @Prop(String) classPrefix?: string;
   @Prop({type: String, default: '64px'}) tabsHeight!: string;
 
-  liClass(item: DataSource) {
+  // 动态设置 li 对应样式
+  setLiClass(item: DataSource) {
     return {
       [this.classPrefix + '-tabs-item']: this.classPrefix,
       selected: item.type === this.type

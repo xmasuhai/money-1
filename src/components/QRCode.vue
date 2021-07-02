@@ -1,8 +1,8 @@
 <template>
   <div class="mask"
-       @click="mask()"
+       @click="hideMask()"
        @touchmove.prevent
-       :style="{'display':riseFlag?'block':'none'}">
+       :style="{'display':isShowQRCode?'block':'none'}">
     <div class="floatParts">
       <img src="../assets/qrcode.png" alt="QECode" class="qrcode"/>
       <span class="tipsText">请使用手机扫码打开</span>
@@ -11,9 +11,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
-import getClientType from '@/lib/getClientWidth';
+import {Component, Vue} from 'vue-property-decorator';
+import getClientType from '@/lib/getClientWidth.ts';
 
 @Component
 export default class QRCode extends Vue {
@@ -21,7 +20,8 @@ export default class QRCode extends Vue {
   flagOff = false;
   clientType = getClientType();
 
-  get riseFlag() {
+  // 计算客户端宽度 是否展示 二维码
+  get isShowQRCode() {
     if (this.clientType === 'PC' && !this.flagOff) {
       this.flag = true;
     } else if (this.flagOff) {
@@ -33,7 +33,7 @@ export default class QRCode extends Vue {
     return this.flag;
   }
 
-  mask() {
+  hideMask() {
     this.$emit('updateMask');
   }
 }

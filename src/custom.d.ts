@@ -22,7 +22,6 @@ type RecordState = {
   localTimeStamp: string;
   createRecordError?: Error | null;
 }
-
 type StatisticsState = {
   triggerMethod: string;
   groupedResult: GroupedType[];
@@ -36,10 +35,8 @@ type GroupedType = {
   total?: number;
   items: RecordItem[];
 };
-
 // type CheckInputNum = (button: HTMLButtonElement, input: string, event: TapEvent)
 //   => { return(output: string) };
-
 type MoneySessionStore = {
   tagsStore: Tag[];
   tipsStore: string;

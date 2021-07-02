@@ -15,8 +15,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 import HeaderBar from '@/components/HeaderBar.vue';
@@ -25,15 +24,16 @@ import HeaderBar from '@/components/HeaderBar.vue';
   components: {HeaderBar, Button, FormItem}
 })
 export default class EditLabel extends Vue {
+  // 获取 当前 标签 数据 // 创建此页前 (created) 已保存在Vuex中
   get currentTag() {
     return this.$store.state.tagStore.currentTag;
   }
 
-  created() {
-    this.$store.commit('fetchTags');
-    this.$store.commit('setCurrentTag', this.$route.params.id);
-    if (!this.currentTag) {
-      this.$router.replace('/404');
+  remove() {
+    if (this.currentTag) {
+      this.$store.commit('removeTag', this.currentTag.id);
+      window.alert(`成功删除标签：${this.currentTag.name}`);
+      this.goBack();
     }
   }
 
@@ -48,16 +48,18 @@ export default class EditLabel extends Vue {
       {id: this.currentTag.id, name});
   }
 
-  remove() {
-    if (this.currentTag) {
-      this.$store.commit('removeTag', this.currentTag.id);
-      window.alert(`成功删除标签：${this.currentTag.name}`);
-      this.goBack();
-    }
-  }
-
   goBack() {
     this.$router.back();
+  }
+
+  // hooks
+  created() {
+    this.$store.commit('fetchTags');
+    // 保存到Vuex中
+    this.$store.commit('setCurrentTag', this.$route.params.id);
+    if (!this.currentTag) {
+      this.$router.replace('/404');
+    }
   }
 }
 </script>

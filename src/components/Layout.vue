@@ -8,12 +8,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
-import hideMenuBar from '@/lib/hideMenuBar';
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import hideMenuBar from '@/lib/hideMenuBar.ts';
 
 @Component
 export default class Layout extends Vue {
+  // 由动态外部参数 获取 类样式
   @Prop(String) ['classPrefix']: string;
 
   mounted() {

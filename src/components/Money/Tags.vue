@@ -30,6 +30,7 @@ export default class Tags extends mixins(tagHelper) {
     return this.$store.state.tagStore.tagsList;
   }
 
+  // 处理 session 中的标签样式
   renderSessionTags() {
     if (this.selectedTags) {
       // 拷贝 session 数据
@@ -73,7 +74,6 @@ export default class Tags extends mixins(tagHelper) {
       this.selectedTags.forEach(tag => {
         (this.$refs[tag.name] as Array<HTMLLIElement>)[0].className = '';
       });
-
       this.selectedTags = [];
       this.$emit('update:selectedTags', this.selectedTags);
 
@@ -82,7 +82,7 @@ export default class Tags extends mixins(tagHelper) {
 
   // hooks
   created() {
-    // 读取所有标签
+    // 读取 localStorage 中所有标签
     this.$store.commit('fetchTags');
   }
 
