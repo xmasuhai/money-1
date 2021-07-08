@@ -2,17 +2,11 @@
   <section class="form-wrapper">
     <label class="form-item">
       <span class="name">{{ fieldName }}</span>
-      <template v-if="type === 'date'">
+      <template>
         <input :type="type"
                :placeholder="placeholder"
                :value="inputValue"
-               @change="oninputValueChanged($event.target.value)"/>
-      </template>
-      <template v-else>
-        <input :type="type || 'text'"
-               :placeholder="placeholder"
-               :value="inputValue"
-               @input="oninputValueChanged($event.target.value)"/>
+               @[modelEvent]="oninputValueChanged($event.target.value)"/>
       </template>
     </label>
   </section>
@@ -27,7 +21,16 @@ export default class FormItem extends Vue {
   @Prop({default: ''}) inputValue!: string;
   @Prop({required: true}) fieldName!: string;
   @Prop({default: ''}) placeholder?: string;
-  @Prop() type?: string;
+  @Prop() type!: 'text' | 'date';
+
+  eventList = {
+    'date': 'change',
+    'text': 'input'
+  };
+
+  get modelEvent() {
+    return this.eventList[this.type];
+  }
 
   oninputValueChanged(newValue: string) {
     this.$emit('update:inputValue', newValue);
