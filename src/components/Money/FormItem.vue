@@ -12,8 +12,7 @@
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 import dateFormat from '@/lib/dateFormat.ts';
 
 @Component
@@ -39,10 +38,6 @@ export default class FormItem extends Vue {
     } else if (this.type === 'text') {
       this.$store.commit('updateTipsStore', newValue);
     }
-  }
-
-  dateFormat(isoString: string) {
-    dateFormat(isoString);
   }
 
   renderSessionInfo() {
