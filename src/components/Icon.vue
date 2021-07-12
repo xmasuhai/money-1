@@ -24,7 +24,7 @@ try {
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component
-export default class Numpad extends Vue {
+export default class Icon extends Vue {
   // 动态引入 svg name
   @Prop({default: ''}) ['name']: string;
 }
