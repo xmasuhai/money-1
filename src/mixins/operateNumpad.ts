@@ -54,6 +54,7 @@ export default class OperateNumpad extends Vue {
 
   clearNum() {
     this.output = '0';
+    this.currentIndex = -1;
     this.$store.commit('updateMoneyStore', this.output);
   }
 
