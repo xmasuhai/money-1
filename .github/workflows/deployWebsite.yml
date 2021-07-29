@@ -35,3 +35,4 @@ jobs:
         publish_dir: dist
         external_repository: xmasuhai/xmasuhai.github.io
         publish_branch: gh-pages
+      run: sh deploy.sh
