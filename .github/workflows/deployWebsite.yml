@@ -13,9 +13,6 @@ jobs:
     # 使用某个 Repo
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        persist-credentials: false
-
     # 构建静态文件
     - name: Install and Build 🔧
       run: |
