@@ -12,7 +12,7 @@ jobs:
   steps:
     # 使用某个 Repo
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
 
     - name: Setup node
       uses: actions/setup-node@v1
@@ -21,7 +21,6 @@ jobs:
 
     # 构建静态文件
     - name: Install and Build 🔧
-      uses: actions/setup-node@master
       run: |
         npm install yarn
         yarn
@@ -31,8 +30,9 @@ jobs:
     - name: Deploy 🚀
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.PERSONAL_TOKEN }}
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
         publish_dir: dist
         external_repository: xmasuhai/xmasuhai.github.io
         publish_branch: gh-pages
-      run: sh deploy.sh
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
