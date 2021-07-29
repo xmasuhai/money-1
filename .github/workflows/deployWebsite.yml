@@ -1,4 +1,4 @@
-name: deploy to website
+name: Deploy GitHub Pages
 on:
   # 触发条件
   push:
@@ -13,26 +13,20 @@ jobs:
     # 使用某个 Repo
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Setup node
-      uses: actions/setup-node@v1
       with:
-        node-version: "14.x"
+        persist-credentials: false
 
     # 构建静态文件
     - name: Install and Build 🔧
       run: |
         npm install yarn
-        yarn
+        yarn install
         yarn build
 
     # 部署到 GitHub Pages
     - name: Deploy 🚀
-      uses: peaceiris/actions-gh-pages@v3
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        publish_dir: dist
-        external_repository: xmasuhai/xmasuhai.github.io
-        publish_branch: gh-pages
-        user_name: 'github-actions[bot]'
-        user_email: 'github-actions[bot]@users.noreply.github.com'
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist
