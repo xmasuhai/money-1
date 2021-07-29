@@ -8,7 +8,9 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "deploy": "bash deploy.sh",
     "build:dev": "cross-env NODE_ENV=development yarn build"
+
   },
   "dependencies": {
     "ant-design-vue": "^1.7.4",

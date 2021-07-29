@@ -19,13 +19,13 @@ jobs:
 
       # 1、生成静态文件
       - name: Build
-        run: yarn install && yarn build && sh deploy.sh
+        run: yarn install && yarn build && yarn deploy
 
       # 2、部署到 GitHub Pages
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY_NAME: xmasuhai/money-1
+          REPOSITORY_NAME: xmasuhai/meowney-0-website
           BRANCH: gh-pages
           FOLDER: dist
