@@ -11,8 +11,8 @@ jobs:
 
   steps:
     # 使用某个 Repo
-    - name: Checkout 🛎️
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@master
 
     - name: Setup node
       uses: actions/setup-node@v1
