@@ -19,8 +19,8 @@ const routes: Array<RouteConfig> = [
     component: Money,
     beforeEnter: (to, from, next) => {
       // 读取 moneySessionStore
-      console.log('get moneySessionStore');
-      next()
+      // console.log('get moneySessionStore');
+      next();
     },
   },
   {

@@ -1,5 +1,7 @@
 <template>
-  <main id="app" @resize="window.location.reload();">
+  <main id="app"
+        ref="app"
+        @resize="window.location.reload();">
     <QRCode v-show="show"
             @updateMask="hideQRCode">
     </QRCode>
@@ -11,6 +13,7 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import QRCode from '@/components/QRCode.vue';
+import clientWidth, {getWindowConfig} from '@/lib/getClient.ts';
 
 @Component({
   components: {QRCode}
@@ -21,6 +24,17 @@ export default class App extends Vue {
   hideQRCode() {
     this.show = false;
   }
+
+  mounted() {
+    if (clientWidth() === 'mobile') {
+      this.$nextTick(() => {
+        const pageInfo = getWindowConfig();
+        (this.$refs.app as HTMLElement).style.height
+          = (pageInfo.windowHeight - 46) + 'px';
+      });
+    }
+  }
+
 }
 </script>
 

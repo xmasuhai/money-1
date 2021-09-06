@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import getClientType from '@/lib/getClientWidth.ts';
+import getClientType from '@/lib/getClient.ts';
 
 @Component
 export default class QRCode extends Vue {

@@ -46,7 +46,7 @@ import recordTypeList from '@/constants/recordTypeList.ts';
 const ECharts = require('vue-echarts').default;
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
-import getClientWidth from '@/lib/getClientWidth.ts';
+import getClientWidth from '@/lib/getClient.ts';
 
 @Component({
   components: {HeaderBar, Tabs, ECharts}

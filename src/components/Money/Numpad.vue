@@ -28,7 +28,7 @@ import NumpadButton from '@/components/Money/numpad/NumpadButton.vue';
 import SearchLight from '@/mixins/searchLight.ts';
 import OperateNumpad from '@/mixins/operateNumpad.ts';
 import NumpadOutput from '@/components/Money/numpad/NumpadOutput.vue';
-import getClientType from '@/lib/getClientWidth.ts';
+import getClientType from '@/lib/getClient.ts';
 
 @Component({
   components: {NumpadOutput, NumpadButton}
