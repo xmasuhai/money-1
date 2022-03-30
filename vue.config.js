@@ -9,7 +9,7 @@ module.exports = {
   lintOnSave: false,
   chainWebpack: config => {
     const dir = path.resolve(__dirname, 'src/assets/icons') // 确定目录
-    config.module.rule('svg').uses.clear() //
+    config.module.rule('svg').uses.clear()
     config.module
       .rule('svg-sprite')
       .test(/\.svg$/) // .test(/\.(svg)(\?.*)?$/)
@@ -30,6 +30,28 @@ module.exports = {
       )
 
     config.module.rule('svg').exclude.add(dir)// 其他 svg loader 排除 icons 目录
+
+    // alias
+    config.resolve.alias
+      .set('@', path.join(__dirname, 'src'))
+      .set('@style', path.join(__dirname, 'src/assets/style'))
+      .set('@comp', path.join(__dirname, 'src/components'))
+      .set('@mixins', path.join(__dirname, 'src/mixins'))
+      .set('@store', path.join(__dirname, 'src/store'))
+
+    // server
+    /*
+    config.devServer
+      .set('port', 8080)
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/mock'
+        }
+      }
+    })
+  */
   },
   transpileDependencies: [
     'vue-echarts',

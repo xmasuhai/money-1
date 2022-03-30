@@ -12,9 +12,9 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component
 export default class HeaderBar extends Vue {
-  @Prop({default: '/money'}) routerPath!: string;
-  @Prop({required: true, default: ''}) headerTitle!: string;
-  @Prop({default: true}) hasIcon!: true;
+  @Prop({type: String, default: '/money'}) routerPath!: string;
+  @Prop({type: String, required: true, default: ''}) headerTitle!: string;
+  @Prop({type: Boolean, required: false, default: true}) hasIcon!: true;
 
   goBack(routerPath: string) {
     this.$router.push({
@@ -25,7 +25,7 @@ export default class HeaderBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 .headerBar {
   text-align: center;

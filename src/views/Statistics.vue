@@ -230,7 +230,7 @@ export default class Statistics extends Vue {
     return formattedDate;
   }
 
-  // hooks
+  // lifeCircle hooks
   protected beforeCreate(): void {
     this.$store.commit('fetchRecords');
   }
@@ -247,7 +247,7 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 %sticky {
   position: sticky;
