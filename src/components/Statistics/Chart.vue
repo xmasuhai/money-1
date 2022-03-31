@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+// 自己封装echarts组件 可替换为使用vue-charts的官方封装
 import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
 import echart, {EChartOption, ECharts} from 'echarts';
 
@@ -33,7 +34,6 @@ export default class Chart extends Vue {
   mounted() {
     this.initChart();
   }
-
 
 }
 </script>
