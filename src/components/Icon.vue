@@ -1,27 +1,8 @@
-<template>
-  <svg class="icon" @click="$emit('click', $event)">
-    <use :xlink:href="'#' + name"/>
-  </svg>
-</template>
-
 <script lang="ts">
-// 批量导入 svg
-const importAll =
-  (requireContext: __WebpackModuleApi.RequireContext) => {
-    requireContext.keys().forEach(requireContext);
-  };
-// 指定目录 只能用相对路径 不支持@别名路径
-// 使用importAll加载所有的svg
-importAll(require.context('../assets/icons/', true, /\.svg$/));
-
-// let importAll = (requireContext: __WebpackModuleApi.requireContext) => requireContext.keys().forEach(requireContext)
-try {
-  importAll(require.context('../assets/icons/', true, /\.svg$/));
-} catch (error) {
-  console.log(error);
-}
-
+import importAllSvg from '@/lib/importAllSvg';
 import {Component, Prop, Vue} from 'vue-property-decorator';
+
+importAllSvg();
 
 @Component
 export default class Icon extends Vue {
@@ -29,6 +10,12 @@ export default class Icon extends Vue {
   @Prop({default: ''}) ['name']: string;
 }
 </script>
+
+<template>
+  <svg class="icon" @click="$emit('click', $event)">
+    <use :xlink:href="'#' + name"/>
+  </svg>
+</template>
 
 <style lang="scss" scoped>
 .icon {

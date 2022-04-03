@@ -1,16 +1,3 @@
-<template>
-  <nav>
-    <router-link v-for="tab of tabs"
-                 :key="tab.id"
-                 :to="tab.pathTo"
-                 class="item"
-                 active-class="selected">
-      <Icon :name="tab.iconName"/>
-      {{ tab.title }}
-    </router-link>
-  </nav>
-</template>
-
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import Icon from '@/components/Icon.vue';
@@ -26,8 +13,21 @@ export default class Nav extends Vue {
 }
 </script>
 
+<template>
+  <nav>
+    <router-link v-for="tab of tabs"
+                 :key="tab.id"
+                 :to="tab.pathTo"
+                 class="item"
+                 active-class="selected">
+      <Icon :name="tab.iconName"/>
+      {{ tab.title }}
+    </router-link>
+  </nav>
+</template>
+
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 nav {
   @extend %outer-shadow;
