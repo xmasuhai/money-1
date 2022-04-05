@@ -1,19 +1,3 @@
-<template>
-  <Layout>
-    <header-bar router-path="/labels"
-                :header-title="'编辑标签'">
-    </header-bar>
-    <FormItem :inputValue="currentTag.name"
-              @update:inputValue="update"
-              class="form-item"
-              field-name="标签名"
-              placeholder="在这里输入标签名"/>
-    <div class="button-wrapper">
-      <Button @click="remove">删除标签</Button>
-    </div>
-  </Layout>
-</template>
-
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
@@ -52,7 +36,7 @@ export default class EditLabel extends Vue {
     this.$router.back();
   }
 
-  // hooks
+  // lifeCircle hooks
   created() {
     this.$store.commit('fetchTags');
     // 保存到Vuex中
@@ -64,8 +48,24 @@ export default class EditLabel extends Vue {
 }
 </script>
 
+<template>
+  <Layout>
+    <header-bar router-path="/labels"
+                :header-title="'编辑标签'">
+    </header-bar>
+    <FormItem :inputValue="currentTag.name"
+              @update:inputValue="update"
+              class="form-item"
+              field-name="标签名"
+              placeholder="在这里输入标签名"/>
+    <div class="button-wrapper">
+      <Button @click="remove">删除标签</Button>
+    </div>
+  </Layout>
+</template>
+
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 ::v-deep {
   .headerBar {

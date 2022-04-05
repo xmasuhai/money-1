@@ -1,20 +1,3 @@
-<template>
-  <Layout class="labels">
-    <header-bar :headerTitle="'标签'"></header-bar>
-    <ul class="tags">
-      <li v-for="tag in tags" :key="tag.id">
-        <router-link class="tag" :to="`/labels/edit/${tag.id}`">
-          <span class="tag-text">{{ tag.name }}</span>
-          <Icon class="tag-icon" name="money_right"/>
-        </router-link>
-      </li>
-    </ul>
-    <div class="createTag-wrapper">
-      <Button class="createTag" @click.native="createTag">新建标签</Button>
-    </div>
-  </Layout>
-</template>
-
 <script lang="ts">
 import {Component} from 'vue-property-decorator';
 // mixins 中继承 Vue
@@ -33,15 +16,32 @@ export default class Labels extends mixins(tagHelper) {
     return this.$store.state.tagStore.tagsList;
   }
 
-  // hooks
+  // lifeCircle hooks
   beforeCreate() {
     this.$store.commit('fetchTags');
   }
 }
 </script>
 
+<template>
+  <Layout class="labels">
+    <header-bar :headerTitle="'标签'"></header-bar>
+    <ul class="tags">
+      <li v-for="tag in tags" :key="tag.id">
+        <router-link class="tag" :to="`/labels/edit/${tag.id}`">
+          <span class="tag-text">{{ tag.name }}</span>
+          <Icon class="tag-icon" name="money_right"/>
+        </router-link>
+      </li>
+    </ul>
+    <div class="createTag-wrapper">
+      <Button class="createTag" @click.native="createTag">新建标签</Button>
+    </div>
+  </Layout>
+</template>
+
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 .labels {
   ::v-deep {

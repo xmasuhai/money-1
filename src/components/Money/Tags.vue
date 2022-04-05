@@ -1,19 +1,3 @@
-<template>
-  <section class="tags">
-    <ul class="current">
-      <li v-for="tag in tagsList"
-          :ref="tag.name"
-          :key="tag.id"
-          @click="toggle(tag)"
-          :class="{selected: (selectedTags.indexOf(tag) >= 0)}">
-        {{ tag.name }}
-      </li>
-    </ul>
-    <div class="new">
-      <button @click="createTag">添加新标签</button>
-    </div>
-  </section>
-</template>
 <script lang="ts">
 import {Component, Prop, Watch,} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
@@ -30,7 +14,7 @@ export default class Tags extends mixins(tagHelper) {
     return this.$store.state.tagStore.tagsList;
   }
 
-  // 处理 session 中的标签样式
+  // 处理 session 中的标签样式状态
   renderSessionTags() {
     if (this.selectedTags) {
       // 拷贝 session 数据
@@ -49,7 +33,8 @@ export default class Tags extends mixins(tagHelper) {
   // 将点击的标签 推入数组/从数组中删除 并将 标签列表 发布给父组件
   toggle(tag: Tag) {
     // 得到 本次 点击标签下标 在 被选中标签列表下标的位置
-    const index = this.selectedTags.map(itemTag => itemTag.id) // 得到被选中标签下标数组 []
+    const index = this.selectedTags
+      .map(itemTag => itemTag.id) // 得到被选中标签下标数组 []
       .indexOf(tag.id);
 
     // 下标是否存在于 被选中标签列表中
@@ -66,7 +51,7 @@ export default class Tags extends mixins(tagHelper) {
     this.$emit('update:selectedTags', this.selectedTags);
   }
 
-  // 是否取消选取标签
+  // 监听是否取消选取标签 执行 清除对应样式 并向父组件发布更新selectedTags 逻辑
   @Watch('isDeselectTags')
   deselectTag() {
     if (this.isDeselectTags) {
@@ -76,11 +61,10 @@ export default class Tags extends mixins(tagHelper) {
       });
       this.selectedTags = [];
       this.$emit('update:selectedTags', this.selectedTags);
-
     }
   }
 
-  // hooks
+  // lifeCircle hooks
   created() {
     // 读取 localStorage 中所有标签
     this.$store.commit('fetchTags');
@@ -94,8 +78,25 @@ export default class Tags extends mixins(tagHelper) {
 }
 </script>
 
+<template>
+  <section class="tags">
+    <ul class="current">
+      <li v-for="tag in tagsList"
+          :ref="tag.name"
+          :key="tag.id"
+          @click="toggle(tag)"
+          :class="{selected: (selectedTags.indexOf(tag) >= 0)}">
+        {{ tag.name }}
+      </li>
+    </ul>
+    <div class="new">
+      <button @click="createTag">添加新标签</button>
+    </div>
+  </section>
+</template>
+
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 .tags {
   background: #fff;

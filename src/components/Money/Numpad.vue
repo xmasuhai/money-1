@@ -1,26 +1,3 @@
-<template>
-  <section class="numpad">
-    <numpad-output :output="output"
-                   @update:output="getSessionOutput"/>
-    <div class="buttons"
-         @[clientEvent]="markButton($event); handleButtonFn($event)"
-         @mousemove="showSearchlight"
-         :style="searchlightCoordinate">
-      <numpad-button
-        v-for="(item, index) in numPadText"
-        :data-bundle-event="item.bundleEvent"
-        :button-index="index"
-        :currentIndex="currentIndex"
-        :key="item.id"
-        :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
-        :button-text="item.text">
-        <Icon v-if="['num', 'dot'].indexOf(item.name) === -1"
-              :name="item.id"/>
-      </numpad-button>
-    </div>
-  </section>
-</template>
-
 <script lang="ts">
 import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
@@ -80,8 +57,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     return this.eventName;
   }
 
-  // 给不同的按钮绑定对应事件的处理函数
-  // 事件代理
+  // 事件代理 给不同的按钮绑定对应事件的处理函数
   handleButtonFn(e: TapEvent) {
     let target = e.target as HTMLElement;
     // 获取 按钮 节点
@@ -100,8 +76,31 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
 }
 </script>
 
+<template>
+  <section class="numpad">
+    <numpad-output :output="output"
+                   @update:output="getSessionOutput"/>
+    <div class="buttons"
+         @[clientEvent]="markButton($event); handleButtonFn($event)"
+         @mousemove="showSearchlight"
+         :style="searchlightCoordinate">
+      <numpad-button
+        v-for="(item, index) in numPadText"
+        :data-bundle-event="item.bundleEvent"
+        :button-index="index"
+        :currentIndex="currentIndex"
+        :key="item.id"
+        :class="{ok: item.id === 'ok', zero: item.id === 'zero'}"
+        :button-text="item.text">
+        <Icon v-if="['num', 'dot'].indexOf(item.name) === -1"
+              :name="item.id"/>
+      </numpad-button>
+    </div>
+  </section>
+</template>
+
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 .numpad {
   .output {
