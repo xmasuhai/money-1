@@ -16,17 +16,17 @@ const StatisticsStore = {
   getters: {
     groupedList(state: StatisticsState) {
       store.commit('trigger');
-      console.log(state);
+      // console.log(state);
       return state;
     },
     switchTriggerMethod(state: StatisticsState) {
       store.commit('trigger');
-      console.log(state.triggerMethod);
+      // console.log(state.triggerMethod);
       return state;
     },
     myChartOption(state: StatisticsState) {
       store.commit('trigger');
-      console.log(state.groupedResult);
+      // console.log(state.groupedResult);
       return state;
     },
   }

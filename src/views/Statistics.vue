@@ -214,30 +214,49 @@ export default class Statistics extends Vue {
       echartDiv.scrollLeft = echartDiv.scrollWidth;
       echartDiv.scrollBy(echartDiv.scrollWidth, 0);
     }, 800);
-    console.log(this.tempResult);
+    // console.log(this.tempResult);
   }
 }
 </script>
 
 <template>
-  <Layout class="statistics">
-    <HeaderBar :header-title="'统计'" router-path="/money"></HeaderBar>
-    <Tabs class-prefix="type" :data-source="recordTypeList" :type.sync="type"/>
-    <div class="echarts-wrapper" ref="vChartWrapper">
-      <ECharts class="echarts" :options="myChartOption" ref="vChartContent"/>
+  <Layout class="statistics"
+          :header-title="'统计'">
+    <Tabs class-prefix="type"
+          :data-source="recordTypeList"
+          :type.sync="type"/>
+    <div class="echarts-wrapper"
+         ref="vChartWrapper">
+      <ECharts class="echarts"
+               :options="myChartOption"
+               ref="vChartContent"/>
     </div>
     <ol v-if="groupedList.length > 0">
-      <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{ showDay(group.title) }} <span>共计： ￥{{ group.total }}</span></h3>
+      <li v-for="(group, index) in groupedList"
+          :key="index">
+
+        <h3 class="title">
+          {{ showDay(group.title) }}
+          <span>
+            共计： ￥{{ group.total }}
+          </span>
+        </h3>
+
         <ol>
-          <li class="record" v-for="{amount, id, tags, tips} in group.items" :key="id">
-            <span class="recordTag">{{ tagToString(tags) }}</span>
+          <li class="record"
+              v-for="{amount, id, tags, tips} in group.items"
+              :key="id">
+            <span class="recordTag">
+              {{ tagToString(tags) }}
+            </span>
             <div class="notes">
-              <span class="tips">备注：</span><span class="text">{{ tips }}</span>
+              <span class="tips">备注：</span>
+              <span class="text">{{ tips }}</span>
             </div>
             <span>￥ {{ amount }}</span>
           </li>
         </ol>
+
       </li>
     </ol>
     <div v-else class="noResult">

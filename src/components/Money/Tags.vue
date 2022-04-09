@@ -103,8 +103,8 @@ export default class Tags extends mixins(tagHelper) {
   display: flex;
   flex-direction: column-reverse;
   flex-grow: 1;
-  font-size: 14px;
-  padding: 16px;
+  font-size: .8em;
+  padding: 1em;
 
   > .current {
     order: 1;
@@ -112,7 +112,7 @@ export default class Tags extends mixins(tagHelper) {
     flex-wrap: wrap;
 
     > li {
-      $h: 24px;
+      $h: 1.5em;
       $bg: #d9d9d9;
       background: $bg;
       height: $h;

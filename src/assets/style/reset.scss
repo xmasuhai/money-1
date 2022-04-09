@@ -5,6 +5,11 @@
   padding: 0;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 a {
   color: inherit;
   text-decoration: none;

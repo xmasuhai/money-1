@@ -24,8 +24,8 @@ export default class Labels extends mixins(tagHelper) {
 </script>
 
 <template>
-  <Layout class="labels">
-    <header-bar :headerTitle="'标签'"></header-bar>
+  <Layout class="labels"
+          :header-title="'标签'">
     <ul class="tags">
       <li v-for="tag in tags" :key="tag.id">
         <router-link class="tag" :to="`/labels/edit/${tag.id}`">

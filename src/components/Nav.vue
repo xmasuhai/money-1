@@ -27,13 +27,15 @@ export default class Nav extends Vue {
 </template>
 
 <style lang="scss" scoped>
-@import '~@/assets/style/global.scss';
+@import '../assets/style/global.scss';
+@import '../assets/style/vars.scss';
 
 nav {
   @extend %outer-shadow;
   display: flex;
   flex-direction: row;
-  font-size: 12px;
+  font-size: .8em;
+  height: calc(var(--nav-height));
 
   > .item {
     padding: 2px 0;
@@ -44,8 +46,8 @@ nav {
     flex-direction: column;
 
     .icon {
-      width: 32px;
-      height: 32px;
+      width: 2.4em;
+      height: 2.4em;
     }
   }
 

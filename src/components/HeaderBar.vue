@@ -1,7 +1,8 @@
 <template>
   <header class="headerBar">
     <Icon v-if="hasIcon"
-          class="left-icon" name="money_right"
+          class="left-icon"
+          name="money_right"
           @click.native="goBack(routerPath)"/>
     <span class="title">{{ headerTitle }}</span>
   </header>
@@ -25,23 +26,24 @@ export default class HeaderBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/style/global.scss';
+@import '../assets/style/global.scss';
 
 .headerBar {
   text-align: center;
-  font-size: 16px;
-  padding: 12px 16px;
+  font-size: 1em;
+  padding: .5em 1em;
   margin-bottom: 2px;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 
   @extend %tag-shadow;
 
   > .left-icon {
     color: #666;
-    font-size: 24px;
+    font-size: 1.2em;
   }
 
   > .title {
@@ -51,8 +53,7 @@ export default class HeaderBar extends Vue {
   &::after {
     content: '';
     display: inline;
-    width: 24px;
-    height: 24px;
+    width: 1.5em;
   }
 }
 </style>

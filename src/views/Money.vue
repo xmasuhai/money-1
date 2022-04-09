@@ -1,8 +1,8 @@
 <template>
-  <Layout class-prefix="layout" class="layout-content">
-    <HeaderBar :header-title="'记账'"
-               :hasIcon="false">
-    </HeaderBar>
+  <Layout class-prefix="layout"
+          class="layout-content"
+          :header-title="'记账'"
+          :titleIcon="false">
     <Tags @update:selectedTags="updatePickedTags"
           :sessionSelectedTags="sessionSelectedTags"
           :is-deselect-tags="emptyTags"
@@ -149,15 +149,6 @@ export default class Money extends Vue {
   .layout-content {
     display: flex;
     flex-direction: column;
-  }
-
-  .headerBar {
-    &::before {
-      content: '';
-      display: inline;
-      width: 24px;
-      height: 24px;
-    }
   }
 
   .fuckAnt-tabs {

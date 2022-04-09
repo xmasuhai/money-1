@@ -1,12 +1,12 @@
 <template>
-  <main id="app"
-        ref="app"
-        @resize="window.location.reload();">
+  <div id="app"
+       ref="app"
+       @resize="window.location.reload();">
     <QRCode v-show="show"
             @updateMask="hideQRCode">
     </QRCode>
     <router-view></router-view>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">
@@ -39,8 +39,8 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import "~@/assets/style/global.scss";
-@import "~@/assets/style/reset.scss";
+@import '~@/assets/style/global.scss';
+@import '~@/assets/style/reset.scss';
 
 #app {
   -webkit-font-smoothing: antialiased;

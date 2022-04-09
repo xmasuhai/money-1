@@ -49,10 +49,8 @@ export default class EditLabel extends Vue {
 </script>
 
 <template>
-  <Layout>
-    <header-bar router-path="/labels"
-                :header-title="'编辑标签'">
-    </header-bar>
+  <Layout router-path="/labels"
+          :header-title="'编辑标签'">
     <FormItem :inputValue="currentTag.name"
               @update:inputValue="update"
               class="form-item"

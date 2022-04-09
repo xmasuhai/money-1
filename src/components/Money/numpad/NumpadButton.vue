@@ -31,8 +31,8 @@ $bg: #f2f2f2;
   &.current::after {
     content: '';
     display: block;
-    width: 8px;
-    height: 8px;
+    width: .35em;
+    height: .35em;
     border-radius: 50%;
     background: #f0f0f0;
     box-shadow: 0 0 0 #cccccc,
@@ -99,8 +99,8 @@ $bg: #f2f2f2;
   }
 
   > .icon {
-    width: 32px;
-    height: 32px;
+    width: 1.85em;
+    height: 1.85em;
   }
 }
 </style>

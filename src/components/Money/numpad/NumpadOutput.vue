@@ -32,13 +32,13 @@ export default class NumpadOutput extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/style/global.scss";
+@import '~@/assets/style/global.scss';
 
 .output {
   @extend %inner-shadow;
-  font-size: 36px;
+  font-size: 1.5em;
   font-family: Consolas, monospace;
-  padding: 9px 16px;
+  padding: .5em 1.2em;
   text-align: right;
 }
 </style>

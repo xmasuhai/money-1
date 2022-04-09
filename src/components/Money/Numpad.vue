@@ -105,7 +105,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
 .numpad {
   .output {
     @extend %inner-shadow;
-    font-size: 36px;
+    font-size: 2rem;
     font-family: Consolas, monospace;
     padding: 9px 16px;
     text-align: right;
@@ -116,7 +116,7 @@ export default class Numpad extends mixins(SearchLight, OperateNumpad) {
     grid-template: repeat(4, 1fr) / repeat(4, 1fr);
     padding: 1px;
     grid-gap: 1px;
-    height: 256px;
+    height: 15rem;
     overflow: hidden;
     justify-items: stretch;
     align-items: stretch;
