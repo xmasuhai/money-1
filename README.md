@@ -15,4 +15,49 @@
 - 源代码完全使用TypeScript实现，用到了装饰器语法
 
 ---
+
+## 安装
+
+```sh
+pnpm install
+```
+
+- 也可以用 `yarn` 或者 `npm`
+
+---
+
+## 运行
+
+```sh
+pnpm serve
+```
+
+---
+
+## 构建
+
+```sh
+pnpm build
+pnpm build:dev
+```
+
+---
+
+## 运行单元测试
+
+```sh
+pnpm test:unit
+```
+
+---
+
+## 手动部署
+
+```sh
+pnpm deploy
+```
+
+- 目前有添加了 `deployWebsite.yml` 放在 `GitHub Actions`上自动部署预览页面
+
+---
 ---
