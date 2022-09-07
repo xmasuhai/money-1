@@ -19,7 +19,7 @@
 ## 安装
 
 ```sh
-pnpm install
+yarn install
 ```
 
 - 也可以用 `yarn` 或者 `npm`
@@ -29,7 +29,7 @@ pnpm install
 ## 运行
 
 ```sh
-pnpm serve
+yarn serve
 ```
 
 ---
@@ -37,8 +37,8 @@ pnpm serve
 ## 构建
 
 ```sh
-pnpm build
-pnpm build:dev
+yarn build
+yarn build:dev
 ```
 
 ---
@@ -46,7 +46,7 @@ pnpm build:dev
 ## 运行单元测试
 
 ```sh
-pnpm test:unit
+yarn test:unit
 ```
 
 ---
@@ -54,7 +54,7 @@ pnpm test:unit
 ## 手动部署
 
 ```sh
-pnpm deploy
+yarn deploy
 ```
 
 - 目前有添加了 `deployWebsite.yml` 放在 `GitHub Actions`上自动部署预览页面
