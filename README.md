@@ -16,13 +16,21 @@
 
 ---
 
+## 环境
+
+```sh
+NODE Version: v14.21.3
+YARN Version: 1.22.19
+NPM Version: 6.14.18
+```
+
+---
+
 ## 安装
 
 ```sh
 yarn install
 ```
-
-- 也可以用 `yarn` 或者 `npm`
 
 ---
 
