@@ -30,6 +30,7 @@ jobs:
         with:
           # ssh-key: ${{ secrets.DEPLOY_KEY }}
           # ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository-name: xmasuhai/meowney-0-website
           branch: gh-pages
           folder: dist
