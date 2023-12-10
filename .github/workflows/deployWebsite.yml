@@ -28,7 +28,8 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY_NAME: xmasuhai/meowney-0-website
-          BRANCH: gh-pages
-          FOLDER: dist
+          # ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repository-name: xmasuhai/meowney-0-website
+          branch: gh-pages
+          folder: dist
