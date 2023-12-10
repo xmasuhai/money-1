@@ -3,7 +3,7 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
 
 # 任务
 jobs:
@@ -13,19 +13,24 @@ jobs:
     steps:
       # 拉取代码
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 14.21.3
 
       # 1、生成静态文件
-      - name: Build
+      - name: Install and Build
         run: yarn install && yarn build
 
       # 2、部署到 GitHub Pages
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY_NAME: xmasuhai/meowney-0-website
-          BRANCH: gh-pages
-          FOLDER: dist
+          # ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repository-name: xmasuhai/meowney-0-website
+          branch: gh-pages
+          folder: dist
