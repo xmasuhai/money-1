@@ -96,6 +96,7 @@ export default class Tags extends mixins(tagHelper) {
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:math';
 @import '~@/assets/style/global.scss';
 
 .tags {
@@ -117,7 +118,7 @@ export default class Tags extends mixins(tagHelper) {
       background: $bg;
       height: $h;
       line-height: $h;
-      border-radius: ($h/2);
+      border-radius: math.div($h, 2);
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
