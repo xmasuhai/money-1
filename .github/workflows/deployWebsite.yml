@@ -21,12 +21,12 @@ jobs:
           node-version: 14.21.3
 
       # 1、生成静态文件
-      - name: Build
+      - name: Install and Build
         run: yarn install && yarn build
 
       # 2、部署到 GitHub Pages
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY_NAME: xmasuhai/meowney-0-website
