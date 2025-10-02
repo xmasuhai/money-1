@@ -19,10 +19,10 @@ jobs:
       # node 版本
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        # with:
-        #   node-version: '14.21.3' # 指定Node.js的版本为14
         with:
-          node-version-file: '../../.nvmrc' # 使用项目根目录中的.nvmrc文件来确定Node.js版本
+          node-version: '14.21.3' # 指定Node.js的版本为14
+        # with:
+          # node-version-file: '../../.nvmrc' # 使用项目根目录中的.nvmrc文件来确定Node.js版本
 
       # 1、生成静态文件
       - name: Build
