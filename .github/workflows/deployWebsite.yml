@@ -19,8 +19,10 @@ jobs:
       # node 版本
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        # with:
+        #   node-version: '14.21.3' # 指定Node.js的版本为14
         with:
-          node-version: '14.21.3' # 指定Node.js的版本为14
+          node-version-file: '.nvmrc' # 使用项目根目录中的.nvmrc文件来确定Node.js版本
 
       # 1、生成静态文件
       - name: Build
@@ -28,8 +30,9 @@ jobs:
 
       # 2、部署到 GitHub Pages
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
+          folder: dist # The folder the action should deploy.
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY_NAME: xmasuhai/meowney-0-website
           BRANCH: gh-pages
